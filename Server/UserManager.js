@@ -8,7 +8,7 @@ class UserManager {
 
     async init() {
         this.Users = {};
-        this.CollectionName = 'Usedr';
+        this.CollectionName = 'User';
         await MongoController.connect();
         await this.loadUsers();
     }
@@ -44,7 +44,7 @@ class UserManager {
         // create user instance
         for (const property of UserProperties) {
             this.Users[property.name] = new User(property);
-            console.log(property.name)
+
         }
 
     }

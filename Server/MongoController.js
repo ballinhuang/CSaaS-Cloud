@@ -3,7 +3,7 @@ import assert from 'assert';
 
 class MongoController {
     constructor() {
-        this.url = 'mongodb://localhost:6000';
+        this.url = 'mongodb://localhost:6000/User';
         this.db = null;
     }
 
@@ -35,7 +35,6 @@ class MongoController {
     }
 
     async getDocument(collectionName) {
-        console.log(collectionName)
         assert.ok(this.isCollectionExist(collectionName), 'Collection NOT exist.');
         const collection = this.db.collection(collectionName);
         return await collection.find().toArray();

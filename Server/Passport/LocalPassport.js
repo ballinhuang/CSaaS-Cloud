@@ -3,10 +3,12 @@ import { Strategy as LocalPassport } from 'passport-local';
 const JSON_Strategy = (passport, users) => {
 
     passport.serializeUser((user, done) => {
+        console.log('serializeUser:' + user.name);
         done(null, user.name);
     });
 
     passport.deserializeUser((name, done) => {
+        console.log('Wht NO CALL!!! : ( QQ')
         const user = users[name];
         done(null, (user === undefined) ? false : user);
     });
@@ -16,6 +18,7 @@ const JSON_Strategy = (passport, users) => {
         passwordField: 'passwd',
         session: true,
     }, (name, passwd, done) => {
+
         let user = users[name];
         if (user === undefined || user.passwd !== passwd)
             done(null, false);

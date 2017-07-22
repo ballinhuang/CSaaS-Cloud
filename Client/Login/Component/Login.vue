@@ -7,16 +7,21 @@
 </template>
 
 <script>
+import jq from 'jquery';
 export default {
     data () {
         return {
-            name: "123",
-            passwd: "123"
+            name: "",
+            passwd: ""
         }
     },
     methods: {
-        greet: async function (event) {
-            alert('Hello ' + this.name + ' ' + this.passwd);
+        greet: function (event) {
+            const name = this.name;
+            const passwd = this.passwd;
+            jq.post('/login', { name, passwd }, (data) => {
+                window.location.href = data.redirect;
+            });
             this.name = "";
             this.passwd = ""
         }
