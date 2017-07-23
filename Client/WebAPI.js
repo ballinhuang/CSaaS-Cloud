@@ -1,14 +1,25 @@
-import jq from 'jquery';
+import VueResource from 'vue-resource';
+import Vue from 'vue';
+
+Vue.use(VueResource);
+
 class WebAPI {
 
 	logout() {
-		jq.get('/logout', (data) => {
-			window.location.href = data.redirect;
+		Vue.http.get('/logout').then(response => {
+			window.location.href = response.body.redirect;
+		}, response => {
 		});
 	}
 
-	getUserName(success, fail, always) {
-		jq.get('/api/uses/username', success).fail(fail).always(always);
+	getUserName() {
+		var result = "123";
+		Vue.http.get('/api/uses/username').then(response => {
+			result = response.body.name;
+		}, response => {
+			result = "no";
+		});
+		return result;
 	}
 
 }

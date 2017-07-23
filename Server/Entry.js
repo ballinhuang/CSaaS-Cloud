@@ -37,7 +37,7 @@ APP.use(Session({
   secret: 'zkldjgiqahoewgo',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }));
 APP.use(helmet());
 APP.use(BodyParser.json());
@@ -86,4 +86,16 @@ APP.post('/login', Passport.authenticate('json'), (req, res) => {
   res.status(200).send({
     redirect: '/index'
   });
+});
+
+APP.get('/logout', isLogin, (req, res) => {
+  req.logout();
+  res.status(200).send({
+    redirect: '/home'
+  });
+});
+
+APP.get('/api/uses/username', isLogin, (req, res) => {
+  console.log(req.user.name);
+  res.status(200).send({ name: req.user.name });
 });

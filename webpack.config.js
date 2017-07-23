@@ -43,6 +43,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: `${__dirname}/Client/Index/index.css` },
+      { from: `${__dirname}/Client/Login/login.css` },
     ])
   ]
 }
