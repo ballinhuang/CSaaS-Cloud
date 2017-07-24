@@ -96,6 +96,5 @@ APP.get('/logout', isLogin, (req, res) => {
 });
 
 APP.get('/api/uses/username', isLogin, (req, res) => {
-  console.log(req.user.name);
   res.status(200).send({ name: req.user.name });
 });

@@ -10,9 +10,6 @@
                     <li>
                         <router-link to="/profile">{{UserName}}</router-link>
                     </li>
-                    <li>
-                        <button v-on:click="greet">Greet</button>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -24,13 +21,17 @@ import API from '../../WebAPI.js'
 export default {
     data () {
         return {
-            UserName: "123"
+            UserName: ""
         }
     },
     methods: {
-        greet: function (event) {
-            alert(API.getUserName())
-        }
+    },
+    created: function () {
+        API.getUserName((res) => {
+            this.UserName = res.body.name;
+        }, (res) => {
+            this.UserName = "";
+        })
     }
 }
 </script>

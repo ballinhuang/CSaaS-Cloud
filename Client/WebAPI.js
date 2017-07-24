@@ -12,14 +12,9 @@ class WebAPI {
 		});
 	}
 
-	getUserName() {
+	getUserName(success, fail) {
 		var result = "123";
-		Vue.http.get('/api/uses/username').then(response => {
-			result = response.body.name;
-		}, response => {
-			result = "no";
-		});
-		return result;
+		Vue.http.get('/api/uses/username').then(success, fail);
 	}
 
 }

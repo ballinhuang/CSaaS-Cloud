@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <button v-on:click="logout">logout</button>
   </div>
 </template>
 
@@ -12,9 +11,6 @@ export default {
     }
   },
   methods: {
-    logout: function (event) {
-      API.logout();
-    }
   }
 }
 </script>
