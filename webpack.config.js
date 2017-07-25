@@ -11,14 +11,35 @@ module.exports = {
     filename: '[name].js',
   },
   module: {
-    loaders: [
-      { test: /\.css$/, loader: 'style!css!' },
-      { test: /\.vue$/, loader: "vue-loader" },
-      { test: /\.json$/, loader: "json-loader" },
-      { test: /\.html$/, loader: 'vue-template-loader' },
-      { test: /\.js$/, loader: "babel-loader", exclude: /node_modules/ },
-      { test: /\.(png|jpg|gif|ico)$/, loader: "url-loader" },
-      { test: /\.(ttf|otf|woff|woff2|eot|svg)\??.*$/, loader: "url-loader?limit=50000&mimetype=application/octet-stream&name=fonts/font-[sha512:hash:base64:15].[ext]" }
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          // vue-loader options go here
+        },
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: [
+            'es2015',
+            'babel-preset-stage-0'
+          ]
+        }
+        , exclude: /node_modules/
+      },
+      {
+        test: /\.styl$/,
+        loader: ['style-loader', 'css-loader', 'stylus-loader']
+      },
+      {
+        test: /\.(jpg|eot|png|woff|woff2|ttf|svg)$/,
+        loader: "url-loader"
+      }
     ]
   },
   resolve: {
