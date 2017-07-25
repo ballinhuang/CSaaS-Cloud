@@ -19,9 +19,6 @@ const router = new VueRouter({
     routes: routes
 })
 const app = new Vue({
-    el: '#app',
     router,
-    components: {
-        'menubar': Menu
-    }
+    render: h => h(Menu)
 }).$mount('#app')
