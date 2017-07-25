@@ -15,9 +15,6 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          // vue-loader options go here
-        },
         exclude: /node_modules/
       },
       {
@@ -63,7 +60,6 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: `${__dirname}/Client/Index/index.css` },
       { from: `${__dirname}/Client/Login/login.css` },
     ])
   ]
