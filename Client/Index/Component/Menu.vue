@@ -1,18 +1,20 @@
 <template>
     <v-app standalone>
-        <v-navigation-drawer persistent v-model="drawer" light enable-resize-watcher overflow absolute>
-            <v-list>
-                <v-list-tile>
-                    <v-list-tile-content>
-                        <v-list-tile-title>
-                            <span>Menu</span>
-                        </v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-divider></v-divider>
+        <v-navigation-drawer dark v-model="drawer" enable-resize-watcher persistent>
+            <v-toolbar flat class="transparent">
+                <v-list class="pa-0">
+                    <v-list-tile avatar tag="div">
+                        <v-list-tile-content>
+                            <v-list-tile-title>Hello! {{UserName}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+            </v-toolbar>
+            <v-list class="pt-0" dense>
+                <v-divider dark></v-divider>
                 <v-list-tile v-for="item in items" :key="item.title" :href="item.href" :router="item.router">
                     <v-list-tile-action>
-                        <v-icon>{{ item.icon }}</v-icon>
+                        <v-icon dark>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -20,7 +22,7 @@
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar class="indigo" dark>
+        <v-toolbar class="blue darken-2" fixed dark>
             <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Dashboard</v-toolbar-title>
         </v-toolbar>
@@ -29,18 +31,18 @@
                 <router-view></router-view>
             </v-container>
         </main>
-        <v-footer class="indigo">
+        <v-footer class="blue darken-2" fixed dark>
             <span class="white--text">© 2017 NTCU</span>
         </v-footer>
     </v-app>
 </template>
 
 <script>
+import API from '../../WebAPI'
 export default {
     data () {
         return {
             drawer: true,
-
             items: [{
                 href: '#/home',
                 router: true,
@@ -51,8 +53,16 @@ export default {
                 router: true,
                 title: 'Profile',
                 icon: 'extension',
-            }]
+            }],
+            UserName: ""
         }
+    },
+    created: function () {
+        API.getUserName((res) => {
+            this.UserName = res.body.name;
+        }, (res) => {
+            this.UserName = ""
+        })
     }
 }
 </script>
