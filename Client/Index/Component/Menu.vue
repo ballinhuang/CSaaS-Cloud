@@ -53,6 +53,11 @@ export default {
                 router: true,
                 title: 'Profile',
                 icon: 'extension',
+            }, {
+                href: '#/board',
+                router: true,
+                title: 'Board',
+                icon: 'extension',
             }],
             UserName: ""
         }
