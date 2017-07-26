@@ -4,7 +4,7 @@
         <v-spacer></v-spacer>
         <v-layout row wrap>
             <v-flex xs1 class="text-xs-right">
-                <addcluster :itemlist="items"></addcluster>
+                <addcluster :clusters="items"></addcluster>
             </v-flex>
             <v-flex xs5 offset-xs6>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -49,28 +49,37 @@ export default {
             ],
             items: [
                 {
-                    value: false,
                     name: 'ClusterA',
                     port: 5001,
                     nodes: 10,
-                    nodeslist: [{ nodename: "lab01", nodenp: 10 }, { nodename: "lab02", nodenp: 9 }],
+                    nodeslist: [
+                        { nodename: "lab01", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 10 },
+                        { nodename: "lab02", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 9 }
+                    ],
                     stat: 'Work',
+                    scheduler: 'FIFO'
                 },
                 {
-                    value: false,
                     name: 'ClusterB',
                     port: 5003,
                     nodes: 8,
-                    nodeslist: [{ nodename: "lab03", nodenp: 10 }, { nodename: "lab04", nodenp: 9 }],
+                    nodeslist: [
+                        { nodename: "lab03", nodeip: '127.0.0.1', nodeport: 50002, nodenp: 10 },
+                        { nodename: "lab04", nodeip: '127.0.0.3', nodeport: 50001, nodenp: 9 }
+                    ],
                     stat: 'Work',
+                    scheduler: 'Easy'
                 },
                 {
-                    value: false,
                     name: 'ClusterC',
                     port: 5005,
                     nodes: 9,
-                    nodeslist: [{ nodename: "lab05", nodenp: 10 }, { nodename: "lab06", nodenp: 9 }],
+                    nodeslist: [
+                        { nodename: "lab05", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 10 },
+                        { nodename: "lab06", nodeip: '127.0.0.2', nodeport: 50003, nodenp: 9 }
+                    ],
                     stat: 'Work',
+                    scheduler: 'Backfilling'
                 },
             ]
         }

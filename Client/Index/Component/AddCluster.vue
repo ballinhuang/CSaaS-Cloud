@@ -1,61 +1,135 @@
 <template>
-    <div>
-        <v-layout row>
-            <v-dialog v-model="dialog" persistent>
-                <v-btn fab dark class="indigo" slot="activator">
-                    <v-icon dark>add</v-icon>
-                </v-btn>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Add new Cluster</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-text-field label="Cluster Name" required v-model="item.name"></v-text-field>
-                        <v-text-field type="Number" label="Cluster Nodes Count" required v-model="item.nodes"></v-text-field>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Close</v-btn>
-                        <v-btn class="blue--text darken-1" flat v-on:click="additem">Save</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </v-layout>
-    </div>
+    <v-layout>
+        <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
+            <v-btn fab dark class="indigo" slot="activator">
+                <v-icon dark>add</v-icon>
+            </v-btn>
+    
+            <v-stepper v-model="e6" vertical>
+                <v-stepper-step step="1" v-bind:complete="e6 > 1">
+                    Step One
+                    <small>Set Cluster's name.</small>
+                </v-stepper-step>
+                <v-stepper-content step="1">
+                    <v-text-field label="Cluster Name" required v-model="newcluster.name"></v-text-field>
+                    <v-btn primary @click.native="e6 = 2">Continue</v-btn>
+                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-step step="2" v-bind:complete="e6 > 2">
+                    Step Two
+                    <small>Set nodes list.</small>
+                </v-stepper-step>
+                <v-stepper-content step="2">
+                    <v-text-field type="Number" label="Cluster Nodes Count" required v-model="newcluster.nodes" @change="nodecout"></v-text-field>
+                    <v-data-table v-bind:headers="headers" :items="newcluster.nodeslist" hide-actions class="elevation-1">
+                        <template slot="items" scope="props">
+                            <td>
+                                <v-text-field required v-model="props.item.nodename"></v-text-field>
+                            </td>
+                            <td>
+                                <v-text-field required v-model="props.item.nodeip"></v-text-field>
+                            </td>
+                            <td>
+                                <v-text-field required v-model="props.item.nodeport"></v-text-field>
+                            </td>
+                            <td>
+                                <v-text-field required v-model="props.item.nodenp"></v-text-field>
+                            </td>
+                        </template>
+                    </v-data-table>
+                    <v-btn primary @click.native="e6 = 3">Continue</v-btn>
+                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-step step="3" v-bind:complete="e6 > 3">
+                    Step Three
+                    <small>Set schedulor.</small>
+                </v-stepper-step>
+                <v-stepper-content step="3">
+                    <v-select label="Schedule alogrithm select." :items="options" v-model="newcluster.scheduler"></v-select>
+                    <v-btn primary @click.native="additem">Continue</v-btn>
+                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                </v-stepper-content>
+            </v-stepper>
+        </v-dialog>
+    </v-layout>
 </template>
 
 <script>
 export default {
     data () {
         return {
+            e6: 1,
             dialog: false,
-            item: {
+            headers: [
+                { text: 'Name', value: 'name', align: 'left' },
+                { text: 'IP', value: 'nodes', align: 'left' },
+                { text: 'Port', value: 'port', align: 'left' },
+                { text: 'CPU', value: 'cpu', align: 'left' },
+            ],
+            options: [
+                {
+                    value: 'FIFO',
+                    text: 'FIFO'
+                },
+                {
+                    value: 'Eazy',
+                    text: 'Eazy'
+                },
+                {
+                    value: 'Backfilling',
+                    text: 'Backfilling'
+                }
+            ],
+            newcluster: {
                 name: '',
+                port: '',
                 nodes: 0,
-                port: 0,
-                stat: ''
+                nodeslist: [{
+                    nodename: '1',
+                    nodeip: '1',
+                    nodeport: '1',
+                    nodenp: 0
+                }],
+                stat: '',
+                scheduler: ''
             }
         }
     },
     methods: {
         additem (event) {
-            if (this.item.name === '' || this.item.nodes === '') {
-                this.dialog = true;
-                return;
-            }
-            this.item.port = 5000;
-            this.item.stat = 'Work';
-            this.itemlist.push(JSON.parse(JSON.stringify(this.item)));
-            this.dialog = false;
+            this.newcluster.port = 5000;
+            this.newcluster.stat = 'Work';
+            this.clusters.push(JSON.parse(JSON.stringify(this.newcluster)));
             this.cleanitem();
         },
         cleanitem () {
-            this.item.name = '';
-            this.item.nodes = 0;
-            this.item.port = 0;
-            this.item.stat = '';
+            this.newcluster.name = '';
+            this.newcluster.port = '';
+            this.newcluster.nodes = 0;
+            this.newcluster.nodeslist = [{
+                nodename: '',
+                nodeip: '',
+                nodeport: '',
+                nodenp: 0
+            }];
+            this.newcluster.stat = '';
+            this.newcluster.scheduler = '';
+            this.e6 = 1;
+            this.dialog = false;
+        },
+        nodecout (event) {
+            this.newcluster.nodeslist = [{
+                nodename: '',
+                nodeip: '',
+                nodeport: '',
+                nodenp: 0
+            }];
+            var i = 1;
+            for (i = 1; i < this.newcluster.nodes; i++) {
+                this.newcluster.nodeslist.push({ nodename: '', nodeip: '', nodeport: '', nodenp: 0 });
+            }
         }
     },
-    props: ['itemlist']
+    props: ['clusters']
 }
 </script>
