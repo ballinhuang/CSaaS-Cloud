@@ -36,7 +36,7 @@
                                     <v-text-field required v-model="props.item.nodeport"></v-text-field>
                                 </td>
                                 <td>
-                                    <v-text-field required v-model="props.item.nodenp"></v-text-field>
+                                    <v-text-field type="number" required v-model="props.item.nodenp"></v-text-field>
                                 </td>
                             </template>
                         </v-data-table>
@@ -122,16 +122,19 @@ export default {
             this.dialog = false;
         },
         nodecout (event) {
-            this.newcluster.nodeslist = [{
-                nodename: '',
-                nodeip: '',
-                nodeport: '',
-                nodenp: 0
-            }];
-            var i = 1;
-            for (i = 1; i < this.newcluster.nodes; i++) {
-                this.newcluster.nodeslist.push({ nodename: '', nodeip: '', nodeport: '', nodenp: 0 });
+            if (this.newcluster.nodes > this.newcluster.nodeslist.length) {
+                var i = 0;
+                for (i = this.newcluster.nodeslist.length; i < this.newcluster.nodes; i++) {
+                    this.newcluster.nodeslist.push({ nodename: '', nodeip: '', nodeport: '', nodenp: 0 });
+                }
             }
+            else {
+                var i = 0;
+                for (i = this.newcluster.nodeslist.length; i > this.newcluster.nodes; i--) {
+                    this.newcluster.nodeslist.pop();
+                }
+            }
+
         }
     },
     props: ['clusters']

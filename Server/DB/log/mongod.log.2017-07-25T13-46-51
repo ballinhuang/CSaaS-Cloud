@@ -1,0 +1,61 @@
+2017-07-25T20:03:49.265+0800 I CONTROL  [main] Trying to start Windows service 'MongoDB'
+2017-07-25T20:03:49.266+0800 I CONTROL  [initandlisten] MongoDB starting : pid=9128 port=6000 dbpath=C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db 64-bit host=DESKTOP-9AI1SO7
+2017-07-25T20:03:49.266+0800 I CONTROL  [initandlisten] targetMinOS: Windows 7/Windows Server 2008 R2
+2017-07-25T20:03:49.266+0800 I CONTROL  [initandlisten] db version v3.4.6
+2017-07-25T20:03:49.266+0800 I CONTROL  [initandlisten] git version: c55eb86ef46ee7aede3b1e2a5d184a7df4bfb5b5
+2017-07-25T20:03:49.266+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1u-fips  22 Sep 2016
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten] allocator: tcmalloc
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten] modules: none
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten] build environment:
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten]     distmod: 2008plus-ssl
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2017-07-25T20:03:49.267+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2017-07-25T20:03:49.268+0800 I CONTROL  [initandlisten] options: { config: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db.config", net: { port: 6000 }, security: { authorization: "disabled" }, service: true, storage: { dbPath: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db" }, systemLog: { destination: "file", path: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\log\mongod.log" } }
+2017-07-25T20:03:49.269+0800 I -        [initandlisten] Detected data files in C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2017-07-25T20:03:49.269+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3515M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),
+2017-07-25T20:03:49.843+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'C:/Users/pc/Documents/GitHub/CSaaS-Cloud/Server/DB/db/diagnostic.data'
+2017-07-25T20:03:49.844+0800 I STORAGE  [initandlisten] Service running
+2017-07-25T20:03:49.844+0800 I NETWORK  [thread1] waiting for connections on port 6000
+2017-07-25T20:04:05.542+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:49968 #1 (1 connection now open)
+2017-07-25T20:04:05.547+0800 I NETWORK  [conn1] received client metadata from 127.0.0.1:49968 conn1: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:04:05.564+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:49969 #2 (2 connections now open)
+2017-07-25T20:06:55.339+0800 I -        [conn2] end connection 127.0.0.1:49969 (2 connections now open)
+2017-07-25T20:06:55.340+0800 I -        [conn1] end connection 127.0.0.1:49968 (1 connection now open)
+2017-07-25T20:06:57.877+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50030 #3 (1 connection now open)
+2017-07-25T20:06:57.882+0800 I NETWORK  [conn3] received client metadata from 127.0.0.1:50030 conn3: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:06:57.896+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50031 #4 (2 connections now open)
+2017-07-25T20:07:26.422+0800 I -        [conn3] end connection 127.0.0.1:50030 (2 connections now open)
+2017-07-25T20:07:26.422+0800 I -        [conn4] end connection 127.0.0.1:50031 (2 connections now open)
+2017-07-25T20:07:29.139+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50034 #5 (1 connection now open)
+2017-07-25T20:07:29.144+0800 I NETWORK  [conn5] received client metadata from 127.0.0.1:50034 conn5: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:07:29.159+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50035 #6 (2 connections now open)
+2017-07-25T20:08:21.189+0800 I -        [conn6] end connection 127.0.0.1:50035 (2 connections now open)
+2017-07-25T20:08:21.189+0800 I -        [conn5] end connection 127.0.0.1:50034 (2 connections now open)
+2017-07-25T20:08:24.218+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50062 #7 (1 connection now open)
+2017-07-25T20:08:24.224+0800 I NETWORK  [conn7] received client metadata from 127.0.0.1:50062 conn7: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:08:24.243+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50063 #8 (2 connections now open)
+2017-07-25T20:09:15.843+0800 I -        [conn7] end connection 127.0.0.1:50062 (2 connections now open)
+2017-07-25T20:09:15.843+0800 I -        [conn8] end connection 127.0.0.1:50063 (2 connections now open)
+2017-07-25T20:09:18.784+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50067 #9 (1 connection now open)
+2017-07-25T20:09:18.789+0800 I NETWORK  [conn9] received client metadata from 127.0.0.1:50067 conn9: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:09:18.806+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50068 #10 (2 connections now open)
+2017-07-25T20:09:30.848+0800 I -        [conn9] end connection 127.0.0.1:50067 (2 connections now open)
+2017-07-25T20:09:30.848+0800 I -        [conn10] end connection 127.0.0.1:50068 (1 connection now open)
+2017-07-25T20:09:33.701+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50071 #11 (1 connection now open)
+2017-07-25T20:09:33.707+0800 I NETWORK  [conn11] received client metadata from 127.0.0.1:50071 conn11: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:09:33.722+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50072 #12 (2 connections now open)
+2017-07-25T20:12:09.318+0800 I -        [conn11] end connection 127.0.0.1:50071 (2 connections now open)
+2017-07-25T20:12:09.318+0800 I -        [conn12] end connection 127.0.0.1:50072 (2 connections now open)
+2017-07-25T20:12:11.924+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50117 #13 (1 connection now open)
+2017-07-25T20:12:11.929+0800 I NETWORK  [conn13] received client metadata from 127.0.0.1:50117 conn13: { driver: { name: "nodejs", version: "2.2.30" }, os: { type: "Windows_NT", name: "win32", architecture: "x64", version: "10.0.15063" }, platform: "Node.js v6.11.1, LE, mongodb-core: 2.1.14" }
+2017-07-25T20:12:11.945+0800 I NETWORK  [thread1] connection accepted from 127.0.0.1:50118 #14 (2 connections now open)
+2017-07-25T20:20:21.064+0800 I -        [conn13] end connection 127.0.0.1:50117 (2 connections now open)
+2017-07-25T20:20:21.064+0800 I -        [conn14] end connection 127.0.0.1:50118 (2 connections now open)
+2017-07-25T20:20:49.088+0800 I CONTROL  [serviceShutdown] got SERVICE_CONTROL_STOP request from Windows Service Control Manager, will terminate after current cmd ends
+2017-07-25T20:20:49.089+0800 I NETWORK  [serviceShutdown] shutdown: going to close listening sockets...
+2017-07-25T20:20:49.090+0800 I NETWORK  [serviceShutdown] closing listening socket: 548
+2017-07-25T20:20:49.090+0800 I NETWORK  [serviceShutdown] shutdown: going to flush diaglog...
+2017-07-25T20:20:49.090+0800 I FTDC     [serviceShutdown] Shutting down full-time diagnostic data capture
+2017-07-25T20:20:49.096+0800 I STORAGE  [serviceShutdown] WiredTigerKVEngine shutting down
+2017-07-25T20:20:49.200+0800 I STORAGE  [serviceShutdown] shutdown: removing fs lock...
+2017-07-25T20:20:49.201+0800 I CONTROL  [serviceShutdown] now exiting

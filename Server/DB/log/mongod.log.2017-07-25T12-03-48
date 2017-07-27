@@ -1,0 +1,26 @@
+2017-07-25T19:38:52.956+0800 I CONTROL  [main] Trying to start Windows service 'MongoDB'
+2017-07-25T19:38:52.957+0800 I CONTROL  [initandlisten] MongoDB starting : pid=4052 port=6000 dbpath=C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db 64-bit host=DESKTOP-9AI1SO7
+2017-07-25T19:38:52.957+0800 I CONTROL  [initandlisten] targetMinOS: Windows 7/Windows Server 2008 R2
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] db version v3.4.6
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] git version: c55eb86ef46ee7aede3b1e2a5d184a7df4bfb5b5
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1u-fips  22 Sep 2016
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] allocator: tcmalloc
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] modules: none
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] build environment:
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten]     distmod: 2008plus-ssl
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2017-07-25T19:38:52.958+0800 I CONTROL  [initandlisten] options: { config: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db.config", net: { port: 6000 }, security: { authorization: "disabled" }, service: true, storage: { dbPath: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db" }, systemLog: { destination: "file", path: "C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\log\mongod.log" } }
+2017-07-25T19:38:52.962+0800 I -        [initandlisten] Detected data files in C:\Users\pc\Documents\GitHub\CSaaS-Cloud\Server\DB\db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2017-07-25T19:38:52.963+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3515M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),
+2017-07-25T19:38:53.565+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'C:/Users/pc/Documents/GitHub/CSaaS-Cloud/Server/DB/db/diagnostic.data'
+2017-07-25T19:38:53.566+0800 I STORAGE  [initandlisten] Service running
+2017-07-25T19:38:53.566+0800 I NETWORK  [thread1] waiting for connections on port 6000
+2017-07-25T19:53:45.712+0800 I CONTROL  [serviceShutdown] got SERVICE_CONTROL_STOP request from Windows Service Control Manager, will terminate after current cmd ends
+2017-07-25T19:53:45.712+0800 I NETWORK  [serviceShutdown] shutdown: going to close listening sockets...
+2017-07-25T19:53:45.712+0800 I NETWORK  [serviceShutdown] closing listening socket: 560
+2017-07-25T19:53:45.712+0800 I NETWORK  [serviceShutdown] shutdown: going to flush diaglog...
+2017-07-25T19:53:45.712+0800 I FTDC     [serviceShutdown] Shutting down full-time diagnostic data capture
+2017-07-25T19:53:45.717+0800 I STORAGE  [serviceShutdown] WiredTigerKVEngine shutting down
+2017-07-25T19:53:45.802+0800 I STORAGE  [serviceShutdown] shutdown: removing fs lock...
+2017-07-25T19:53:45.802+0800 I CONTROL  [serviceShutdown] now exiting
