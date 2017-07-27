@@ -4,52 +4,56 @@
             <v-btn fab dark class="indigo" slot="activator">
                 <v-icon dark>add</v-icon>
             </v-btn>
-    
-            <v-stepper v-model="e6" vertical>
-                <v-stepper-step step="1" v-bind:complete="e6 > 1">
-                    Step One
-                    <small>Set Cluster's name.</small>
-                </v-stepper-step>
-                <v-stepper-content step="1">
-                    <v-text-field label="Cluster Name" required v-model="newcluster.name"></v-text-field>
-                    <v-btn primary @click.native="e6 = 2">Continue</v-btn>
-                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
-                </v-stepper-content>
-                <v-stepper-step step="2" v-bind:complete="e6 > 2">
-                    Step Two
-                    <small>Set nodes list.</small>
-                </v-stepper-step>
-                <v-stepper-content step="2">
-                    <v-text-field type="Number" label="Cluster Nodes Count" required v-model="newcluster.nodes" @change="nodecout"></v-text-field>
-                    <v-data-table v-bind:headers="headers" :items="newcluster.nodeslist" hide-actions class="elevation-1">
-                        <template slot="items" scope="props">
-                            <td>
-                                <v-text-field required v-model="props.item.nodename"></v-text-field>
-                            </td>
-                            <td>
-                                <v-text-field required v-model="props.item.nodeip"></v-text-field>
-                            </td>
-                            <td>
-                                <v-text-field required v-model="props.item.nodeport"></v-text-field>
-                            </td>
-                            <td>
-                                <v-text-field required v-model="props.item.nodenp"></v-text-field>
-                            </td>
-                        </template>
-                    </v-data-table>
-                    <v-btn primary @click.native="e6 = 3">Continue</v-btn>
-                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
-                </v-stepper-content>
-                <v-stepper-step step="3" v-bind:complete="e6 > 3">
-                    Step Three
-                    <small>Set schedulor.</small>
-                </v-stepper-step>
-                <v-stepper-content step="3">
-                    <v-select label="Schedule alogrithm select." :items="options" v-model="newcluster.scheduler"></v-select>
-                    <v-btn primary @click.native="additem">Continue</v-btn>
-                    <v-btn flat @click.native="cleanitem">Cancel</v-btn>
-                </v-stepper-content>
-            </v-stepper>
+            <v-card>
+                <v-toolbar dark class="primary">
+                    <v-toolbar-title>Add Cluster</v-toolbar-title>
+                </v-toolbar>
+                <v-stepper v-model="e6" vertical>
+                    <v-stepper-step step="1" v-bind:complete="e6 > 1">
+                        Step One
+                        <small>Set Cluster's name.</small>
+                    </v-stepper-step>
+                    <v-stepper-content step="1">
+                        <v-text-field label="Cluster Name" required v-model="newcluster.name"></v-text-field>
+                        <v-btn primary @click.native="e6 = 2">Continue</v-btn>
+                        <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                    </v-stepper-content>
+                    <v-stepper-step step="2" v-bind:complete="e6 > 2">
+                        Step Two
+                        <small>Set nodes list.</small>
+                    </v-stepper-step>
+                    <v-stepper-content step="2">
+                        <v-text-field type="Number" label="Cluster Nodes Count" required v-model="newcluster.nodes" @change="nodecout"></v-text-field>
+                        <v-data-table v-bind:headers="headers" :items="newcluster.nodeslist" hide-actions class="elevation-1">
+                            <template slot="items" scope="props">
+                                <td>
+                                    <v-text-field required v-model="props.item.nodename"></v-text-field>
+                                </td>
+                                <td>
+                                    <v-text-field required v-model="props.item.nodeip"></v-text-field>
+                                </td>
+                                <td>
+                                    <v-text-field required v-model="props.item.nodeport"></v-text-field>
+                                </td>
+                                <td>
+                                    <v-text-field required v-model="props.item.nodenp"></v-text-field>
+                                </td>
+                            </template>
+                        </v-data-table>
+                        <v-btn primary @click.native="e6 = 3">Continue</v-btn>
+                        <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                    </v-stepper-content>
+                    <v-stepper-step step="3" v-bind:complete="e6 > 3">
+                        Step Three
+                        <small>Set schedulor.</small>
+                    </v-stepper-step>
+                    <v-stepper-content step="3">
+                        <v-select label="Schedule alogrithm select." :items="options" v-model="newcluster.scheduler"></v-select>
+                        <v-btn primary @click.native="additem">Continue</v-btn>
+                        <v-btn flat @click.native="cleanitem">Cancel</v-btn>
+                    </v-stepper-content>
+                </v-stepper>
+            </v-card>
         </v-dialog>
     </v-layout>
 </template>

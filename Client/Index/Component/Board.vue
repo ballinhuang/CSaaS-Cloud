@@ -16,6 +16,7 @@
                     <td>{{ props.item.name }}</td>
                     <td>{{ props.item.nodes }}</td>
                     <td>{{ props.item.port }}</td>
+                    <td>{{ props.item.scheduler }}</td>
                     <td>{{ props.item.stat }}</td>
                     <td>
                         <nodelist :node="props.item">
@@ -44,6 +45,7 @@ export default {
                 { text: 'Cluster Name', value: 'name', align: 'left' },
                 { text: 'Nodes Count', value: 'nodes', align: 'left' },
                 { text: 'Port', value: 'port', align: 'left' },
+                { text: 'Schedule mode', value: 'scheduler', align: 'left' },
                 { text: 'Stat', value: 'stat', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
