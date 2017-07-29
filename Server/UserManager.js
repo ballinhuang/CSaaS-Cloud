@@ -46,9 +46,7 @@ class UserManager {
             this.Users[property.name] = new User(property);
 
         }
-
     }
-
 }
 
 module.exports = new UserManager();

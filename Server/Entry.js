@@ -95,6 +95,14 @@ APP.get('/logout', isLogin, (req, res) => {
   });
 });
 
+
+//API
+
 APP.get('/api/uses/username', isLogin, (req, res) => {
   res.status(200).send({ name: req.user.name });
+});
+
+APP.get('/api/uses/user', isLogin, (req, res) => {
+  let user = UserManager.getUser(req.user.name);
+  res.status(200).json(user);
 });

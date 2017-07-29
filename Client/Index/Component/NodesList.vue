@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" width="800px">
             <v-btn primary dark slot="activator">Node List</v-btn>
             <v-card>
-                <v-data-table v-bind:headers="headers" :items="node.nodeslist" hide-actions class="elevation-1">
+                <v-data-table v-bind:headers="headers" :items="node" hide-actions class="elevation-1">
                     <template slot="items" scope="props">
                         <td>{{ props.item.nodename }}</td>
                         <td>{{ props.item.nodeip }}</td>

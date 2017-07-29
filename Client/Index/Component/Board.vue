@@ -19,7 +19,7 @@
                     <td>{{ props.item.scheduler }}</td>
                     <td>{{ props.item.stat }}</td>
                     <td>
-                        <nodelist :node="props.item">
+                        <nodelist :node="props.item.nodeslist">
                         </nodelist>
                     </td>
                 </template>
@@ -35,6 +35,7 @@
 <script>
 import AddCluster from './AddCluster.vue'
 import NodesList from './NodesList.vue'
+import API from '../../WebAPI.js'
 
 export default {
     data () {
@@ -49,7 +50,24 @@ export default {
                 { text: 'Stat', value: 'stat', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
-            items: [
+            items: []
+        }
+    },
+    components: {
+        'addcluster': AddCluster,
+        'nodelist': NodesList,
+    },
+    beforeCreate: function () {
+        API.getUser((res) => {
+            this.items = res.body.clusters;
+        }, (res) => {
+            alert("ERROR");
+        });
+    }
+}
+
+/*
+[
                 {
                     name: 'ClusterA',
                     port: 5001,
@@ -83,12 +101,6 @@ export default {
                     stat: 'Work',
                     scheduler: 'Backfilling'
                 },
-            ]
-        }
-    },
-    components: {
-        'addcluster': AddCluster,
-        'nodelist': NodesList,
-    }
-}
+            ] */
 </script>
+

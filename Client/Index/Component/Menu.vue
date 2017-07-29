@@ -10,8 +10,8 @@
                     </v-list-tile>
                 </v-list>
             </v-toolbar>
+            <v-divider></v-divider>
             <v-list class="pt-0" dense>
-                <v-divider dark></v-divider>
                 <v-list-tile v-for="item in items" :key="item.title" :href="item.href" :router="item.router">
                     <v-list-tile-action>
                         <v-icon dark>{{ item.icon }}</v-icon>
@@ -27,7 +27,7 @@
             <v-toolbar-title>Dashboard</v-toolbar-title>
         </v-toolbar>
         <main>
-            <v-container fluid>
+            <v-container>
                 <router-view></router-view>
             </v-container>
         </main>

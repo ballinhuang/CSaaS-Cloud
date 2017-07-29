@@ -3,7 +3,7 @@ import assert from 'assert';
 
 class MongoController {
     constructor() {
-        this.url = 'mongodb://localhost:6000/User';
+        this.url = 'mongodb://localhost:6000/CSAAS';
         this.db = null;
     }
 
