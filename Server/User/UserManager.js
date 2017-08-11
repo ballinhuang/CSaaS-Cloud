@@ -47,6 +47,20 @@ class UserManager {
 
         }
     }
+    // create new user to DB
+    async createUser(Name, Passwd) {
+        const newUser = new User({ name: Name, passwd: Passwd })
+
+        if (this.Users[Name] != null) {
+            console.log("already have same user name")
+            return
+        }
+
+        await MongoController
+            .insertDocument(this.CollectionName, newUser.getProperty())
+
+        this.Users[Name] = newUser;
+    }
 }
 
 module.exports = new UserManager();
