@@ -1,5 +1,5 @@
 import assert from 'assert';
-import MongoController from './MongoController.js';
+import MongoController from '../MongoController.js';
 import User from './User.js';
 
 class UserManager {

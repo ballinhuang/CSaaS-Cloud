@@ -6,8 +6,8 @@ import Session from 'express-session';
 import http from 'http';
 import helmet from 'helmet';
 
-import JSON_strategy from './Passport/LocalPassport.js';
-import UserManager from './UserManager.js';
+import { LocalStrategy } from './Passport';
+import { UserManager } from './User';
 
 import {
   JSubjob,
@@ -24,7 +24,7 @@ JobQueue.register(JSubjob)
  */
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
-  JSON_strategy(Passport, Users);
+  LocalStrategy(Passport, Users);
 });
 /*
     Express setting

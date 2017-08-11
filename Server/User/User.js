@@ -6,11 +6,6 @@ module.exports = class User {
         this.clusters = property.clusters || [];
     }
 
-    updatePassword(passwd) {
-        // update this
-        this.passwd = passwd;
-    }
-
     getProperty() {
         return {
             name: this.name,

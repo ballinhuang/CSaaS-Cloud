@@ -1,6 +1,6 @@
 import { Strategy as LocalPassport } from 'passport-local';
 
-const JSON_Strategy = (passport, users) => {
+module.exports  = (passport, users) => {
 
     passport.serializeUser((user, done) => {
         done(null, user.name);
@@ -24,5 +24,3 @@ const JSON_Strategy = (passport, users) => {
             done(null, user);
     }));
 };
-
-module.exports = JSON_Strategy;
