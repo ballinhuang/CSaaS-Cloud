@@ -51,13 +51,16 @@ export default {
             }, {
                 href: '#/profile',
                 router: true,
-                title: 'Profile',
+                title: 'Administrator',
                 icon: 'extension',
             }, {
                 href: '#/board',
                 router: true,
-                title: 'Board',
+                title: 'Clusters',
                 icon: 'extension',
+            }, {
+                title: 'Simulation',
+                icon: 'dashboard'
             }],
             UserName: ""
         }

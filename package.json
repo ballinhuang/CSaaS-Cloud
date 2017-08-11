@@ -28,6 +28,7 @@
     "imports-loader": "^0.7.1",
     "jquery": "^3.2.1",
     "json-loader": "^0.5.4",
+    "kue": "^0.11.6",
     "mongodb": "^2.2.30",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",

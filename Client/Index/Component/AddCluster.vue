@@ -89,9 +89,9 @@ export default {
                 port: '',
                 nodes: 0,
                 nodeslist: [{
-                    nodename: '1',
-                    nodeip: '1',
-                    nodeport: '1',
+                    nodename: '',
+                    nodeip: '',
+                    nodeport: '',
                     nodenp: 0
                 }],
                 stat: '',

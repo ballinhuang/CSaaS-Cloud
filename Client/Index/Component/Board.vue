@@ -44,10 +44,10 @@ export default {
             pagination: {},
             headers: [
                 { text: 'Cluster Name', value: 'name', align: 'left' },
-                { text: 'Nodes Count', value: 'nodes', align: 'left' },
+                { text: 'Node Count', value: 'nodes', align: 'left' },
                 { text: 'Port', value: 'port', align: 'left' },
-                { text: 'Schedule mode', value: 'scheduler', align: 'left' },
-                { text: 'Stat', value: 'stat', align: 'left' },
+                { text: 'Scheduling mode', value: 'scheduler', align: 'left' },
+                { text: 'State', value: 'stat', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
             items: []

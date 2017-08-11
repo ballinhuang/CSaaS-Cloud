@@ -8,7 +8,16 @@ import helmet from 'helmet';
 
 import JSON_strategy from './Passport/LocalPassport.js';
 import UserManager from './UserManager.js';
+
+import {
+  JSubjob,
+  JobQueue
+} from './Process';
+
 require('./utils.js')();
+
+JobQueue.register(JSubjob)
+
 
 /**
  * init
@@ -21,6 +30,7 @@ UserManager.init().then(async () => {
     Express setting
 */
 const APP = Express();
+const RTR = Express.Router()
 const PORT = 8082;
 
 const Server = http.createServer(APP);
@@ -96,13 +106,27 @@ APP.get('/logout', isLogin, (req, res) => {
 });
 
 
-//API
+// API
+RTR.all('*', isLogin)
 
-APP.get('/api/uses/username', isLogin, (req, res) => {
-  res.status(200).send({ name: req.user.name });
-});
+RTR.route('/uses/username')
+  .get((req, res) => {
+    res.status(200).send({ name: req.user.name });
+  })
 
-APP.get('/api/uses/user', isLogin, (req, res) => {
-  let user = UserManager.getUser(req.user.name);
-  res.status(200).json(user);
-});
+RTR.route('/uses/user')
+  .get((req, res) => {
+    let user = UserManager.getUser(req.user.name);
+    res.status(200).json(user);
+  })
+
+RTR.route('/subjob')
+  .get(async (req,res)=>{
+    JobQueue.add(new JSubjob({$ttl:60000}),(res)=>{
+      console.log(res)
+    },(res)=>{
+      console.log(res)
+    })
+  })
+
+APP.use('/api', RTR)
