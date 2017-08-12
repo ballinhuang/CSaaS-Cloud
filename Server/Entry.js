@@ -14,7 +14,7 @@ import {
   JobQueue
 } from './Process';
 
-require('./utils.js')();
+require('./Utils.js')();
 
 JobQueue.register(JSubjob)
 
@@ -121,10 +121,10 @@ RTR.route('/uses/user')
   })
 
 RTR.route('/subjob')
-  .get(async (req,res)=>{
-    JobQueue.add(new JSubjob({$ttl:60000}),(res)=>{
+  .get(async (req, res) => {
+    JobQueue.add(new JSubjob({ $ttl: 60000 }), (res) => {
       console.log(res)
-    },(res)=>{
+    }, (res) => {
       console.log(res)
     })
   })
