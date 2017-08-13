@@ -131,7 +131,7 @@ RTR.route('/subjob')
       }
     }
     if (isowner) {
-      JobQueue.add(new JSubjob(req.body), (result) => {
+      JobQueue.add(new JSubjob(req.user.name, req.body), (result) => {
         res.status(200).json(result)
       }, (result) => {
         res.status(500).json(result)

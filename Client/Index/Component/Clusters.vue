@@ -18,11 +18,13 @@
                     <td>{{ props.item.port }}</td>
                     <td>{{ props.item.scheduler }}</td>
                     <td>{{ props.item.stat }}</td>
-                    <td class="row">
-                        <nodelist :node="props.item.nodeslist">
-                        </nodelist>
-                        <subjob :cluster="props.item">
-                        </subjob>
+                    <td>
+                        <v-layout row>
+                            <nodelist :node="props.item.nodeslist">
+                            </nodelist>
+                            <subjob :cluster="props.item">
+                            </subjob>
+                        </v-layout>
                     </td>
                 </template>
                 <template slot="pageText" scope="{ pageStart, pageStop }">

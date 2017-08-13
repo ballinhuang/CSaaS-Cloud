@@ -1,9 +1,10 @@
 import Job from './Job.js'
 
+import fs from 'fs'
 import { execFile } from 'child_process'
 
 module.exports = class JSubjob extends Job {
-  constructor(data) {
+  constructor(username, data) {
     super(data)
     this.subjobpath = __dirname + '/subjob'
     this.ip = data.ip || '127.0.0.1'
@@ -11,11 +12,20 @@ module.exports = class JSubjob extends Job {
     this.jobname = data.jobname || null
     this.nodeneed = data.nodeneed || 0
     this.npneed = data.npneed || 0
+    this.script = data.script || null
+    this.username = username
   }
 
   static onProcess(job, done) {
     const d = job.data
-    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, __dirname + '/' + d.jobname]);
+    if (!fs.existsSync(__dirname + '/' + d.username, fs.constants.R_OK | fs.constants.W_OK)) {
+      console.log('creat dir!');
+      fs.mkdirSync(__dirname + '/' + d.username);
+    }
+
+    fs.writeFileSync(__dirname + '/' + d.username + '/' + d.jobname, d.script)
+
+    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, __dirname + '/' + d.username + '/' + d.jobname]);
     let result = { type: null, msg: '' }
     const killer = Job.setKiller(subjob, job.data.ttl, result)
     subjob.stdout.on('data', data => Job.onOutData(data, result))
@@ -40,7 +50,9 @@ module.exports = class JSubjob extends Job {
       port: this.port,
       jobname: this.jobname,
       nodeneed: this.nodeneed,
-      npneed: this.npneed
+      npneed: this.npneed,
+      script: this.script,
+      username: this.username
     }
   }
 }

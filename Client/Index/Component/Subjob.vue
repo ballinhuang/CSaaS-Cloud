@@ -1,5 +1,5 @@
 <template>
-    <v-layout row justify-center>
+    <v-layout row>
         <v-dialog v-model="dialog" persistent>
             <v-btn primary dark slot="activator">Subjob</v-btn>
             <v-card>
@@ -7,7 +7,8 @@
                     <span class="headline">Subjob</span>
                 </v-card-title>
                 <v-card-text>
-                    <v-text-field label="Job name" class="mt-5" v-model="filename" required></v-text-field>
+                    <v-text-field label="Job name" class="mt-5" v-model="filename"></v-text-field>
+                    <v-text-field label="Write the scipt" multi-line v-model="script"></v-text-field>
                     <v-select label="Select nodes need" persistent-hint :items="nodeoptions" v-model="nodeneed"></v-select>
                     <v-select label="Select cpu need" persistent-hint :items="cpuoptions" v-model="cpuneed"></v-select>
                 </v-card-text>
@@ -33,7 +34,8 @@ export default {
             maxcpu: 0,
             cpuneed: 0,
             nodeneed: 0,
-            filename: ''
+            filename: '',
+            script: ''
         }
     },
     methods: {
@@ -45,9 +47,10 @@ export default {
                 jobname: this.filename,
                 npneed: this.cpuneed,
                 nodeneed: this.nodeneed,
+                script: this.script
             }
             API.subjob(msg, (res) => {
-                alert(res.body)
+                alert(res.body.msg)
             }, (res) => {
                 alert(res.body)
             })
