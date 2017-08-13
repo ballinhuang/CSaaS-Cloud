@@ -15,7 +15,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn class="blue--text darken-1" flat @click.native="sendjob">Send</v-btn>
-                    <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Close</v-btn>
+                    <v-btn class="blue--text darken-1" flat @click.native="cleanfield">Close</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -32,7 +32,7 @@ export default {
             nodeoptions: [],
             cpuoptions: [],
             maxcpu: 0,
-            cpuneed: 0,
+            cpuneed: 1,
             nodeneed: 0,
             filename: '',
             script: ''
@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         sendjob () {
-            dialog: false
+            this.script += "\n#SET -N " + this.nodeneed + " -P " + this.cpuneed
             var msg = {
                 name: this.cluster.name,
                 port: this.cluster.port,
@@ -50,15 +50,29 @@ export default {
                 script: this.script
             }
             API.subjob(msg, (res) => {
-                alert(res.body.msg)
+                //alert(res.body.msg)
+                this.alertmsg.msg = res.body.msg
+                this.alertmsg.alert = true
+                this.alertmsg.type = "success"
             }, (res) => {
-                alert(res.body)
+                //alert(res.body)
+                this.alertmsg.msg = res.body
+                this.alertmsg.alert = true
+                this.alertmsg.type = "error"
             })
+            this.cleanfield()
+        },
+        cleanfield () {
+            this.dialog = false
+            this.cpuneed = 0
+            this.nodeneed = 0
+            this.filename = ''
+            this.script = ''
         }
     },
     created: function () {
         var i = 0;
-        for (i = 1; i <= parseInt(this.cluster.nodes); i++) {
+        for (i = 0; i <= parseInt(this.cluster.nodes); i++) {
             this.nodeoptions.push({ value: i, text: i });
         }
         for (var node in this.cluster.nodeslist) {
@@ -70,6 +84,6 @@ export default {
             this.cpuoptions.push({ value: i, text: i });
         }
     },
-    props: ['cluster']
+    props: ['cluster', 'alertmsg']
 }
 </script>

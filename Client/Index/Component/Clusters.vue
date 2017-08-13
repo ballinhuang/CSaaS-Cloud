@@ -10,6 +10,16 @@
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
             </v-flex>
         </v-layout>
+        <v-alert :class="alertmsg.type" transition="scale-transition" v-model="alertmsg.alert">
+            <v-layout row wrap>
+                <v-flex xs11>
+                    {{alertmsg.msg}}
+                </v-flex>
+                <v-flex xs1>
+                    <v-btn dark flat v-on:click.native="cleanalert">close</v-btn>
+                </v-flex>
+            </v-layout>
+        </v-alert>
         <v-card>
             <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
                 <template slot="items" scope="props">
@@ -22,7 +32,7 @@
                         <v-layout row>
                             <nodelist :node="props.item.nodeslist">
                             </nodelist>
-                            <subjob :cluster="props.item">
+                            <subjob :cluster="props.item" :alertmsg="alertmsg">
                             </subjob>
                         </v-layout>
                     </td>
@@ -55,7 +65,14 @@ export default {
                 { text: 'State', value: 'stat', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
-            items: []
+            items: [],
+            alertmsg: { alert: false, type: "", msg: "" },
+        }
+    },
+    methods: {
+        cleanalert () {
+            this.alertmsg.msg = ""
+            this.alertmsg.alert = false
         }
     },
     components: {
