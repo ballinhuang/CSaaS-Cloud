@@ -7,7 +7,7 @@
     "start": "nodemon Server/Entry.js --exec babel-node --presets es2015,stage-0",
     "build": "babel Server -d dist --presets es2015,stage-2",
     "serve": "node dist/index.js",
-    "startdb": "mongod --dbpath=Server/DB/db --port 6000",
+    "startdb": "mongod --dbpath=Server/DB --port 6000",
     "dbtest": "forever -c \"node -r babel-register\" Server/User/CreatUser.js",
     "wbuild": "webpack -d --progress --colors --watch"
   },

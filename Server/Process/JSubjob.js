@@ -1,21 +1,25 @@
 import Job from './Job.js'
 
-import { spawn } from 'child_process'
+import { spawn, execFile } from 'child_process'
 
 module.exports = class JSubjob extends Job {
-  constructor (data) {
+  constructor(data) {
     super(data)
-    this.ls = null
+    this.subjobpath = __dirname + '/subjob'
+    this.ip = data.ip || '127.0.0.1'
+    this.port = data.port || null
+    this.jobname = data.jobname || null
   }
 
-  static onProcess (job, done) {
-    const ls = spawn('cmd.exe',['/c', 'echo','1']);
+  static onProcess(job, done) {
+    const d = job.data
+    const subjob = execFile(d.subjobpath, ['-i', d.ip, '-p', d.port, __dirname + d.jobname]);
     let result = { type: null, msg: '' }
-    const killer = Job.setKiller(ls, job.data.ttl, result)
-    ls.stdout.on('data', data => Job.onOutData(data, result))
-    ls.stderr.on('data', data => Job.onErrData(data, result))
+    const killer = Job.setKiller(subjob, job.data.ttl, result)
+    subjob.stdout.on('data', data => Job.onOutData(data, result))
+    subjob.stderr.on('data', data => Job.onErrData(data, result))
 
-    ls.on('exit', (code) => {
+    subjob.on('exit', (code) => {
       Job.clearKiller(killer)
       if (code === 0) {
         done(null, result)
@@ -26,10 +30,10 @@ module.exports = class JSubjob extends Job {
 
   }
 
-  getData () {
+  getData() {
     return {
-        ls:this.ls,
-        ttl:this.ttl
+      ls: this.ls,
+      ttl: this.ttl
     }
   }
 }

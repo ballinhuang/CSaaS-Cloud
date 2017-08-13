@@ -121,12 +121,26 @@ RTR.route('/uses/user')
   })
 
 RTR.route('/subjob')
-  .get(async (req, res) => {
-    JobQueue.add(new JSubjob({ $ttl: 60000 }), (res) => {
-      console.log(res)
-    }, (res) => {
-      console.log(res)
-    })
+  .post((req, res) => {
+    var isowner = false
+    for (var property in req.user.clusters) {
+      if (property.port === req.body.port) {
+        isowner = true
+        break
+      }
+    }
+
+    if (isowner) {
+      JobQueue.add(new JSubjob(req.body), (result) => {
+        res.status(200).json(result)
+      }, (result) => {
+        res.status(500).json(result)
+      })
+    }
+    else {
+      res.status(500).json({ status: 'reject' })
+    }
+
   })
 
 APP.use('/api', RTR)
