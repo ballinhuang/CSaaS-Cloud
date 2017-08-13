@@ -20,6 +20,9 @@ class WebAPI {
 		Vue.http.get('/api/uses/user').then(success, fail);
 	}
 
+	subjob(msg, success, fail) {
+		Vue.http.post('/api/subjob', msg).then(success, fail);
+	}
 }
 
 export default new WebAPI();

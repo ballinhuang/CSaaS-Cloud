@@ -5,9 +5,11 @@ import VueHead from 'vue-head'
 import Vuetify from 'vuetify'
 
 import Menu from './Component/Menu.vue'
+
 import HomeView from './Component/Home.vue'
 import ProfileView from './Component/Profile.vue'
-import Board from './Component/Board.vue'
+import Clusters from './Component/Clusters.vue'
+
 
 Vue.use(VueHead)
 Vue.use(VueRouter)
@@ -18,7 +20,7 @@ const routes = [
     { path: '/', component: HomeView },
     { path: '/home', component: HomeView },
     { path: '/profile', component: ProfileView },
-    { path: '/board', component: Board }
+    { path: '/board', component: Clusters },
 ]
 
 const router = new VueRouter({

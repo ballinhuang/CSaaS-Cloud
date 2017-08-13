@@ -122,14 +122,14 @@ RTR.route('/uses/user')
 
 RTR.route('/subjob')
   .post((req, res) => {
+
     var isowner = false
     for (var property in req.user.clusters) {
-      if (property.port === req.body.port) {
+      if (req.user.clusters[property].port === req.body.port) {
         isowner = true
         break
       }
     }
-
     if (isowner) {
       JobQueue.add(new JSubjob(req.body), (result) => {
         res.status(200).json(result)
@@ -138,9 +138,8 @@ RTR.route('/subjob')
       })
     }
     else {
-      res.status(500).json({ status: 'reject' })
+      res.status(500).json({ type: 'reject', msg: "You are not the cluster's owner" })
     }
-
   })
 
 APP.use('/api', RTR)

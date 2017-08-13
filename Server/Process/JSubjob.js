@@ -1,6 +1,6 @@
 import Job from './Job.js'
 
-import { spawn, execFile } from 'child_process'
+import { execFile } from 'child_process'
 
 module.exports = class JSubjob extends Job {
   constructor(data) {
@@ -9,11 +9,13 @@ module.exports = class JSubjob extends Job {
     this.ip = data.ip || '127.0.0.1'
     this.port = data.port || null
     this.jobname = data.jobname || null
+    this.nodeneed = data.nodeneed || 0
+    this.npneed = data.npneed || 0
   }
 
   static onProcess(job, done) {
     const d = job.data
-    const subjob = execFile(d.subjobpath, ['-i', d.ip, '-p', d.port, __dirname + d.jobname]);
+    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, __dirname + '/' + d.jobname]);
     let result = { type: null, msg: '' }
     const killer = Job.setKiller(subjob, job.data.ttl, result)
     subjob.stdout.on('data', data => Job.onOutData(data, result))
@@ -33,7 +35,12 @@ module.exports = class JSubjob extends Job {
   getData() {
     return {
       ls: this.ls,
-      ttl: this.ttl
+      ttl: this.ttl,
+      ip: this.ip,
+      port: this.port,
+      jobname: this.jobname,
+      nodeneed: this.nodeneed,
+      npneed: this.npneed
     }
   }
 }

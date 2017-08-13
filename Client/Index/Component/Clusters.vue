@@ -18,9 +18,11 @@
                     <td>{{ props.item.port }}</td>
                     <td>{{ props.item.scheduler }}</td>
                     <td>{{ props.item.stat }}</td>
-                    <td>
+                    <td class="row">
                         <nodelist :node="props.item.nodeslist">
                         </nodelist>
+                        <subjob :cluster="props.item">
+                        </subjob>
                     </td>
                 </template>
                 <template slot="pageText" scope="{ pageStart, pageStop }">
@@ -36,6 +38,7 @@
 import AddCluster from './AddCluster.vue'
 import NodesList from './NodesList.vue'
 import API from '../../WebAPI.js'
+import Subjob from './Subjob.vue'
 
 export default {
     data () {
@@ -56,6 +59,7 @@ export default {
     components: {
         'addcluster': AddCluster,
         'nodelist': NodesList,
+        'subjob': Subjob
     },
     beforeCreate: function () {
         API.getUser((res) => {
@@ -65,42 +69,5 @@ export default {
         });
     }
 }
-
-/*
-[
-                {
-                    name: 'ClusterA',
-                    port: 5001,
-                    nodes: 10,
-                    nodeslist: [
-                        { nodename: "lab01", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 10 },
-                        { nodename: "lab02", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 9 }
-                    ],
-                    stat: 'Work',
-                    scheduler: 'FIFO'
-                },
-                {
-                    name: 'ClusterB',
-                    port: 5003,
-                    nodes: 8,
-                    nodeslist: [
-                        { nodename: "lab03", nodeip: '127.0.0.1', nodeport: 50002, nodenp: 10 },
-                        { nodename: "lab04", nodeip: '127.0.0.3', nodeport: 50001, nodenp: 9 }
-                    ],
-                    stat: 'Work',
-                    scheduler: 'Easy'
-                },
-                {
-                    name: 'ClusterC',
-                    port: 5005,
-                    nodes: 9,
-                    nodeslist: [
-                        { nodename: "lab05", nodeip: '127.0.0.1', nodeport: 50001, nodenp: 10 },
-                        { nodename: "lab06", nodeip: '127.0.0.2', nodeport: 50003, nodenp: 9 }
-                    ],
-                    stat: 'Work',
-                    scheduler: 'Backfilling'
-                },
-            ] */
 </script>
 
