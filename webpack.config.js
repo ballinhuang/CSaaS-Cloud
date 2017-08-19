@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: {
     Index: `${__dirname}/Client/Index/Index.js`,
-    Login: `${__dirname}/Client/Login/Login.js`
+    Login: `${__dirname}/Client/Login/Login.js`,
   },
   output: {
     path: __dirname + '/Client/build',

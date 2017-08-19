@@ -13,4 +13,22 @@ module.exports = class User {
             clusters: this.clusters
         };
     }
+
+    addcluster(newcluster) {
+        let c = this.clusters.find(c => c.name === newcluster.name)
+        if (c === undefined) {
+            newcluster.state = 'Stop'
+            newcluster.port = "0"
+            newcluster.serverpid = "0"
+            newcluster.schedulerpid = "0"
+            this.clusters.push(newcluster);
+            return true
+        }
+        else
+            return false
+    }
+
+    startcluster(targetcluster) {
+
+    }
 };

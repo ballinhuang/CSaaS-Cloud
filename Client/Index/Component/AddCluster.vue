@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import API from '../../WebAPI'
 export default {
     data () {
         return {
@@ -101,9 +102,18 @@ export default {
     },
     methods: {
         additem (event) {
-            this.newcluster.port = 5000;
-            this.newcluster.stat = 'Work';
-            this.clusters.push(JSON.parse(JSON.stringify(this.newcluster)));
+            let msg ={
+                name: this.newcluster.name,
+                nodes: this.newcluster.nodes,
+                nodeslist: this.newcluster.nodeslist,
+                scheduler: this.newcluster.scheduler
+            }
+            API.addcluster(msg,(result)=>{
+                let c =result.body.clusters.find(c => c.name === msg.name)
+                this.clusters.push(c);
+            },(result)=>{
+                alert('add cluster error!')
+            })
             this.cleanitem();
         },
         cleanitem () {

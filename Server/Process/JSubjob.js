@@ -19,7 +19,6 @@ module.exports = class JSubjob extends Job {
   static onProcess(job, done) {
     const d = job.data
     if (!fs.existsSync(__dirname + '/' + d.username, fs.constants.R_OK | fs.constants.W_OK)) {
-      console.log('creat dir!');
       fs.mkdirSync(__dirname + '/' + d.username);
     }
 

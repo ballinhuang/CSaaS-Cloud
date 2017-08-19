@@ -61,6 +61,31 @@ class UserManager {
 
         this.Users[Name] = newUser;
     }
+
+    // operate: {op: v}
+    // op: $addcluster
+    async modUser(uname, operate) {
+        const tarUser = this.getUser(uname)
+        assert.ok(tarUser !== null, `User ${tarUser.name} NOT exist`)
+        const op = Object.keys(operate)[0]
+        const v = operate[op]
+        if (op === '$addcluster') {
+            tarUser.addcluster(v)
+        } else {
+            console.log('Unknown modUser command')
+        }
+        return this.updateDB(tarUser)
+    }
+
+    // update user data in DB
+    async updateDB(tarUser) {
+        assert.ok(tarUser !== null, `User ${tarUser.name} NOT exist`)
+        return MongoController.updateDocument(
+            this.CollectionName,
+            { name: tarUser.name },
+            tarUser.getProperty()
+        )
+    }
 }
 
 module.exports = new UserManager();

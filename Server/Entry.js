@@ -11,12 +11,16 @@ import { UserManager } from './User';
 
 import {
   JSubjob,
+  JUserMod,
   JobQueue
 } from './Process';
 
 require('./Utils.js')();
 
-JobQueue.register(JSubjob)
+JobQueue.register(
+  JSubjob,
+  JUserMod
+)
 
 
 /**
@@ -118,6 +122,13 @@ RTR.route('/uses/user')
   .get((req, res) => {
     let user = UserManager.getUser(req.user.name);
     res.status(200).json(user);
+  })
+  .patch(async (req, res) => {
+    JobQueue.add(new JUserMod(req.user.name, req.body), (result) => {
+      res.status(200).json(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
   })
 
 RTR.route('/subjob')

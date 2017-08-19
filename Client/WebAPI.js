@@ -23,6 +23,13 @@ class WebAPI {
 	subjob(msg, success, fail) {
 		Vue.http.post('/api/subjob', msg).then(success, fail);
 	}
+
+	addcluster(msg, success, fail) {
+		let modeusermsg = {
+			$addcluster: msg
+		}
+		Vue.http.patch('/api/uses/user', modeusermsg).then(success, fail)
+	}
 }
 
 export default new WebAPI();

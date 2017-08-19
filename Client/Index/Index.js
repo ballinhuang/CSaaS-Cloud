@@ -10,7 +10,6 @@ import HomeView from './Component/Home.vue'
 import ProfileView from './Component/Profile.vue'
 import Clusters from './Component/Clusters.vue'
 
-
 Vue.use(VueHead)
 Vue.use(VueRouter)
 Vue.use(VueHead)

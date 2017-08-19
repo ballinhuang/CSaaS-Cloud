@@ -1,8 +1,10 @@
 import JobQueue from './JobQueue.js'
 
 import JSubjob from './JSubjob.js'
+import JUserMod from './JUserMod.js'
 
 module.exports = {
   JSubjob,
-  JobQueue : new JobQueue()
+  JUserMod,
+  JobQueue: new JobQueue()
 }
