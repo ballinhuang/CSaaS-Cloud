@@ -16,9 +16,37 @@ class UserManager {
     /* use it in internal */
     getUser(userName) {
         const u = this.Users[userName];
-        return u === undefined
-            ? null
-            : u;
+        if (u !== undefined) {
+            if (u.authority.type === "manager") {
+                return u;
+            }
+            else if (u.authority.type === "user") {
+                let superior = this.getUser(u.authority.superior);
+                if (superior === undefined) {
+                    return null;
+                }
+                let legaluser = superior.users.find(user => user === u.name)
+                if (legaluser !== undefined) {
+                    for (var cluster in u.clusters) {
+                        for (var superior_cluster in superior.clusters) {
+                            if (u.clusters[cluster].name === superior.clusters[superior_cluster].name) {
+                                for (var key in superior.clusters[superior_cluster]) {
+                                    if (superior.clusters[superior_cluster].hasOwnProperty(key)) {
+                                        u.clusters[cluster][key] = superior.clusters[superior_cluster][key]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return u;
+                } else {
+                    return null;
+                }
+            }
+        }
+        else {
+            return null;
+        }
     }
 
     getUsers() {

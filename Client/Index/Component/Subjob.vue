@@ -59,7 +59,6 @@ export default {
             }
             var msg = {
                 name: this.cluster.name,
-                port: this.cluster.port,
                 jobname: this.filename,
                 npneed: this.cpuneed,
                 nodeneed: this.nodeneed,
@@ -70,7 +69,7 @@ export default {
                 this.alertmsg.alert = true
                 this.alertmsg.type = "success"
             }, (res) => {
-                this.alertmsg.msg = res.body
+                this.alertmsg.msg = res.body.msg
                 this.alertmsg.alert = true
                 this.alertmsg.type = "error"
             })

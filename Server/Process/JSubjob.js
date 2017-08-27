@@ -4,27 +4,28 @@ import fs from 'fs'
 import { execFile } from 'child_process'
 
 module.exports = class JSubjob extends Job {
-  constructor(username, data) {
+  constructor(username, target_cluster, data) {
     super(data)
-    this.subjobpath = __dirname + '/subjob'
-    this.ip = data.ip || '127.0.0.1'
-    this.port = data.port || null
+    this.ip = '127.0.0.1'
+    this.port = target_cluster.port || null
     this.jobname = data.jobname || null
     this.nodeneed = data.nodeneed || 0
     this.npneed = data.npneed || 0
     this.script = data.script || null
+    this.cluster_username = target_cluster.username || null
     this.username = username || null
   }
 
   static onProcess(job, done) {
     const d = job.data
+    console.log(d);
     if (!fs.existsSync(__dirname + '/' + d.username, fs.constants.R_OK | fs.constants.W_OK)) {
       fs.mkdirSync(__dirname + '/' + d.username);
     }
 
     fs.writeFileSync(__dirname + '/' + d.username + '/' + d.jobname, d.script)
 
-    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, '-u', d.username, __dirname + '/' + d.username + '/' + d.jobname]);
+    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, '-u', d.cluster_username, __dirname + '/' + d.username + '/' + d.jobname]);
     let result = { type: null, msg: '' }
     const killer = Job.setKiller(subjob, job.data.ttl, result)
     subjob.stdout.on('data', data => Job.onOutData(data, result))
@@ -35,15 +36,13 @@ module.exports = class JSubjob extends Job {
       if (code === 0) {
         done(null, result)
       } else {
-        done(`Exit with ${code}. Msg:\n${result.msg}`)
+        done(`Exit with ${code}. Msg:\n${result.msg}`, { msg: `Exit with ${code}. Msg:\n${result.msg}` })
       }
     })
-
   }
 
   getData() {
     return {
-      ls: this.ls,
       ttl: this.ttl,
       ip: this.ip,
       port: this.port,
@@ -51,6 +50,7 @@ module.exports = class JSubjob extends Job {
       nodeneed: this.nodeneed,
       npneed: this.npneed,
       script: this.script,
+      cluster_username: this.cluster_username,
       username: this.username
     }
   }

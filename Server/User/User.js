@@ -5,15 +5,27 @@ module.exports = class User {
         this.passwd = property.passwd;
         this.clusters = property.clusters || [];
         this.authority = property.authority;
+        this.users = property.users || [];
     }
 
     getProperty() {
-        return {
-            name: this.name,
-            passwd: this.passwd,
-            clusters: this.clusters,
-            authority: this.authority
-        };
+        if (this.authority.type !== 'user') {
+            return {
+                name: this.name,
+                passwd: this.passwd,
+                clusters: this.clusters,
+                authority: this.authority,
+                users: this.users
+            };
+        }
+        else {
+            return {
+                name: this.name,
+                passwd: this.passwd,
+                clusters: this.clusters,
+                authority: this.authority,
+            };
+        }
     }
 
     addcluster(newcluster) {

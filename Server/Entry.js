@@ -121,13 +121,10 @@ RTR.route('/uses/username')
 RTR.route('/uses/user')
   .get((req, res) => {
     let user = UserManager.getUser(req.user.name);
-    if (user.authority.type === "manager") {
-      res.status(200).json(user);
-    }
+    res.status(200).json(user);
   })
   .patch(async (req, res) => {
     JobQueue.add(new JUserMod(req.user.name, req.body), (result) => {
-      console.log(result)
       res.status(200).json(result)
     }, (result) => {
       res.status(500).send(result)
@@ -136,23 +133,27 @@ RTR.route('/uses/user')
 
 RTR.route('/subjob')
   .post((req, res) => {
-
+    let user = UserManager.getUser(req.user.name)
     var isowner = false
-    for (var property in req.user.clusters) {
-      if (req.user.clusters[property].port === req.body.port) {
+    let target_cluster = null
+    for (var cluster in user.clusters) {
+      if (user.clusters[cluster].name === req.body.name) {
         isowner = true
+        target_cluster = user.clusters[cluster]
         break
       }
     }
     if (isowner) {
-      JobQueue.add(new JSubjob(req.user.name, req.body), (result) => {
+      JobQueue.add(new JSubjob(req.user.name, target_cluster, req.body), (result) => {
         res.status(200).json(result)
+        console.log(result)
       }, (result) => {
         res.status(500).json(result)
+        console.log(result)
       })
     }
     else {
-      res.status(500).json({ type: 'reject', msg: "You are not the cluster's owner" })
+      res.status(500).json({ type: 'reject', msg: "You are not the cluster's user." })
     }
   })
 
