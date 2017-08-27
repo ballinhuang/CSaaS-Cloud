@@ -10,8 +10,8 @@ module.exports = class JUserMod extends Job {
     static async onProcess(job, done) {
         const d = job.data
         try {
-            await UserManager.modUser(d.uname, d.operator)
-            done(null, UserManager.getUser(d.uname).getProperty())
+            const msg = await UserManager.modUser(d.uname, d.operator)
+            done(null, msg)
         } catch (err) { done(err.msg) }
     }
 

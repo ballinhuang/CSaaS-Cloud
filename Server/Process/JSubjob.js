@@ -13,7 +13,7 @@ module.exports = class JSubjob extends Job {
     this.nodeneed = data.nodeneed || 0
     this.npneed = data.npneed || 0
     this.script = data.script || null
-    this.username = username
+    this.username = username || null
   }
 
   static onProcess(job, done) {
@@ -24,7 +24,7 @@ module.exports = class JSubjob extends Job {
 
     fs.writeFileSync(__dirname + '/' + d.username + '/' + d.jobname, d.script)
 
-    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, __dirname + '/' + d.username + '/' + d.jobname]);
+    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, '-u', d.username, __dirname + '/' + d.username + '/' + d.jobname]);
     let result = { type: null, msg: '' }
     const killer = Job.setKiller(subjob, job.data.ttl, result)
     subjob.stdout.on('data', data => Job.onOutData(data, result))

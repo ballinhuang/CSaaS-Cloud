@@ -48,8 +48,8 @@ class UserManager {
         }
     }
     // create new user to DB
-    async createUser(Name, Passwd) {
-        const newUser = new User({ name: Name, passwd: Passwd })
+    async createUser(Name, Passwd, Type) {
+        const newUser = new User({ name: Name, passwd: Passwd, authority: Type })
 
         if (this.Users[Name] != null) {
             console.log("already have same user name")
@@ -70,11 +70,15 @@ class UserManager {
         const op = Object.keys(operate)[0]
         const v = operate[op]
         if (op === '$addcluster') {
-            tarUser.addcluster(v)
+            if (!tarUser.addcluster(v)) {
+                return { msg: "false" }
+            }
         } else {
+            return { msg: "false" }
             console.log('Unknown modUser command')
         }
-        return this.updateDB(tarUser)
+        this.updateDB(tarUser)
+        return { msg: "success" }
     }
 
     // update user data in DB

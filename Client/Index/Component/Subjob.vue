@@ -7,9 +7,10 @@
                     <span class="headline">Job Submission</span>
                 </v-card-title>
                 <v-card-text>
+
                     <v-text-field label="Job name" class="mt-5" v-model="filename"></v-text-field>
                     <v-text-field label="Write the scipt" multi-line v-model="script"></v-text-field>
-                    <v-layout row wrap>
+                    <v-layout row>
                         <v-flex xs4>
                             <v-checkbox v-bind:label="`Parallel Job: ${ex2.toString()}`" @change="cleanParallel" v-model="ex2" light></v-checkbox>
                         </v-flex>
@@ -19,6 +20,7 @@
                     </v-layout>
                     <v-select v-show="ex2" label="Select nodes needed" persistent-hint @input="initcpuoptions" :items="nodeoptions" v-model="nodeneed"></v-select>
                     <v-select v-show="ex2" label="Cpu per node" persistent-hint :items="cpuoptions" v-model="cpuneed"></v-select>
+
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>

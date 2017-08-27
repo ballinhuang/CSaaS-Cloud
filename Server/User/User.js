@@ -4,13 +4,15 @@ module.exports = class User {
         this.name = property.name;
         this.passwd = property.passwd;
         this.clusters = property.clusters || [];
+        this.authority = property.authority;
     }
 
     getProperty() {
         return {
             name: this.name,
             passwd: this.passwd,
-            clusters: this.clusters
+            clusters: this.clusters,
+            authority: this.authority
         };
     }
 
