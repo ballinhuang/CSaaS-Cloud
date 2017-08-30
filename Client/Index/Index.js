@@ -19,7 +19,7 @@ const routes = [
     { path: '/', component: HomeView },
     { path: '/home', component: HomeView },
     { path: '/profile', component: ProfileView },
-    { path: '/board', component: Clusters },
+    { path: '/clusters', component: Clusters },
 ]
 
 const router = new VueRouter({

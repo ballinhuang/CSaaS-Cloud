@@ -30,6 +30,13 @@ class WebAPI {
 		}
 		Vue.http.patch('/api/uses/user', modeusermsg).then(success, fail)
 	}
+
+	adduser(msg, success, fail) {
+		let addusermsg = {
+			$adduser: msg
+		}
+		Vue.http.patch('/api/uses/user', addusermsg).then(success, fail)
+	}
 }
 
 export default new WebAPI();

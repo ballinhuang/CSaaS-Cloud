@@ -8,17 +8,17 @@
                 <v-toolbar dark class="primary">
                     <v-toolbar-title>Add Cluster</v-toolbar-title>
                 </v-toolbar>
-                <v-stepper v-model="e6" vertical>
-                    <v-stepper-step step="1" v-bind:complete="e6 > 1">
+                <v-stepper v-model="step" vertical>
+                    <v-stepper-step step="1" v-bind:complete="step > 1">
                         Step One
                         <small>Set Cluster's name.</small>
                     </v-stepper-step>
                     <v-stepper-content step="1">
                         <v-text-field label="Cluster Name" required v-model="newcluster.name"></v-text-field>
-                        <v-btn primary @click.native="e6 = 2">Continue</v-btn>
+                        <v-btn primary @click.native="step = 2">Continue</v-btn>
                         <v-btn flat @click.native="cleanitem">Cancel</v-btn>
                     </v-stepper-content>
-                    <v-stepper-step step="2" v-bind:complete="e6 > 2">
+                    <v-stepper-step step="2" v-bind:complete="step > 2">
                         Step Two
                         <small>Set nodes list.</small>
                     </v-stepper-step>
@@ -40,10 +40,10 @@
                                 </td>
                             </template>
                         </v-data-table>
-                        <v-btn primary @click.native="e6 = 3">Continue</v-btn>
+                        <v-btn primary @click.native="step = 3">Continue</v-btn>
                         <v-btn flat @click.native="cleanitem">Cancel</v-btn>
                     </v-stepper-content>
-                    <v-stepper-step step="3" v-bind:complete="e6 > 3">
+                    <v-stepper-step step="3" v-bind:complete="step > 3">
                         Step Three
                         <small>Set schedulor.</small>
                     </v-stepper-step>
@@ -63,7 +63,7 @@ import API from '../../WebAPI'
 export default {
     data () {
         return {
-            e6: 1,
+            step: 1,
             dialog: false,
             headers: [
                 { text: 'Name', value: 'name', align: 'left' },
@@ -102,16 +102,16 @@ export default {
     },
     methods: {
         additem (event) {
-            let msg ={
+            let msg = {
                 name: this.newcluster.name,
                 nodes: this.newcluster.nodes,
                 nodeslist: this.newcluster.nodeslist,
                 scheduler: this.newcluster.scheduler
             }
-            API.addcluster(msg,(result)=>{
-                let c =result.body.clusters.find(c => c.name === msg.name)
+            API.addcluster(msg, (result) => {
+                let c = result.body.clusters.find(c => c.name === msg.name)
                 this.clusters.push(c);
-            },(result)=>{
+            }, (result) => {
                 alert('add cluster error!')
             })
             this.cleanitem();
@@ -128,7 +128,7 @@ export default {
             }];
             this.newcluster.stat = '';
             this.newcluster.scheduler = '';
-            this.e6 = 1;
+            this.step = 1;
             this.dialog = false;
         },
         nodecout (event) {

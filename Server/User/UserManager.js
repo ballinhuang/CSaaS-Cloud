@@ -16,8 +16,21 @@ class UserManager {
     /* use it in internal */
     getUser(userName) {
         const u = this.Users[userName];
+        return u === undefined
+            ? null
+            : u;
+    }
+
+    /*use to join the profile*/
+    getProfile(userName) {
+        const u = this.getUser(userName).getProperty();
         if (u !== undefined) {
             if (u.authority.type === "manager") {
+                let users = []
+                for (const user of u.users) {
+                    users.push(this.getUser(user).getProperty())
+                }
+                u.users = users
                 return u;
             }
             else if (u.authority.type === "user") {
@@ -78,20 +91,17 @@ class UserManager {
     // create new user to DB
     async createUser(Name, Passwd, Type) {
         const newUser = new User({ name: Name, passwd: Passwd, authority: Type })
-
-        if (this.Users[Name] != null) {
-            console.log("already have same user name")
-            return
+        if (await this.Users[Name] != null) {
+            return false
         }
-
         await MongoController
             .insertDocument(this.CollectionName, newUser.getProperty())
-
         this.Users[Name] = newUser;
+        return true
     }
 
     // operate: {op: v}
-    // op: $addcluster
+    // op: $addcluster $adduser
     async modUser(uname, operate) {
         const tarUser = this.getUser(uname)
         assert.ok(tarUser !== null, `User ${tarUser.name} NOT exist`)
@@ -101,9 +111,23 @@ class UserManager {
             if (!tarUser.addcluster(v)) {
                 return { msg: "false" }
             }
-        } else {
+        }
+        else if (op === '$adduser') {
+            if (tarUser.authority.type === 'manager') {
+                if (await this.createUser(v.username, v.passwd, { "type": "user", "superior": tarUser.name }) === true) {
+                    tarUser.adduser(v.username)
+                }
+                else {
+                    return { msg: "Already have same user name." }
+                }
+            }
+            else {
+                return { msg: "FAIL!Only manager can add user." }
+            }
+
+        }
+        else {
             return { msg: "false" }
-            console.log('Unknown modUser command')
         }
         this.updateDB(tarUser)
         return { msg: "success" }

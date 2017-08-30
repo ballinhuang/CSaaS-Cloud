@@ -120,20 +120,22 @@ RTR.route('/uses/username')
 
 RTR.route('/uses/user')
   .get((req, res) => {
-    let user = UserManager.getUser(req.user.name);
-    res.status(200).json(user);
+    let user = UserManager.getProfile(req.user.name);
+    res.status(200).json(user)
   })
   .patch(async (req, res) => {
     JobQueue.add(new JUserMod(req.user.name, req.body), (result) => {
-      res.status(200).json(result)
+      res.status(200).json(UserManager.getProfile(req.user.name))
+      console.log(UserManager.getProfile(req.user.name))
     }, (result) => {
       res.status(500).send(result)
+      console.log(result)
     })
   })
 
 RTR.route('/subjob')
   .post((req, res) => {
-    let user = UserManager.getUser(req.user.name)
+    let user = UserManager.getProfile(req.user.name)
     var isowner = false
     let target_cluster = null
     for (var cluster in user.clusters) {
@@ -146,10 +148,8 @@ RTR.route('/subjob')
     if (isowner) {
       JobQueue.add(new JSubjob(req.user.name, target_cluster, req.body), (result) => {
         res.status(200).json(result)
-        console.log(result)
       }, (result) => {
-        res.status(500).json(result)
-        console.log(result)
+        res.status(200).json(result)
       })
     }
     else {

@@ -42,7 +42,7 @@ module.exports = class User {
             return false
     }
 
-    startcluster(targetcluster) {
-
+    adduser(newuser) {
+        this.users.push(newuser)
     }
 };

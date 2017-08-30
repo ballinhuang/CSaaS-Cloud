@@ -4,7 +4,7 @@
         <v-spacer></v-spacer>
         <v-layout row wrap>
             <v-flex xs1 class="text-xs-right">
-                <addcluster :clusters="items"></addcluster>
+                <addcluster :clusters="clusters"></addcluster>
             </v-flex>
             <v-flex xs5 offset-xs6>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -21,7 +21,7 @@
             </v-layout>
         </v-alert>
         <v-card>
-            <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
+            <v-data-table v-bind:headers="headers" v-bind:items="clusters" v-bind:search="search">
                 <template slot="items" scope="props">
                     <td>{{ props.item.name }}</td>
                     <td>{{ props.item.nodes }}</td>
@@ -65,7 +65,7 @@ export default {
                 { text: 'State', value: 'stat', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
-            items: [],
+            clusters: [],
             alertmsg: { alert: false, type: "", msg: "" },
         }
     },
@@ -82,7 +82,7 @@ export default {
     },
     beforeCreate: function () {
         API.getUser((res) => {
-            this.items = res.body.clusters;
+            this.clusters = res.body.clusters;
         }, (res) => {
             alert("ERROR");
         });

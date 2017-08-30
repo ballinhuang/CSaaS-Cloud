@@ -33,8 +33,6 @@ export default {
             dialog: false
         }
     },
-    created: function () {
-    },
     props: ['node']
 }
 </script>

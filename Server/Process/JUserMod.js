@@ -11,7 +11,12 @@ module.exports = class JUserMod extends Job {
         const d = job.data
         try {
             const msg = await UserManager.modUser(d.uname, d.operator)
-            done(null, msg)
+            if (msg.msg === "success") {
+                done(null, msg)
+            } else {
+                done(msg.msg)
+            }
+
         } catch (err) { done(err.msg) }
     }
 
