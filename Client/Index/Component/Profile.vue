@@ -23,6 +23,9 @@
                 <template slot="items" scope="props">
                     <td>{{ props.item.name }}</td>
                     <td>{{ props.item.passwd }}</td>
+                    <td>
+                        <clusterset :alertmsg="alertmsg" :username="props.item.name" :user="user" :clusters="props.item.clusters"></clusterset>
+                    </td>
                 </template>
                 <template slot="pageText" scope="{ pageStart, pageStop }">
                     From {{ pageStart }} to {{ pageStop }}
@@ -35,6 +38,7 @@
 <script>
 import API from '../../WebAPI.js'
 import Adduser from './Profile/AddUser.vue'
+import ClusterSet from './Profile/ClusterSet.vue'
 
 export default {
     data () {
@@ -57,7 +61,8 @@ export default {
         }
     },
     components: {
-        adduser: Adduser
+        adduser: Adduser,
+        clusterset: ClusterSet
     },
     beforeCreate: function () {
         API.getUser((res) => {

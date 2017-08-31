@@ -103,7 +103,7 @@ class UserManager {
     // operate: {op: v}
     // op: $addcluster $adduser
     async modUser(uname, operate) {
-        const tarUser = this.getUser(uname)
+        let tarUser = this.getUser(uname)
         assert.ok(tarUser !== null, `User ${tarUser.name} NOT exist`)
         const op = Object.keys(operate)[0]
         const v = operate[op]
@@ -125,6 +125,28 @@ class UserManager {
                 return { msg: "FAIL!Only manager can add user." }
             }
 
+        }
+        else if (op === '$setusercluster') {
+            if (tarUser.authority.type === 'manager') {
+                let legaluser = tarUser.users.find((user) => {
+                    return user === v.username
+                })
+
+                if (legaluser === undefined) {
+                    return { msg: "Not legal user." }
+                }
+                if (tarUser.checkcluster(v.clusterlist)) {
+                    tarUser = this.getUser(v.username)
+                    tarUser.setcluster(v.clusterlist)
+                }
+                else {
+                    return { msg: "Not legal cluster." }
+                }
+
+            }
+            else {
+                return { msg: "FAIL!Only manager can set user's cluster." }
+            }
         }
         else {
             return { msg: "false" }

@@ -8,7 +8,7 @@
                 </v-card-title>
                 <v-card-text>
 
-                    <v-text-field label="Job name" class="mt-5" v-model="filename"></v-text-field>
+                    <v-text-field label="Job name" v-model="filename"></v-text-field>
                     <v-text-field label="Write the scipt" multi-line v-model="script"></v-text-field>
                     <v-layout row>
                         <v-flex xs4>

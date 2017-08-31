@@ -45,4 +45,34 @@ module.exports = class User {
     adduser(newuser) {
         this.users.push(newuser)
     }
+
+    // user
+    setcluster(clusterlist) {
+        // push new
+        for (const clustername of clusterlist) {
+            let c = this.clusters.find(cluster => cluster.name === clustername)
+            if (c === undefined) {
+                this.clusters.push({ "name": clustername, "username": "", "passwd": "" })
+            }
+        }
+        // delete
+        for (var i in this.clusters) {
+            let c = clusterlist.find(cluster => cluster === this.clusters[i].name)
+            if (c === undefined) {
+                this.clusters.splice(i, 1)
+            }
+        }
+    }
+    // manager
+    checkcluster(clusterlist) {
+        for (const clustername of clusterlist) {
+            let c = this.clusters.find((cluster) => {
+                return cluster.name === clustername
+            })
+            if (c === undefined) {
+                return false
+            }
+        }
+        return true
+    }
 };

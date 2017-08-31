@@ -126,10 +126,10 @@ RTR.route('/uses/user')
   .patch(async (req, res) => {
     JobQueue.add(new JUserMod(req.user.name, req.body), (result) => {
       res.status(200).json(UserManager.getProfile(req.user.name))
-      console.log(UserManager.getProfile(req.user.name))
+      //console.log(UserManager.getProfile(req.user.name))
     }, (result) => {
       res.status(500).send(result)
-      console.log(result)
+      //console.log(result)
     })
   })
 
