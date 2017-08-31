@@ -1,31 +1,26 @@
 <template>
-    <v-layout row justify-center>
-        <v-dialog v-model="dialog" persistent>
-            <v-btn primary dark slot="activator" v-on:click="open">Open Dialog</v-btn>
-            <v-card>
-                <v-card-title>
-                    <span class="headline">User Profile</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-layout row wrap>
-                        <v-flex xs12 md6>
-                            <v-card class="elevation-0">
-                                <v-card-text>
-                                    <p>{{ newclustersset }}</p>
-                                    <v-checkbox v-for="cluster in user.clusters" :key="cluster.name" :label="cluster.name" v-model="newclustersset" :value="cluster.name"></v-checkbox>
-                                </v-card-text>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="blue--text darken-1" flat @click.native="clean">Close</v-btn>
-                    <v-btn class="blue--text darken-1" flat @click.native="save">Save</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-layout>
+    <v-dialog v-model="dialog">
+        <v-btn primary dark slot="activator" v-on:click="open">Cluster Setting</v-btn>
+        <v-card>
+            <v-card-title>
+                <span class="headline">User Profile</span>
+            </v-card-title>
+            <v-card-text>
+                <v-layout row wrap>
+                    <v-flex xs4 md6>
+                        <v-card-text>
+                            <v-checkbox v-for="cluster in user.clusters" :key="cluster.name" :label="cluster.name" v-model="newclustersset" :value="cluster.name"></v-checkbox>
+                        </v-card-text>
+                    </v-flex>
+                </v-layout>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn class="blue--text darken-1" flat @click.native="clean">Close</v-btn>
+                <v-btn class="blue--text darken-1" flat @click.native="save">Save</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>

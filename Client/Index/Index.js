@@ -7,8 +7,8 @@ import Vuetify from 'vuetify'
 import Menu from './Component/Menu.vue'
 
 import HomeView from './Component/Home.vue'
-import ProfileView from './Component/Profile.vue'
-import Clusters from './Component/Clusters.vue'
+import ProfileView from './Component/Profile/Profile.vue'
+import Clusters from './Component/Clusters/Clusters.vue'
 
 Vue.use(VueHead)
 Vue.use(VueRouter)

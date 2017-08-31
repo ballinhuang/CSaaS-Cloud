@@ -1,39 +1,37 @@
 <template>
-    <v-layout row>
-        <v-dialog v-model="dialog" width="800px" persistent>
-            <v-btn primary dark slot="activator">Job Submission</v-btn>
-            <v-card>
-                <v-card-title>
-                    <span class="headline">Job Submission</span>
-                </v-card-title>
-                <v-card-text>
+    <v-dialog v-model="dialog" width="800px">
+        <v-btn primary dark slot="activator">Job Submission</v-btn>
+        <v-card>
+            <v-card-title>
+                <span class="headline">Job Submission</span>
+            </v-card-title>
+            <v-card-text>
 
-                    <v-text-field label="Job name" v-model="filename"></v-text-field>
-                    <v-text-field label="Write the scipt" multi-line v-model="script"></v-text-field>
-                    <v-layout row>
-                        <v-flex xs4>
-                            <v-checkbox v-bind:label="`Parallel Job: ${ex2.toString()}`" @change="cleanParallel" v-model="ex2" light></v-checkbox>
-                        </v-flex>
-                        <v-flex xs4>
-                            <v-checkbox v-bind:label="`MPI Support: ${ex1.toString()}`" v-show="ex2" v-model="ex1" light></v-checkbox>
-                        </v-flex>
-                    </v-layout>
-                    <v-select v-show="ex2" label="Select nodes needed" persistent-hint @input="initcpuoptions" :items="nodeoptions" v-model="nodeneed"></v-select>
-                    <v-select v-show="ex2" label="Cpu per node" persistent-hint :items="cpuoptions" v-model="cpuneed"></v-select>
+                <v-text-field label="Job name" v-model="filename"></v-text-field>
+                <v-text-field label="Write the scipt" multi-line v-model="script"></v-text-field>
+                <v-layout row>
+                    <v-flex xs4>
+                        <v-checkbox v-bind:label="`Parallel Job: ${ex2.toString()}`" @change="cleanParallel" v-model="ex2" light></v-checkbox>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-checkbox v-bind:label="`MPI Support: ${ex1.toString()}`" v-show="ex2" v-model="ex1" light></v-checkbox>
+                    </v-flex>
+                </v-layout>
+                <v-select v-show="ex2" label="Select nodes needed" persistent-hint @input="initcpuoptions" :items="nodeoptions" v-model="nodeneed"></v-select>
+                <v-select v-show="ex2" label="Cpu per node" persistent-hint :items="cpuoptions" v-model="cpuneed"></v-select>
 
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="blue--text darken-1" flat @click.native="sendjob">Submit</v-btn>
-                    <v-btn class="blue--text darken-1" flat @click.native="cleanfield">Close</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-layout>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn class="blue--text darken-1" flat @click.native="sendjob">Submit</v-btn>
+                <v-btn class="blue--text darken-1" flat @click.native="cleanfield">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
-import API from '../../WebAPI.js'
+import API from '../../../WebAPI.js'
 
 export default {
     data () {

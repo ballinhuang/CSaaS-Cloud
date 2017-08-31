@@ -1,6 +1,6 @@
 <template>
-    <v-layout>
-        <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
+    <v-layout row justify-center>
+        <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" persistent>
             <v-btn fab dark class="indigo" slot="activator">
                 <v-icon dark>add</v-icon>
             </v-btn>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import API from '../../WebAPI'
+import API from '../../../WebAPI.js'
 export default {
     data () {
         return {

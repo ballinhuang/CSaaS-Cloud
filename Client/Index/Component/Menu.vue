@@ -5,7 +5,7 @@
                 <v-list class="pa-0">
                     <v-list-tile avatar tag="div">
                         <v-list-tile-content>
-                            <v-list-tile-title>Hello! {{UserName}}</v-list-tile-title>
+                            <v-list-tile-title>Hello! {{user.name}}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
                 </v-list>
@@ -49,11 +49,6 @@ export default {
                 title: 'Home',
                 icon: 'home',
             }, {
-                to: '/profile',
-                router: true,
-                title: 'Administrator',
-                icon: 'extension',
-            }, {
                 to: '/clusters',
                 router: true,
                 title: 'Clusters',
@@ -62,14 +57,31 @@ export default {
                 title: 'Simulation',
                 icon: 'dashboard'
             }],
-            UserName: ""
+            user: {},
+            ismanager: false
         }
     },
     created: function () {
-        API.getUserName((res) => {
-            this.UserName = res.body.name;
+        API.getUser((res) => {
+            this.user = res.body;
+            if (this.user.authority.type === "manager") {
+                this.ismanager = true
+                this.items.splice(1, 0, {
+                    to: '/profile',
+                    router: true,
+                    title: 'Administrator',
+                    icon: 'fa-users',
+                })
+            } else {
+                this.items.splice(1, 0, {
+                    to: '/profile',
+                    router: true,
+                    title: 'User',
+                    icon: 'fa-user-circle',
+                })
+            }
         }, (res) => {
-            this.UserName = ""
+            this.user = ""
         })
     }
 }
