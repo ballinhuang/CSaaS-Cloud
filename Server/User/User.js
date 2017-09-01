@@ -75,4 +75,18 @@ module.exports = class User {
         }
         return true
     }
+
+    setclusteruser(clustername, newusername, newuserpasswd) {
+        let legalcluster = this.clusters.find((cluster) => {
+            if (cluster.name === clustername) {
+                cluster.username = newusername
+                cluster.passwd = newuserpasswd
+            }
+            return cluster.name === clustername
+        })
+        if (legalcluster === undefined) {
+            return false
+        }
+        return true
+    }
 };

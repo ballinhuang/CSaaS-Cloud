@@ -34,6 +34,8 @@
                             </nodelist>
                             <subjob v-show="!ismanager" :cluster="props.item" :alertmsg="alertmsg">
                             </subjob>
+                            <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
+                            </usersetting>
                         </v-layout>
                     </td>
                 </template>
@@ -52,6 +54,7 @@ import API from '../../../WebAPI.js'
 import AddCluster from './AddCluster.vue'
 import NodesList from './NodesList.vue'
 import Subjob from './Subjob.vue'
+import UserSetting from './UserSetting.vue'
 
 export default {
     data () {
@@ -80,7 +83,8 @@ export default {
     components: {
         'addcluster': AddCluster,
         'nodelist': NodesList,
-        'subjob': Subjob
+        'subjob': Subjob,
+        'usersetting': UserSetting
     },
     beforeCreate: function () {
         API.getUser((res) => {

@@ -148,6 +148,16 @@ class UserManager {
                 return { msg: "FAIL!Only manager can set user's cluster." }
             }
         }
+        else if (op === '$setclusteruser') {
+            if (tarUser.authority.type === 'user') {
+                if (!tarUser.setclusteruser(v.clustername, v.newusername, v.newuserpasswd)) {
+                    { msg: "Not legal cluster." }
+                }
+            }
+            else {
+                return { msg: "FAIL!Only user can set cluster's user." }
+            }
+        }
         else {
             return { msg: "false" }
         }

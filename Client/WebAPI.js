@@ -44,6 +44,13 @@ class WebAPI {
 		}
 		Vue.http.patch('/api/uses/user', setclustermsg).then(success, fail)
 	}
+
+	setclusteruser(msg, success, fail) {
+		let setclusterusermsg = {
+			$setclusteruser: msg
+		}
+		Vue.http.patch('/api/uses/user', setclusterusermsg).then(success, fail)
+	}
 }
 
 export default new WebAPI();
