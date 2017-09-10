@@ -109,8 +109,7 @@ export default {
                 scheduler: this.newcluster.scheduler
             }
             API.addcluster(msg, (result) => {
-                let c = result.body.clusters.find(c => c.name === msg.name)
-                this.clusters.push(c);
+                user.clusters = result.body.clusters
             }, (result) => {
                 alert('add cluster error!')
             })
@@ -147,6 +146,6 @@ export default {
 
         }
     },
-    props: ['clusters']
+    props: ['user']
 }
 </script>

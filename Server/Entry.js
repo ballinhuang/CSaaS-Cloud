@@ -8,6 +8,7 @@ import helmet from 'helmet';
 
 import { LocalStrategy } from './Passport';
 import { UserManager } from './User';
+import { PortManager } from './Cluster'
 
 import {
   JSubjob,
@@ -29,6 +30,7 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
+  PortManager.init()
 });
 /*
     Express setting
@@ -126,10 +128,8 @@ RTR.route('/uses/user')
   .patch(async (req, res) => {
     JobQueue.add(new JUserMod(req.user.name, req.body), (result) => {
       res.status(200).json(UserManager.getProfile(req.user.name))
-      //console.log(UserManager.getProfile(req.user.name))
     }, (result) => {
       res.status(500).send(result)
-      //console.log(result)
     })
   })
 
@@ -149,7 +149,7 @@ RTR.route('/subjob')
       JobQueue.add(new JSubjob(req.user.name, target_cluster, req.body), (result) => {
         res.status(200).json(result)
       }, (result) => {
-        res.status(200).json(result)
+        res.status(500).json(result)
       })
     }
     else {
@@ -158,3 +158,17 @@ RTR.route('/subjob')
   })
 
 APP.use('/api', RTR)
+
+
+/*
+  route addcluster
+  usermanager getuser
+  user.addcluster addname
+  false
+    res.status(500) err
+  true
+  joqueue add JAddCluster
+  done user.startcluster()
+  updatedb
+  res.status(UserManager.getProfile(req.user.name))
+*/

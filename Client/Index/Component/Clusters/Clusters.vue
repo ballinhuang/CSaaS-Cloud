@@ -4,7 +4,7 @@
         <v-spacer></v-spacer>
         <v-layout row wrap>
             <v-flex xs1 class="text-xs-right">
-                <addcluster v-show="ismanager" :clusters="user.clusters"></addcluster>
+                <addcluster v-show="ismanager" :user="user"></addcluster>
             </v-flex>
             <v-flex xs5 class="pb-3" offset-xs6>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
