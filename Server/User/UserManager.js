@@ -2,6 +2,9 @@ import assert from 'assert';
 import MongoController from '../MongoController.js';
 import User from './User.js';
 
+
+import lodash from 'lodash'
+
 class UserManager {
 
     constructor() { }
@@ -34,7 +37,7 @@ class UserManager {
                 return u;
             }
             else if (u.authority.type === "user") {
-                let superior = this.getUser(u.authority.superior);
+                let superior = this.getUser(u.authority.superior).getProperty();
                 if (superior === undefined) {
                     return null;
                 }
@@ -44,7 +47,10 @@ class UserManager {
                     for (var cluster in u.clusters) {
                         for (var superior_cluster in superior.clusters) {
                             if (u.clusters[cluster].name === superior.clusters[superior_cluster].name) {
-                                joinclusters.push(superior.clusters[superior_cluster])
+                                let copycluster = lodash.cloneDeep(superior.clusters[superior_cluster])
+                                copycluster.username = u.clusters[cluster].username
+                                copycluster.passwd = u.clusters[cluster].passwd
+                                joinclusters.push(copycluster)
                             }
                         }
                     }
@@ -105,12 +111,7 @@ class UserManager {
         const op = Object.keys(operate)[0]
         const v = operate[op]
 
-        if (op === '$addcluster') {
-            if (!tarUser.addcluster(v)) {
-                return { msg: "false" }
-            }
-        }
-        else if (op === '$adduser') {
+        if (op === '$adduser') {
             if (tarUser.authority.type === 'manager') {
                 if (await this.createUser(v.username, v.passwd, { "type": "user", "superior": tarUser.name }) === true) {
                     tarUser.adduser(v.username)

@@ -27,7 +27,7 @@
                     <td>{{ props.item.nodes }}</td>
                     <td>{{ props.item.port }}</td>
                     <td>{{ props.item.scheduler }}</td>
-                    <td>{{ props.item.stat }}</td>
+                    <td>{{ props.item.status }}</td>
                     <td>
                         <v-layout row>
                             <nodelist :node="props.item.nodeslist">
@@ -66,7 +66,7 @@ export default {
                 { text: 'Node Count', value: 'nodes', align: 'left' },
                 { text: 'Port', value: 'port', align: 'left' },
                 { text: 'Scheduling mode', value: 'scheduler', align: 'left' },
-                { text: 'State', value: 'stat', align: 'left' },
+                { text: 'Status', value: 'status', align: 'left' },
                 { text: 'Operate', align: 'left' }
             ],
             user: {},

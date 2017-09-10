@@ -25,10 +25,7 @@ class WebAPI {
 	}
 
 	addcluster(msg, success, fail) {
-		let modeusermsg = {
-			$addcluster: msg
-		}
-		Vue.http.patch('/api/uses/user', modeusermsg).then(success, fail)
+		Vue.http.post('/api/cluster', msg).then(success, fail)
 	}
 
 	adduser(msg, success, fail) {

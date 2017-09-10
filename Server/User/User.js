@@ -29,17 +29,31 @@ module.exports = class User {
     }
 
     addcluster(newcluster) {
+        if (newcluster.name === null || newcluster.nodeslist === null || newcluster.scheduler === null) {
+            return false
+        }
+        for (const node of newcluster.nodeslist) {
+            if (node.name === null || node.ip === null || node.nodeport === null || node.nodenp === null) {
+                return false
+            }
+        }
         let c = this.clusters.find(c => c.name === newcluster.name)
         if (c === undefined) {
-            newcluster.state = 'Stop'
+            newcluster.status = 'Stop'
             newcluster.port = "0"
-            newcluster.serverpid = "0"
-            newcluster.schedulerpid = "0"
+            newcluster.schedulerport = "0"
             this.clusters.push(newcluster);
             return true
         }
         else
             return false
+    }
+
+    startcluster(clustername, svrport, schport) {
+        let c = this.clusters.find(c => c.name === clustername)
+        c.port = svrport
+        c.schedulerport = schport
+        c.status = "Work"
     }
 
     adduser(newuser) {

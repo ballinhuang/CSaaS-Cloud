@@ -19,17 +19,28 @@ class PortManager {
             else {
                 for (var j in user.clusters) {
                     const cluster = user.clusters[j]
-                    //const Lsch = Lunch.lunchscheduler(user.name, cluster.name,cluster.schedulerport, "FIFO")
+                    const schpid = Lunch.lunchscheduler(user.name, cluster.name, cluster.schedulerport, "FIFO")
                     const svrpid = Lunch.lunchserver(user.name, cluster.name, cluster.port, cluster.schedulerport, cluster.nodeslist)
                     this.addProcess(cluster.port, svrpid)
+                    this.addProcess(cluster.schedulerport, schpid)
                 }
             }
         }
-        console.log(this.Ports)
     }
 
     addProcess(port, pid) {
         this.Ports[port] = pid
+    }
+
+    // lock?
+    getPort() {
+        for (var i = 5001; i < 6000; i++) {
+            if (this.Ports[i] === undefined) {
+                this.Ports[i] = 0
+                return i
+            }
+        }
+        return 0
     }
 }
 

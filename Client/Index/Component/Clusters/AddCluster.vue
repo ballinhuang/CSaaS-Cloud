@@ -88,14 +88,14 @@ export default {
             newcluster: {
                 name: '',
                 port: '',
-                nodes: 0,
+                nodes: 1,
                 nodeslist: [{
                     nodename: '',
                     nodeip: '',
                     nodeport: '',
                     nodenp: 0
                 }],
-                stat: '',
+                status: '',
                 scheduler: ''
             }
         }
@@ -109,23 +109,23 @@ export default {
                 scheduler: this.newcluster.scheduler
             }
             API.addcluster(msg, (result) => {
-                user.clusters = result.body.clusters
+                this.user.clusters = result.body.clusters
             }, (result) => {
-                alert('add cluster error!')
+                alert(result.body)
             })
             this.cleanitem();
         },
         cleanitem () {
             this.newcluster.name = '';
             this.newcluster.port = '';
-            this.newcluster.nodes = 0;
+            this.newcluster.nodes = 1;
             this.newcluster.nodeslist = [{
                 nodename: '',
                 nodeip: '',
                 nodeport: '',
                 nodenp: 0
             }];
-            this.newcluster.stat = '';
+            this.newcluster.status = '';
             this.newcluster.scheduler = '';
             this.step = 1;
             this.dialog = false;

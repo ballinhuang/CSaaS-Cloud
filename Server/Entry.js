@@ -13,14 +13,16 @@ import { PortManager } from './Cluster'
 import {
   JSubjob,
   JUserMod,
-  JobQueue
+  JobQueue,
+  JAddCluster
 } from './Process';
 
 require('./Utils.js')();
 
 JobQueue.register(
   JSubjob,
-  JUserMod
+  JUserMod,
+  JAddCluster
 )
 
 
@@ -157,18 +159,13 @@ RTR.route('/subjob')
     }
   })
 
+RTR.route('/cluster')
+  .post((req, res) => {
+    JobQueue.add(new JAddCluster(req.user.name, req.body), (result) => {
+      res.status(200).json(UserManager.getProfile(req.user.name))
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
+
 APP.use('/api', RTR)
-
-
-/*
-  route addcluster
-  usermanager getuser
-  user.addcluster addname
-  false
-    res.status(500) err
-  true
-  joqueue add JAddCluster
-  done user.startcluster()
-  updatedb
-  res.status(UserManager.getProfile(req.user.name))
-*/

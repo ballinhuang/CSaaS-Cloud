@@ -3,3 +3,5 @@
 /Client/build
 
 /Server/DB
+
+/Server/Home/*
