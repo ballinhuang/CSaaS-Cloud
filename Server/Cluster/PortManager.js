@@ -19,27 +19,17 @@ class PortManager {
             else {
                 for (var j in user.clusters) {
                     const cluster = user.clusters[j]
-                    const Lsch = Lunch.lunchscheduler(cluster.schedulerport, "FIFO")
-                    const Lsvr = Lunch.lunchserver(cluster.port, cluster.schedulerport, cluster.nodeslist)
-                    let svr_result = { type: null, msg: '' }
-                    let sch_result = { type: null, msg: '' }
-                    Lsch.stdout.on('data', (data) => {
-                        sch_result.msg += data
-                        this.addProcess(cluster.schedulerport, sch_result.msg)
-                    })
-
-                    Lsvr.stdout.on('data', (data) => {
-                        svr_result.msg += data
-                        this.addProcess(cluster.port, svr_result.msg)
-                    })
+                    //const Lsch = Lunch.lunchscheduler(user.name, cluster.name,cluster.schedulerport, "FIFO")
+                    const svrpid = Lunch.lunchserver(user.name, cluster.name, cluster.port, cluster.schedulerport, cluster.nodeslist)
+                    this.addProcess(cluster.port, svrpid)
                 }
             }
         }
+        console.log(this.Ports)
     }
 
     addProcess(port, pid) {
         this.Ports[port] = pid
-        console.log(this.Ports)
     }
 }
 

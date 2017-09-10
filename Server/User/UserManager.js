@@ -23,7 +23,7 @@ class UserManager {
 
     /*use to join the profile*/
     getProfile(userName) {
-        const u = this.getUser(userName).getProperty();
+        let u = this.getUser(userName).getProperty();
         if (u !== undefined) {
             if (u.authority.type === "manager") {
                 let users = []
@@ -40,17 +40,15 @@ class UserManager {
                 }
                 let legaluser = superior.users.find(user => user === u.name)
                 if (legaluser !== undefined) {
+                    let joinclusters = []
                     for (var cluster in u.clusters) {
                         for (var superior_cluster in superior.clusters) {
                             if (u.clusters[cluster].name === superior.clusters[superior_cluster].name) {
-                                for (var key in superior.clusters[superior_cluster]) {
-                                    if (superior.clusters[superior_cluster].hasOwnProperty(key)) {
-                                        u.clusters[cluster][key] = superior.clusters[superior_cluster][key]
-                                    }
-                                }
+                                joinclusters.push(superior.clusters[superior_cluster])
                             }
                         }
                     }
+                    u.clusters = joinclusters
                     return u;
                 } else {
                     return null;
@@ -85,7 +83,6 @@ class UserManager {
         // create user instance
         for (const property of UserProperties) {
             this.Users[property.name] = new User(property);
-
         }
     }
     // create new user to DB
@@ -107,6 +104,7 @@ class UserManager {
         assert.ok(tarUser !== null, `User ${tarUser.name} NOT exist`)
         const op = Object.keys(operate)[0]
         const v = operate[op]
+
         if (op === '$addcluster') {
             if (!tarUser.addcluster(v)) {
                 return { msg: "false" }
@@ -162,6 +160,7 @@ class UserManager {
             return { msg: "false" }
         }
         this.updateDB(tarUser)
+
         return { msg: "success" }
     }
 
