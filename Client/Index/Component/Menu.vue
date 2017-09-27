@@ -12,7 +12,7 @@
             </v-toolbar>
             <v-divider></v-divider>
             <v-list class="pt-0" dense>
-                <v-list-tile v-for="item in items" :key="item.title" :to="item.to" :router="item.router">
+                <v-list-tile v-for="item in items" :key="item.title" :href="item.href" :to="item.to" :router="item.router">
                     <v-list-tile-action>
                         <v-icon dark>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
@@ -54,8 +54,9 @@ export default {
                 title: 'Clusters',
                 icon: 'extension',
             }, {
-                title: 'Simulation',
-                icon: 'dashboard'
+                href: '/logout',
+                title: 'Logout',
+                icon: 'arrow_back'
             }],
             user: {},
             ismanager: false

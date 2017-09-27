@@ -38,7 +38,7 @@
         </div>
 
         <div v-if="!ismanager">
-            <h3>User</h3>
+            <changepasswd :user="user"></changepasswd>
         </div>
     </div>
 </template>
@@ -47,6 +47,7 @@
 import API from '../../../WebAPI.js'
 import Adduser from './AddUser.vue'
 import ClusterSet from './ClusterSet.vue'
+import ChangePasswd from './ChangePasswd.vue'
 
 export default {
     data () {
@@ -71,7 +72,8 @@ export default {
     },
     components: {
         adduser: Adduser,
-        clusterset: ClusterSet
+        clusterset: ClusterSet,
+        changepasswd: ChangePasswd
     },
     beforeCreate: function () {
         API.getUser((res) => {

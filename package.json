@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon Server/Entry.js --exec babel-node --presets es2015,stage-0",
     "build": "babel Server -d dist --presets es2015,stage-2",
-    "serve": "node dist/index.js",
+    "serve": "forever start -c \"node\" dist/Entry.js",
     "startdb": "mongod --dbpath=Server/DB --port 6000",
     "dbtest": "forever -c \"node -r babel-register\" Server/User/CreatUser.js",
     "wbuild": "webpack -d --progress --colors --watch",
@@ -28,6 +28,7 @@
     "file-loader": "^0.11.2",
     "forever": "^0.15.3",
     "helmet": "^3.7.0",
+    "http-proxy": "^1.16.2",
     "imports-loader": "^0.7.1",
     "jquery": "^3.2.1",
     "json-loader": "^0.5.4",

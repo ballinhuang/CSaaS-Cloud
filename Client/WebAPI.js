@@ -6,10 +6,15 @@ Vue.use(VueResource);
 class WebAPI {
 
 	logout() {
-		Vue.http.get('/logout').then(response => {
-			window.location.href = response.body.redirect;
-		}, response => {
-		});
+		//Vue.http.get('/logout')
+		window.location = "./logout";
+	}
+
+	changepasswd(msg, success, fail) {
+		let changepasswdmsg = {
+			$changepasswd: msg
+		}
+		Vue.http.patch('/api/uses/user', changepasswdmsg).then(success, fail)
 	}
 
 	getUserName(success, fail) {

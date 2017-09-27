@@ -5,7 +5,7 @@ import Passport from 'passport';
 import Session from 'express-session';
 import http from 'http';
 import helmet from 'helmet';
-
+import httpProxy from 'http-proxy'
 import { LocalStrategy } from './Passport';
 import { UserManager } from './User';
 import { PortManager } from './Cluster'
@@ -41,16 +41,25 @@ const APP = Express();
 const RTR = Express.Router()
 const PORT = 8082;
 
+
+const PROXY = httpProxy.createProxyServer({
+  target: {
+    port: 8082,
+    host: 'localhost'
+  }
+}).listen(80)
+
 const Server = http.createServer(APP);
 
 Server.listen(PORT, function () {
   console.log(`Https server listening on port ${PORT}.`)
-});
-
+})
 
 /**
  *  Use setting
  */
+
+
 APP.use(Session({
   secret: 'zkldjgiqahoewgo',
   resave: false,
@@ -108,9 +117,7 @@ APP.post('/login', Passport.authenticate('json'), (req, res) => {
 
 APP.get('/logout', isLogin, (req, res) => {
   req.logout();
-  res.status(200).send({
-    redirect: '/home'
-  });
+  res.status(200).sendFile(`${BaseDir}/Client/Login/login.html`)
 });
 
 

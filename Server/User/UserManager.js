@@ -125,6 +125,9 @@ class UserManager {
             }
 
         }
+        else if (op === '$changepasswd') {
+            tarUser.passwd = v.newpasswd
+        }
         else if (op === '$setusercluster') {
             if (tarUser.authority.type === 'manager') {
                 let legaluser = tarUser.users.find((user) => {
