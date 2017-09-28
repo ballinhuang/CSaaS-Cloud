@@ -3,12 +3,15 @@ import BodyParser from 'body-parser';
 import Compression from 'compression';
 import Passport from 'passport';
 import Session from 'express-session';
+import https from 'https';
 import http from 'http';
+import fs from 'fs';
 import helmet from 'helmet';
 import httpProxy from 'http-proxy'
 import { LocalStrategy } from './Passport';
 import { UserManager } from './User';
 import { PortManager } from './Cluster'
+
 
 import {
   JSubjob,
@@ -39,21 +42,27 @@ UserManager.init().then(async () => {
 */
 const APP = Express();
 const RTR = Express.Router()
-const PORT = 8082;
+const PORT = 443;
+const options = {
+  key: fs.readFileSync(`${__dirname}/Key/TLS/private.key`),
+  cert: fs.readFileSync(`${__dirname}/Key/TLS/certificate.crt`)
+};
+
+const Server = https.createServer(options, APP);
+
+Server.listen(PORT, function () {
+  console.log(`Https server listening on port ${PORT}.`)
+})
 
 
-const PROXY = httpProxy.createProxyServer({
-  target: {
-    port: 8082,
-    host: 'localhost'
-  }
-}).listen(80)
 
+/*
 const Server = http.createServer(APP);
 
 Server.listen(PORT, function () {
   console.log(`Https server listening on port ${PORT}.`)
 })
+*/
 
 /**
  *  Use setting
@@ -64,7 +73,7 @@ APP.use(Session({
   secret: 'zkldjgiqahoewgo',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }));
 APP.use(helmet());
 APP.use(BodyParser.json());
