@@ -3,7 +3,7 @@
 </template>
 
 <script>
-var debounce = require("lodash.debounce");
+var debounce = require("lodash/debounce");
 var monacoLoader = require("./MonacoLoader");
 
 module.exports = {
