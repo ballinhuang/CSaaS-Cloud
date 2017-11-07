@@ -26,7 +26,7 @@ module.exports = {
     },
     changeThrottle: { type: Number, default: 0 }
   },
-  mounted() {
+  mounted: function() {
     this.fetchEditor();
   },
   destroyed() {
@@ -67,16 +67,19 @@ module.exports = {
   },
   watch: {
     highlighted: {
-      handler(lines) {
+      handler: function(lines) {
         this.highlightLines(lines);
       },
       deep: true
     },
-    language() {
+    language: function() {
       window.monaco.editor.setModelLanguage(
         this.editor.getModel(),
         this.language
       );
+    },
+    theme: function() {
+      window.monaco.editor.setTheme(this.theme);
     }
   },
   methods: {
@@ -111,7 +114,7 @@ module.exports = {
       this.editor.onDidChangeModelContent(event =>
         this.codeChangeHandler(editor, event)
       );
-      this.$emit("mounted", editor);
+      this.$emit("mounted", editor, monaco);
     },
     codeChangeHandler: function(editor) {
       if (this.codeChangeEmitter) {
