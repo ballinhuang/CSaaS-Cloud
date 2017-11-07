@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -9,6 +10,7 @@ import Menu from './Component/Menu.vue'
 import HomeView from './Component/Home.vue'
 import ProfileView from './Component/Profile/Profile.vue'
 import Clusters from './Component/Clusters/Clusters.vue'
+import Editor from './Component/Editor/Editor.vue'
 
 Vue.use(VueHead)
 Vue.use(VueRouter)
@@ -20,6 +22,7 @@ const routes = [
     { path: '/home', component: HomeView },
     { path: '/profile', component: ProfileView },
     { path: '/clusters', component: Clusters },
+    { path: '/editor', component: Editor },
 ]
 
 const router = new VueRouter({

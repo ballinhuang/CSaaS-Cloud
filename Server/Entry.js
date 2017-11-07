@@ -35,20 +35,20 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
-  PortManager.init()
+  //PortManager.init()
 });
 /*
     Express setting
 */
 const APP = Express();
 const RTR = Express.Router()
-const PORT = 443;
+const PORT = 8082;
 const options = {
   key: fs.readFileSync(`${__dirname}/Key/TLS/private.key`),
   cert: fs.readFileSync(`${__dirname}/Key/TLS/certificate.crt`)
 };
 
-const Server = https.createServer(options, APP);
+const Server = http.createServer(APP);
 
 Server.listen(PORT, function () {
   console.log(`Https server listening on port ${PORT}.`)
@@ -73,7 +73,7 @@ APP.use(Session({
   secret: 'zkldjgiqahoewgo',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }));
 APP.use(helmet());
 APP.use(BodyParser.json());

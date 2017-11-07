@@ -23,8 +23,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn class="blue--text darken-1" flat @click.native="sendjob">Submit</v-btn>
                 <v-btn class="blue--text darken-1" flat @click.native="cleanfield">Close</v-btn>
+                <v-btn class="blue--text darken-1" flat @click.native="sendjob">Submit</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -51,6 +51,14 @@ export default {
     },
     methods: {
         sendjob () {
+            if (this.cluster.username == "") {
+                alert('User has not been set.')
+                return
+            }
+            if (this.filename == '' || this.script == '') {
+                alert('Job name and script can not be null.')
+                return
+            }
             this.script += "\n#SET -N " + this.nodeneed + " -P " + this.cpuneed
             if (this.ex1 === true) {
                 this.script += "\n#MPI"

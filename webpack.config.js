@@ -61,6 +61,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: `${__dirname}/Client/Login/login.css` },
+      {
+        from: 'node_modules/monaco-editor/min/vs',
+        to: 'vs',
+      }
     ])
   ]
 }

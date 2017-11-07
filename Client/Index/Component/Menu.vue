@@ -38,52 +38,65 @@
 </template>
 
 <script>
-import API from '../../WebAPI'
+import API from "../../WebAPI";
 export default {
-    data () {
-        return {
-            drawer: true,
-            items: [{
-                to: '/home',
-                router: true,
-                title: 'Home',
-                icon: 'home',
-            }, {
-                to: '/clusters',
-                router: true,
-                title: 'Clusters',
-                icon: 'extension',
-            }, {
-                href: '/logout',
-                title: 'Logout',
-                icon: 'arrow_back'
-            }],
-            user: {},
-            ismanager: false
+  data() {
+    return {
+      drawer: true,
+      items: [
+        {
+          to: "/home",
+          router: true,
+          title: "Home",
+          icon: "home"
+        },
+        {
+          to: "/clusters",
+          router: true,
+          title: "Clusters",
+          icon: "extension"
+        },
+        {
+          to: "/editor",
+          router: true,
+          title: "Editor",
+          icon: "extension"
+        },
+        {
+          href: "/logout",
+          title: "Logout",
+          icon: "arrow_back"
         }
-    },
-    created: function () {
-        API.getUser((res) => {
-            this.user = res.body;
-            if (this.user.authority.type === "manager") {
-                this.ismanager = true
-                this.items.splice(1, 0, {
-                    to: '/profile',
-                    router: true,
-                    title: 'Administrator',
-                    icon: 'fa-users',
-                })
-            } else {
-                this.items.splice(1, 0, {
-                    to: '/profile',
-                    router: true,
-                    title: 'User',
-                    icon: 'fa-user-circle',
-                })
-            }
-        }, (res) => {
-            this.user = ""
-        })
-    }
-}
+      ],
+      user: {},
+      ismanager: false
+    };
+  },
+  created: function() {
+    API.getUser(
+      res => {
+        this.user = res.body;
+        if (this.user.authority.type === "manager") {
+          this.ismanager = true;
+          this.items.splice(1, 0, {
+            to: "/profile",
+            router: true,
+            title: "Administrator",
+            icon: "fa-users"
+          });
+        } else {
+          this.items.splice(1, 0, {
+            to: "/profile",
+            router: true,
+            title: "User",
+            icon: "fa-user-circle"
+          });
+        }
+      },
+      res => {
+        this.user = "";
+      }
+    );
+  }
+};
 </script>

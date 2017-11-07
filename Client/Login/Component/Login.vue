@@ -1,6 +1,6 @@
 <template>
     <center>
-        <img src="../../build/CSAAS.png" />
+        <img src="../../build/CSAAS.png" width="900px" />
         <div class="container">
             <div class="z-depth-1 grey lighten-4 row" style="width:35%;display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
                 <form class="col s12">
@@ -8,21 +8,21 @@
                         <div class='col s12'>
                         </div>
                     </div>
-    
+
                     <div class='row'>
                         <div class='input-field col s12'>
                             <input class='validate' type='text' v-model="name" />
                             <label for='email'>Enter your name</label>
                         </div>
                     </div>
-    
+
                     <div class='row'>
                         <div class='input-field col s12'>
                             <input class='validate' type='password' v-model="passwd" />
                             <label for='password'>Enter your password</label>
                         </div>
                     </div>
-    
+
                     <br />
                     <center>
                         <div class='row'>
