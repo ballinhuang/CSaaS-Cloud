@@ -25,17 +25,19 @@
           bottom
         ></v-select>
       </v-flex>
-      <v-flex xs1>
+      <v-flex xs1 text-xs-center>
+        <v-btn class="indigo white--text" dark>
+          <v-icon dark>fa-floppy-o</v-icon>
+        </v-btn>
       </v-flex>
-      <v-flex xs3>
+      <v-flex xs1 text-xs-center>
         <v-btn v-on:click="cleaneditor" class="indigo white--text" dark>
           <v-icon dark>fa-trash</v-icon>
         </v-btn>
       </v-flex>
     </v-layout>
-    <!-- Load from webpack (note the srcPath="dist" prop) -->
     <Monaco
-        height="600"
+        height="700"
         :language="language"
         srcPath="build"
         :code="code"
