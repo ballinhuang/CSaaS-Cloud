@@ -44,7 +44,11 @@ module.exports = class Lunch {
         }
 
         const schedulerexepath = path.join(process.cwd(), `./Server/Cluster/scheduler`)
-        const argu = `-i 127.0.0.1 -p ${sch_port} -mode ${mode}`
+        let argu = ''
+        if (mode === "FIFO" || mode === "default")
+            argu = `-i 127.0.0.1 -p ${sch_port}`
+        else
+            argu = `-i 127.0.0.1 -p ${sch_port} -mode ${mode}`
         let stdout = ''
         const proc = spawnSync(schedulerexepath, argu.split(' '), {
             cwd: homedir,

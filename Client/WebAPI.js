@@ -53,6 +53,14 @@ class WebAPI {
 		}
 		Vue.http.patch('/api/uses/user', setclusterusermsg).then(success, fail)
 	}
+
+	operatecluster(clustername, operate, success, fail) {
+		let operateclustermsg = {
+			clustername: clustername,
+			operate: operate
+		}
+		Vue.http.post('/api/opcluster', operateclustermsg).then(success, fail)
+	}
 }
 
 export default new WebAPI();

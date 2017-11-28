@@ -2,6 +2,8 @@ import UserManager from '../User/UserManager.js'
 
 import Lunch from './Lunch.js'
 
+import Process from 'process'
+
 class PortManager {
 
     init() {
@@ -18,6 +20,9 @@ class PortManager {
             }
             else {
                 for (var j in user.clusters) {
+                    if (user.clusters[j].status !== "Work") {
+                        continue;
+                    }
                     const cluster = user.clusters[j]
                     const schpid = Lunch.lunchscheduler(user.name, cluster.name, cluster.schedulerport, "FIFO")
                     const svrpid = Lunch.lunchserver(user.name, cluster.name, cluster.port, cluster.schedulerport, cluster.nodeslist)
@@ -41,6 +46,17 @@ class PortManager {
             }
         }
         return 0
+    }
+
+    killprocess(port) {
+        Process.kill(this.Ports[port])
+        this.Ports[port] = 0
+        console.log(this.Ports)
+    }
+
+    removeport(port) {
+        delete this.Ports[port]
+        console.log(this.Ports)
     }
 }
 

@@ -3,13 +3,11 @@ import { Strategy as LocalPassport } from 'passport-local';
 module.exports = (passport, users) => {
 
     passport.serializeUser((user, done) => {
-        //console.log(user.name + 'ser')
         done(null, user.name);
     });
 
     passport.deserializeUser((name, done) => {
         const user = users[name];
-        //console.log(user.name + 'dser')
         done(null, (user === undefined) ? false : user);
     });
 

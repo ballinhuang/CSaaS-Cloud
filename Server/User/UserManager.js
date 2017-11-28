@@ -46,7 +46,7 @@ class UserManager {
                     let joinclusters = []
                     for (var cluster in u.clusters) {
                         for (var superior_cluster in superior.clusters) {
-                            if (u.clusters[cluster].name === superior.clusters[superior_cluster].name) {
+                            if (u.clusters[cluster].name === superior.clusters[superior_cluster].name && superior.clusters[superior_cluster].status === 'Work') {
                                 let copycluster = lodash.cloneDeep(superior.clusters[superior_cluster])
                                 copycluster.username = u.clusters[cluster].username
                                 copycluster.passwd = u.clusters[cluster].passwd

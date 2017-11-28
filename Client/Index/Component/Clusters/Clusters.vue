@@ -36,6 +36,15 @@
                             </subjob>
                             <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
                             </usersetting>
+                            <v-btn icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
+                                <v-icon>fa-play</v-icon>
+                            </v-btn>
+                            <v-btn icon class="indigo--text" v-on:click="stopcluster(props.item.name)">
+                                <v-icon>fa-stop</v-icon>
+                            </v-btn>
+                            <v-btn icon class="indigo--text" v-on:click="removecluster(props.item.name)">
+                                <v-icon>fa-trash-o</v-icon>
+                            </v-btn>
                         </v-layout>
                     </td>
                 </template>
@@ -49,53 +58,92 @@
 
 
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 
-import AddCluster from './AddCluster.vue'
-import NodesList from './NodesList.vue'
-import Subjob from './Subjob.vue'
-import UserSetting from './UserSetting.vue'
+import AddCluster from "./AddCluster.vue";
+import NodesList from "./NodesList.vue";
+import Subjob from "./Subjob.vue";
+import UserSetting from "./UserSetting.vue";
 
 export default {
-    data () {
-        return {
-            search: '',
-            pagination: {},
-            headers: [
-                { text: 'Cluster Name', value: 'name', align: 'left' },
-                { text: 'Node Count', value: 'nodes', align: 'left' },
-                { text: 'Port', value: 'port', align: 'left' },
-                { text: 'Scheduling mode', value: 'scheduler', align: 'left' },
-                { text: 'Status', value: 'status', align: 'left' },
-                { text: 'Operate', align: 'left' }
-            ],
-            user: {},
-            alertmsg: { alert: false, type: "", msg: "" },
-            ismanager: false
+  data() {
+    return {
+      search: "",
+      pagination: {},
+      headers: [
+        { text: "Cluster Name", value: "name", align: "left" },
+        { text: "Node Count", value: "nodes", align: "left" },
+        { text: "Port", value: "port", align: "left" },
+        { text: "Scheduling mode", value: "scheduler", align: "left" },
+        { text: "Status", value: "status", align: "left" },
+        { text: "Operate", align: "left" }
+      ],
+      user: {},
+      alertmsg: { alert: false, type: "", msg: "" },
+      ismanager: false
+    };
+  },
+  methods: {
+    cleanalert() {
+      this.alertmsg.msg = "";
+      this.alertmsg.alert = false;
+    },
+    stopcluster(clustername) {
+      API.operatecluster(
+        clustername,
+        { op: "Stop" },
+        res => {
+          this.user = res.body;
+        },
+        res => {
+          alert("ERROR");
         }
+      );
     },
-    methods: {
-        cleanalert () {
-            this.alertmsg.msg = ""
-            this.alertmsg.alert = false
+    removecluster(clustername) {
+      API.operatecluster(
+        clustername,
+        { op: "Remove" },
+        res => {
+          this.user = res.body;
+        },
+        res => {
+          alert("ERROR");
         }
+      );
     },
-    components: {
-        'addcluster': AddCluster,
-        'nodelist': NodesList,
-        'subjob': Subjob,
-        'usersetting': UserSetting
-    },
-    beforeCreate: function () {
-        API.getUser((res) => {
-            this.user = res.body;
-            if (this.user.authority.type === "manager") {
-                this.ismanager = true
-            }
-        }, (res) => {
-            alert("ERROR");
-        });
+    recovercluster(clustername) {
+      API.operatecluster(
+        clustername,
+        { op: "Recover" },
+        res => {
+          this.user = res.body;
+        },
+        res => {
+          alert("ERROR");
+        }
+      );
     }
-}
+  },
+  components: {
+    addcluster: AddCluster,
+    nodelist: NodesList,
+    subjob: Subjob,
+    usersetting: UserSetting
+  },
+  beforeCreate: function() {
+    API.getUser(
+      res => {
+        this.user = res.body;
+        if (this.user.authority.type === "manager") {
+          this.ismanager = true;
+        }
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
+  }
+};
 </script>
 

@@ -17,7 +17,8 @@ import {
   JSubjob,
   JUserMod,
   JobQueue,
-  JAddCluster
+  JAddCluster,
+  JOPCluster
 } from './Process';
 
 require('./Utils.js')();
@@ -25,7 +26,8 @@ require('./Utils.js')();
 JobQueue.register(
   JSubjob,
   JUserMod,
-  JAddCluster
+  JAddCluster,
+  JOPCluster
 )
 
 
@@ -35,7 +37,7 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
-  //PortManager.init()
+  PortManager.init()
 });
 /*
     Express setting
@@ -53,16 +55,6 @@ const Server = http.createServer(APP);
 Server.listen(PORT, function () {
   console.log(`Https server listening on port ${PORT}.`)
 })
-
-
-
-/*
-const Server = http.createServer(APP);
-
-Server.listen(PORT, function () {
-  console.log(`Https server listening on port ${PORT}.`)
-})
-*/
 
 /**
  *  Use setting
@@ -184,4 +176,13 @@ RTR.route('/cluster')
     })
   })
 
+//issue
+RTR.route('/opcluster')
+  .post((req, res) => {
+    JobQueue.add(new JOPCluster(req.user.name, req.body.clustername, req.body.operate), (result) => {
+      res.status(200).json(UserManager.getProfile(req.user.name))
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
 APP.use('/api', RTR)
