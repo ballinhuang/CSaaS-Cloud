@@ -57,12 +57,6 @@ export default {
           icon: "extension"
         },
         {
-          to: "/editor",
-          router: true,
-          title: "Editor",
-          icon: "extension"
-        },
-        {
           href: "/logout",
           title: "Logout",
           icon: "arrow_back"

@@ -5,16 +5,22 @@
             <v-card-title>
                 <span class="headline">Node List</span>
             </v-card-title>
+            <addnode v-show="ismanager" @closenodelist="dialog = false" :clustername="clustername" :user="user"></addnode>
             <v-card-text>
-
                 <v-data-table v-bind:headers="headers" :items="node" hide-actions class="elevation-1">
                     <template slot="items" scope="props">
                         <td>{{ props.item.nodename }}</td>
                         <td>{{ props.item.nodeip }}</td>
                         <td>{{ props.item.nodeport }}</td>
                         <td>{{ props.item.nodenp }}</td>
+                        <td>
+                            <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removenode(props.item.nodename)">
+                                <v-icon>fa-trash-o</v-icon>
+                            </v-btn>
+                        </td>
                     </template>
                 </v-data-table>
+                
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -25,18 +31,39 @@
 </template>
 
 <script>
+import AddNode from "./AddNode.vue";
+import API from "../../../WebAPI.js";
 export default {
-    data () {
-        return {
-            headers: [
-                { text: 'Node name', value: 'nodename', align: 'left' },
-                { text: 'IP', value: 'ip', align: 'left' },
-                { text: 'Port', value: 'port', align: 'left' },
-                { text: 'CPU', value: 'nodenp', align: 'left' }
-            ],
-            dialog: false
+  data() {
+    return {
+      headers: [
+        { text: "Node name", align: "left" },
+        { text: "IP", align: "left" },
+        { text: "Port", align: "left" },
+        { text: "CPU", align: "left" },
+        { text: "Operate", align: "left" }
+      ],
+      showaddnode: false,
+      dialog: false
+    };
+  },
+  methods: {
+    removenode(nodename) {
+      API.operatecluster(
+        this.clustername,
+        { op: "removenode", data: { nodename: nodename } },
+        res => {
+          this.user.clusters = res.body.clusters;
+        },
+        res => {
+          alert("ERROR");
         }
-    },
-    props: ['node']
-}
+      );
+    }
+  },
+  components: {
+    addnode: AddNode
+  },
+  props: ["node", "user", "clustername", "ismanager"]
+};
 </script>

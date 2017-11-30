@@ -24,7 +24,6 @@ module.exports = class JOPCluster extends Job {
                 break
             }
         }
-
         if (d.operate.op === "Stop" && target_cluster.status === 'Work') {
             PortManager.killprocess(target_cluster.port)
             PortManager.killprocess(target_cluster.schedulerport)
@@ -54,7 +53,7 @@ module.exports = class JOPCluster extends Job {
                 nodenp: d.operate.data.nodenp
             })
             execFile(__dirname + '/addnode', [
-                '-i', target_cluster.ip,
+                '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.nodeip,
                 d.operate.data.nodeport,
@@ -70,7 +69,7 @@ module.exports = class JOPCluster extends Job {
                 }
             }
             execFile(__dirname + '/removenode', [
-                '-i', target_cluster.ip,
+                '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.nodename,
             ])
@@ -78,7 +77,7 @@ module.exports = class JOPCluster extends Job {
         else if (d.operate.op === "changemode") {
             target_cluster.scheduler = d.operate.data.mode
             execFile(__dirname + '/changemod', [
-                '-i', target_cluster.ip,
+                '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.mode,
             ])
