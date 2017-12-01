@@ -61,6 +61,10 @@ class WebAPI {
 		}
 		Vue.http.post('/api/opcluster', operateclustermsg).then(success, fail)
 	}
+
+	getschfile(dir, success, fail) {
+		Vue.http.get(`/api/getschfile/${dir}`).then(success, fail);
+	}
 }
 
 export default new WebAPI();

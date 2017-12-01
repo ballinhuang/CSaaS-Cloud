@@ -44,6 +44,7 @@
                             <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
                                 <v-icon>fa-trash-o</v-icon>
                             </v-btn>
+                            <changemod :user="user" :cluster="props.item" :modes="modes"></changemod>
                         </v-layout>
                     </td>
                 </template>
@@ -63,6 +64,7 @@ import AddCluster from "./AddCluster.vue";
 import NodesList from "./NodesList.vue";
 import Subjob from "./Subjob.vue";
 import UserSetting from "./UserSetting.vue";
+import Changemode from "./Changemode.vue";
 
 export default {
   data() {
@@ -80,7 +82,8 @@ export default {
       ],
       user: {},
       alertmsg: { alert: false, type: "", msg: "" },
-      ismanager: false
+      ismanager: false,
+      modes: []
     };
   },
   methods: {
@@ -129,7 +132,8 @@ export default {
     addcluster: AddCluster,
     nodelist: NodesList,
     subjob: Subjob,
-    usersetting: UserSetting
+    usersetting: UserSetting,
+    changemod: Changemode
   },
   beforeCreate: function() {
     API.getUser(
@@ -138,6 +142,15 @@ export default {
         if (this.user.authority.type === "manager") {
           this.ismanager = true;
         }
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
+    API.getschfile(
+      "Scheduler",
+      res => {
+        this.modes = res.body;
       },
       res => {
         alert("ERROR");

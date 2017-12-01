@@ -47,8 +47,11 @@ module.exports = class Lunch {
         let argu = ''
         if (mode === "FIFO" || mode === "default")
             argu = `-i 127.0.0.1 -p ${sch_port}`
-        else
-            argu = `-i 127.0.0.1 -p ${sch_port} -mode ${mode}`
+        else {
+            const filepath = path.join(process.cwd(), `./Server/Home/${username}/Scheduler/${mode}`)
+            argu = `-i 127.0.0.1 -p ${sch_port} -mode ${filepath}`
+        }
+
         let stdout = ''
         const proc = spawnSync(schedulerexepath, argu.split(' '), {
             cwd: homedir,

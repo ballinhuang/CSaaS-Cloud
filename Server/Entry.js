@@ -7,7 +7,7 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 import helmet from 'helmet';
-import httpProxy from 'http-proxy'
+import path from 'path';
 import { LocalStrategy } from './Passport';
 import { UserManager } from './User';
 import { PortManager } from './Cluster'
@@ -18,7 +18,8 @@ import {
   JUserMod,
   JobQueue,
   JAddCluster,
-  JOPCluster
+  JOPCluster,
+  JReadschdir
 } from './Process';
 
 require('./Utils.js')();
@@ -27,7 +28,8 @@ JobQueue.register(
   JSubjob,
   JUserMod,
   JAddCluster,
-  JOPCluster
+  JOPCluster,
+  JReadschdir
 )
 
 
@@ -156,10 +158,10 @@ RTR.route('/subjob')
       }
     }
     if (isowner) {
-      JobQueue.add(new JSubjob(req.user.name, target_cluster, req.body), (result) => {
+      JobQueue.add(new JSubjob(user, target_cluster, req.body), (result) => {
         res.status(200).json(result)
       }, (result) => {
-        res.status(500).json(result)
+        res.status(500).json({ type: 'error', msg: result })
       })
     }
     else {
@@ -181,6 +183,15 @@ RTR.route('/opcluster')
   .post((req, res) => {
     JobQueue.add(new JOPCluster(req.user.name, req.body.clustername, req.body.operate), (result) => {
       res.status(200).json(UserManager.getProfile(req.user.name))
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
+
+RTR.route('/getschfile/:dir')
+  .get((req, res) => {
+    JobQueue.add(new JReadschdir(req.user.name, req.params.dir), (result) => {
+      res.status(200).json(result)
     }, (result) => {
       res.status(500).send(result)
     })

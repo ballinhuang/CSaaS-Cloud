@@ -3,6 +3,7 @@ import Job from './Job.js'
 import { execFile } from 'child_process'
 import { PortManager, Lunch } from '../Cluster'
 import { UserManager } from '../User'
+import path from 'path'
 
 module.exports = class JOPCluster extends Job {
     constructor(username, target_cluster_name, operate) {
@@ -76,11 +77,22 @@ module.exports = class JOPCluster extends Job {
         }
         else if (d.operate.op === "changemode") {
             target_cluster.scheduler = d.operate.data.mode
-            execFile(__dirname + '/Command/changemod', [
-                '-i', '127.0.0.1',
-                '-p', target_cluster.port,
-                d.operate.data.mode,
-            ])
+            if (d.operate.data.mode === "FIFO") {
+                execFile(__dirname + '/Command/changemod', [
+                    '-i', '127.0.0.1',
+                    '-p', target_cluster.port,
+                    "default"
+                ])
+
+            }
+            else {
+                const filepath = path.join(process.cwd(), `./Server/Home/${d.username}/Scheduler/${d.operate.data.mode}`)
+                execFile(__dirname + '/Command/changemod', [
+                    '-i', '127.0.0.1',
+                    '-p', target_cluster.port,
+                    filepath
+                ])
+            }
         }
 
         UserManager.updateDB(user)

@@ -26,7 +26,7 @@ class PortManager {
                         this.addProcess(cluster.schedulerport, 0)
                         continue;
                     }
-                    const schpid = Lunch.lunchscheduler(user.name, cluster.name, cluster.schedulerport, "FIFO")
+                    const schpid = Lunch.lunchscheduler(user.name, cluster.name, cluster.schedulerport, cluster.scheduler)
                     const svrpid = Lunch.lunchserver(user.name, cluster.name, cluster.port, cluster.schedulerport, cluster.nodeslist)
                     this.addProcess(cluster.port, svrpid)
                     this.addProcess(cluster.schedulerport, schpid)
