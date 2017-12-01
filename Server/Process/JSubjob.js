@@ -2,9 +2,10 @@ import Job from './Job.js'
 
 import fs from 'fs'
 import { execFile } from 'child_process'
+import path from 'path'
 
 module.exports = class JSubjob extends Job {
-  constructor(username, target_cluster, data) {
+  constructor(user, target_cluster, data) {
     super(data)
     this.ip = '127.0.0.1'
     this.port = target_cluster.port || null
@@ -13,18 +14,20 @@ module.exports = class JSubjob extends Job {
     this.npneed = data.npneed || 0
     this.script = data.script || null
     this.cluster_username = target_cluster.username || null
-    this.username = username || null
+    this.username = user.name || null
+    this.user = user
   }
 
   static onProcess(job, done) {
     const d = job.data
-    if (!fs.existsSync(__dirname + '/' + d.username, fs.constants.R_OK | fs.constants.W_OK)) {
-      fs.mkdirSync(__dirname + '/' + d.username);
+    const dirpath = path.join(process.cwd(), `./Server/Home/${d.user.authority.superior}/Users/${d.user.name}`)
+    if (!fs.existsSync(dirpath, fs.constants.R_OK | fs.constants.W_OK)) {
+      fs.mkdirSync(dirpath);
     }
 
-    fs.writeFileSync(__dirname + '/' + d.username + '/' + d.jobname, d.script)
+    fs.writeFileSync(dirpath + '/' + d.jobname, d.script)
 
-    const subjob = execFile(__dirname + '/subjob', ['-i', d.ip, '-p', d.port, '-u', d.cluster_username, __dirname + '/' + d.username + '/' + d.jobname]);
+    const subjob = execFile(__dirname + '/Command/subjob', ['-i', d.ip, '-p', d.port, '-u', d.cluster_username, dirpath + '/' + d.jobname]);
     let result = { type: null, msg: '' }
     const killer = Job.setKiller(subjob, job.data.ttl, result)
     subjob.stdout.on('data', data => Job.onOutData(data, result))
@@ -50,7 +53,8 @@ module.exports = class JSubjob extends Job {
       npneed: this.npneed,
       script: this.script,
       cluster_username: this.cluster_username,
-      username: this.username
+      username: this.username,
+      user: this.user
     }
   }
 }

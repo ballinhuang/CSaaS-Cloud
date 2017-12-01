@@ -52,7 +52,7 @@ module.exports = class JOPCluster extends Job {
                 nodeport: d.operate.data.nodeport,
                 nodenp: d.operate.data.nodenp
             })
-            execFile(__dirname + '/addnode', [
+            execFile(__dirname + '/Command/addnode', [
                 '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.nodeip,
@@ -68,7 +68,7 @@ module.exports = class JOPCluster extends Job {
                     break;
                 }
             }
-            execFile(__dirname + '/removenode', [
+            execFile(__dirname + '/Command/removenode', [
                 '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.nodename,
@@ -76,7 +76,7 @@ module.exports = class JOPCluster extends Job {
         }
         else if (d.operate.op === "changemode") {
             target_cluster.scheduler = d.operate.data.mode
-            execFile(__dirname + '/changemod', [
+            execFile(__dirname + '/Command/changemod', [
                 '-i', '127.0.0.1',
                 '-p', target_cluster.port,
                 d.operate.data.mode,

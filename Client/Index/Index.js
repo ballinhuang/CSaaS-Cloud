@@ -11,6 +11,7 @@ import HomeView from './Component/Home.vue'
 import ProfileView from './Component/Profile/Profile.vue'
 import Clusters from './Component/Clusters/Clusters.vue'
 import Editor from './Component/Editor/Editor.vue'
+import Scheduler from './Component/Scheduler/Scheduler.vue'
 
 Vue.use(VueHead)
 Vue.use(VueRouter)
@@ -23,6 +24,7 @@ const routes = [
     { path: '/profile', component: ProfileView },
     { path: '/clusters', component: Clusters },
     { path: '/editor', component: Editor },
+    { path: '/scheduler', component: Scheduler }
 ]
 
 const router = new VueRouter({

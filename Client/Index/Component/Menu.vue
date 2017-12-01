@@ -78,6 +78,12 @@ export default {
             title: "Administrator",
             icon: "fa-users"
           });
+          this.items.splice(2, 0, {
+            to: "/scheduler",
+            router: true,
+            title: "Scheduler",
+            icon: "fa-users"
+          });
         } else {
           this.items.splice(1, 0, {
             to: "/profile",
