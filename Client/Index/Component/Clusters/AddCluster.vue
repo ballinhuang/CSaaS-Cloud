@@ -59,93 +59,114 @@
 </template>
 
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 export default {
-    data () {
-        return {
-            step: 1,
-            dialog: false,
-            headers: [
-                { text: 'Name', value: 'name', align: 'left' },
-                { text: 'IP', value: 'nodes', align: 'left' },
-                { text: 'Port', value: 'port', align: 'left' },
-                { text: 'CPU', value: 'cpu', align: 'left' },
-            ],
-            options: [
-                {
-                    value: 'FIFO',
-                    text: 'FIFO'
-                },
-                {
-                    value: 'Eazy',
-                    text: 'Eazy'
-                },
-                {
-                    value: 'Backfilling',
-                    text: 'Backfilling'
-                }
-            ],
-            newcluster: {
-                name: '',
-                port: '',
-                nodes: 1,
-                nodeslist: [{
-                    nodename: '',
-                    nodeip: '',
-                    nodeport: '',
-                    nodenp: 0
-                }],
-                status: '',
-                scheduler: ''
-            }
-        }
-    },
-    methods: {
-        additem (event) {
-            let msg = {
-                name: this.newcluster.name,
-                nodes: this.newcluster.nodes,
-                nodeslist: this.newcluster.nodeslist,
-                scheduler: this.newcluster.scheduler
-            }
-            API.addcluster(msg, (result) => {
-                this.user.clusters = result.body.clusters
-            }, (result) => {
-                alert(result.body)
-            })
-            this.cleanitem();
+  data() {
+    return {
+      step: 1,
+      dialog: false,
+      headers: [
+        { text: "Name", value: "name", align: "left" },
+        { text: "IP", value: "nodes", align: "left" },
+        { text: "Port", value: "port", align: "left" },
+        { text: "CPU", value: "cpu", align: "left" }
+      ],
+      newcluster: {
+        name: "",
+        port: "",
+        nodes: 1,
+        nodeslist: [
+          {
+            nodename: "",
+            nodeip: "",
+            nodeport: "",
+            nodenp: 0
+          }
+        ],
+        status: "",
+        scheduler: ""
+      }
+    };
+  },
+  computed: {
+    options: function() {
+      var options = [];
+      options.push({
+        value: "FIFO",
+        text: "FIFO"
+      });
+      this.modes.forEach(element => {
+        options.push({
+          value: element,
+          text: element
+        });
+      });
+      return options;
+    }
+  },
+  methods: {
+    additem(event) {
+      let msg = {
+        name: this.newcluster.name,
+        nodes: this.newcluster.nodes,
+        nodeslist: this.newcluster.nodeslist,
+        scheduler: this.newcluster.scheduler
+      };
+      API.addcluster(
+        msg,
+        result => {
+          this.user.clusters = result.body.clusters;
         },
-        cleanitem () {
-            this.newcluster.name = '';
-            this.newcluster.port = '';
-            this.newcluster.nodes = 1;
-            this.newcluster.nodeslist = [{
-                nodename: '',
-                nodeip: '',
-                nodeport: '',
-                nodenp: 0
-            }];
-            this.newcluster.status = '';
-            this.newcluster.scheduler = '';
-            this.step = 1;
-            this.dialog = false;
-        },
-        nodecout (event) {
-            if (this.newcluster.nodes > this.newcluster.nodeslist.length) {
-                var i = 0;
-                for (i = this.newcluster.nodeslist.length; i < this.newcluster.nodes; i++) {
-                    this.newcluster.nodeslist.push({ nodename: '', nodeip: '', nodeport: '', nodenp: 0 });
-                }
-            }
-            else {
-                var i = 0;
-                for (i = this.newcluster.nodeslist.length; i > this.newcluster.nodes; i--) {
-                    this.newcluster.nodeslist.pop();
-                }
-            }
-
+        result => {
+          alert(result.body);
         }
+      );
+      this.cleanitem();
     },
-    props: ['user']
-}
+    cleanitem() {
+      this.newcluster.name = "";
+      this.newcluster.port = "";
+      this.newcluster.nodes = 1;
+      this.newcluster.nodeslist = [
+        {
+          nodename: "",
+          nodeip: "",
+          nodeport: "",
+          nodenp: 0
+        }
+      ];
+      this.newcluster.status = "";
+      this.newcluster.scheduler = "";
+      this.step = 1;
+      this.dialog = false;
+    },
+    nodecout(event) {
+      if (this.newcluster.nodes > this.newcluster.nodeslist.length) {
+        var i = 0;
+        for (
+          i = this.newcluster.nodeslist.length;
+          i < this.newcluster.nodes;
+          i++
+        ) {
+          this.newcluster.nodeslist.push({
+            nodename: "",
+            nodeip: "",
+            nodeport: "",
+            nodenp: 0
+          });
+        }
+      } else {
+        var i = 0;
+        for (
+          i = this.newcluster.nodeslist.length;
+          i > this.newcluster.nodes;
+          i--
+        ) {
+          this.newcluster.nodeslist.pop();
+        }
+      }
+    }
+  },
+  props: ["user", "modes"]
+};
 </script>

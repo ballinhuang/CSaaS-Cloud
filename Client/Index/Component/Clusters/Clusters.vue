@@ -4,7 +4,7 @@
         <v-spacer></v-spacer>
         <v-layout row wrap>
             <v-flex xs1 class="text-xs-right">
-                <addcluster v-show="ismanager" :user="user"></addcluster>
+                <addcluster v-if="ismanager" :modes="modes" :user="user"></addcluster>
             </v-flex>
             <v-flex xs5 class="pb-3" offset-xs6>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -31,20 +31,20 @@
                     <td><nodelist :clustername="props.item.name" :ismanager="ismanager" :node="props.item.nodeslist" :user="user"></nodelist></td>
                     <td>
                         <v-layout row>
-                            <subjob v-show="!ismanager" :cluster="props.item" :alertmsg="alertmsg">
-                            </subjob>
-                            <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
-                            </usersetting>
-                            <v-btn v-show="ismanager && props.item.status !== 'Work'" icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
-                                <v-icon>fa-play</v-icon>
-                            </v-btn>
-                            <v-btn v-show="ismanager && props.item.status !== 'Stop'" icon class="indigo--text" v-on:click="stopcluster(props.item.name)">
-                                <v-icon>fa-stop</v-icon>
-                            </v-btn>
-                            <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
-                                <v-icon>fa-trash-o</v-icon>
-                            </v-btn>
-                            <changemod :user="user" :cluster="props.item" :modes="modes"></changemod>
+                              <subjob v-show="!ismanager" :cluster="props.item" :alertmsg="alertmsg">
+                              </subjob>
+                              <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
+                              </usersetting>
+                              <v-btn v-show="ismanager && props.item.status !== 'Work'" icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
+                                  <v-icon>fa-play</v-icon>
+                              </v-btn>
+                              <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
+                                  <v-icon>fa-trash-o</v-icon>
+                              </v-btn>
+                              <v-btn v-show="ismanager && props.item.status !== 'Stop'" icon class="indigo--text" v-on:click="stopcluster(props.item.name)">
+                                  <v-icon>fa-stop</v-icon>
+                              </v-btn>
+                              <changemod v-if="ismanager" :user="user" :cluster="props.item" :modes="modes"></changemod>
                         </v-layout>
                     </td>
                 </template>
@@ -141,16 +141,16 @@ export default {
         this.user = res.body;
         if (this.user.authority.type === "manager") {
           this.ismanager = true;
+          API.getschfile(
+            "Scheduler",
+            res => {
+              this.modes = res.body;
+            },
+            res => {
+              alert("ERROR");
+            }
+          );
         }
-      },
-      res => {
-        alert("ERROR");
-      }
-    );
-    API.getschfile(
-      "Scheduler",
-      res => {
-        this.modes = res.body;
       },
       res => {
         alert("ERROR");
