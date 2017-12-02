@@ -19,7 +19,8 @@ import {
   JobQueue,
   JAddCluster,
   JOPCluster,
-  JReadschdir
+  JReadschdir,
+  JOPJob
 } from './Process';
 
 require('./Utils.js')();
@@ -29,7 +30,8 @@ JobQueue.register(
   JUserMod,
   JAddCluster,
   JOPCluster,
-  JReadschdir
+  JReadschdir,
+  JOPJob
 )
 
 
@@ -183,6 +185,15 @@ RTR.route('/opcluster')
   .post((req, res) => {
     JobQueue.add(new JOPCluster(req.user.name, req.body.clustername, req.body.operate), (result) => {
       res.status(200).json(UserManager.getProfile(req.user.name))
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
+//issue
+RTR.route('/opjob')
+  .post((req, res) => {
+    JobQueue.add(new JOPJob(req.user.name, req.body.clustername, req.body.operate), (result) => {
+      res.status(200).json(result)
     }, (result) => {
       res.status(500).send(result)
     })

@@ -5,6 +5,7 @@ import JUserMod from './JUserMod.js'
 import JAddCluster from './JAddCluster.js'
 import JOPCluster from './JOPCluster.js'
 import JReadschdir from './JReadschdir.js'
+import JOPJob from './JOPJob.js'
 
 module.exports = {
   JSubjob,
@@ -12,5 +13,6 @@ module.exports = {
   JAddCluster,
   JOPCluster,
   JReadschdir,
+  JOPJob,
   JobQueue: new JobQueue()
 }

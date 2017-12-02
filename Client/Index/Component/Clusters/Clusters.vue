@@ -28,9 +28,14 @@
                     <td>{{ props.item.port }}</td>
                     <td>{{ props.item.scheduler }}</td>
                     <td>{{ props.item.status }}</td>
-                    <td><nodelist :clustername="props.item.name" :ismanager="ismanager" :node="props.item.nodeslist" :user="user"></nodelist></td>
                     <td>
-                        <v-layout row>
+                      <v-layout row wrap>
+                          <nodelist :clustername="props.item.name" :ismanager="ismanager" :node="props.item.nodeslist" :user="user"></nodelist>
+                          <jobstat :clustername="props.item.name"></jobstat>
+                      </v-layout>
+                    </td>
+                    <td>
+                        <v-layout row wrap>
                               <subjob v-show="!ismanager" :cluster="props.item" :alertmsg="alertmsg">
                               </subjob>
                               <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
@@ -38,13 +43,13 @@
                               <v-btn v-show="ismanager && props.item.status !== 'Work'" icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
                                   <v-icon>fa-play</v-icon>
                               </v-btn>
-                              <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
-                                  <v-icon>fa-trash-o</v-icon>
-                              </v-btn>
                               <v-btn v-show="ismanager && props.item.status !== 'Stop'" icon class="indigo--text" v-on:click="stopcluster(props.item.name)">
                                   <v-icon>fa-stop</v-icon>
                               </v-btn>
                               <changemod v-if="ismanager" :user="user" :cluster="props.item" :modes="modes"></changemod>
+                              <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
+                                  <v-icon>fa-trash-o</v-icon>
+                              </v-btn>
                         </v-layout>
                     </td>
                 </template>
@@ -65,6 +70,7 @@ import NodesList from "./NodesList.vue";
 import Subjob from "./Subjob.vue";
 import UserSetting from "./UserSetting.vue";
 import Changemode from "./Changemode.vue";
+import JobStat from "./JobStat.vue";
 
 export default {
   data() {
@@ -77,7 +83,7 @@ export default {
         { text: "Port", value: "port", align: "left" },
         { text: "Scheduling mode", value: "scheduler", align: "left" },
         { text: "Status", value: "status", align: "left" },
-        { text: "Nodes List", align: "left" },
+        { text: "Information", align: "left" },
         { text: "Operate", align: "left" }
       ],
       user: {},
@@ -133,7 +139,8 @@ export default {
     nodelist: NodesList,
     subjob: Subjob,
     usersetting: UserSetting,
-    changemod: Changemode
+    changemod: Changemode,
+    jobstat: JobStat
   },
   beforeCreate: function() {
     API.getUser(

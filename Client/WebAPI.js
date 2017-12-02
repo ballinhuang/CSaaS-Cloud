@@ -65,6 +65,14 @@ class WebAPI {
 	getschfile(dir, success, fail) {
 		Vue.http.get(`/api/getschfile/${dir}`).then(success, fail);
 	}
+
+	operatejob(clustername, operate, success, fail) {
+		let operatejobmsg = {
+			clustername: clustername,
+			operate: operate
+		}
+		Vue.http.post('/api/opjob', operatejobmsg).then(success, fail)
+	}
 }
 
 export default new WebAPI();
