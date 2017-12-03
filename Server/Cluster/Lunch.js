@@ -32,6 +32,11 @@ module.exports = class Lunch {
             timeout: 60
         })
         stdout = proc.stdout.toString()
+
+        fs.unlink(nodecondir, (err) => {
+            if (err) throw err;
+        });
+
         console.log(`Start server process at port ${svr_port}. PID = ${stdout}`)
         return stdout
     }

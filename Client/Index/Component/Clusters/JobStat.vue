@@ -23,28 +23,30 @@
             </v-text-field>
           </v-flex>
         </v-layout>
-            
-        <v-data-table
-        v-bind:headers="headers"
-        v-bind:items="items"
-        v-bind:search="search"
-        >
-            <template slot="items" scope="props">
-                <td>{{props.item.JOBID}}</td>
-                <td>{{props.item.JOBNAME}}</td>
-                <td>{{props.item.USER}}</td>
-                <td>{{props.item.JOBSTAT}}</td>
-                <td>{{props.item.MOTHERNODE}}</td>
-                <td>
-                  <v-btn v-if="props.item.JOBSTAT === 'RUNNING'" v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
-                </td>
-            </template>
+        
+        <v-card-text>
+          <v-data-table
+          v-bind:headers="headers"
+          v-bind:items="items"
+          v-bind:search="search"
+          >
+              <template slot="items" scope="props">
+                  <td>{{props.item.JOBID}}</td>
+                  <td>{{props.item.JOBNAME}}</td>
+                  <td>{{props.item.USER}}</td>
+                  <td>{{props.item.JOBSTAT}}</td>
+                  <td>{{props.item.MOTHERNODE}}</td>
+                  <td>
+                    <v-btn v-if="props.item.JOBSTAT === 'RUNNING'" v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
+                  </td>
+              </template>
 
-            <template slot="pageText" scope="{ pageStart, pageStop }">
-                From {{ pageStart }} to {{ pageStop }}
-            </template>
+              <template slot="pageText" scope="{ pageStart, pageStop }">
+                  From {{ pageStart }} to {{ pageStop }}
+              </template>
 
-        </v-data-table>
+          </v-data-table>
+        </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>

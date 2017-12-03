@@ -79,9 +79,9 @@ export default {
             icon: "fa-users"
           });
           this.items.splice(2, 0, {
-            to: "/scheduler",
+            to: "/simulator",
             router: true,
-            title: "Scheduler",
+            title: "Simulator",
             icon: "fa-users"
           });
         } else {
