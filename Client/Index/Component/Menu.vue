@@ -78,11 +78,11 @@ export default {
             title: "Administrator",
             icon: "fa-users"
           });
-          this.items.splice(2, 0, {
+          this.items.splice(3, 0, {
             to: "/simulator",
             router: true,
-            title: "Simulator",
-            icon: "fa-users"
+            title: "Simulation",
+            icon: "fa-line-chart "
           });
         } else {
           this.items.splice(1, 0, {
