@@ -20,7 +20,8 @@ import {
   JAddCluster,
   JOPCluster,
   JReadschdir,
-  JOPJob
+  JOPJob,
+  JSim
 } from './Process';
 
 require('./Utils.js')();
@@ -31,7 +32,8 @@ JobQueue.register(
   JAddCluster,
   JOPCluster,
   JReadschdir,
-  JOPJob
+  JOPJob,
+  JSim
 )
 
 
@@ -41,7 +43,7 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
-  //PortManager.init()
+  PortManager.init()
 });
 /*
     Express setting
@@ -202,6 +204,15 @@ RTR.route('/opjob')
 RTR.route('/getschfile/:dir')
   .get((req, res) => {
     JobQueue.add(new JReadschdir(req.user.name, req.params.dir), (result) => {
+      res.status(200).json(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
+
+RTR.route('/sim')
+  .post((req, res) => {
+    JobQueue.add(new JSim(req.user.name, req.body.operate), (result) => {
       res.status(200).json(result)
     }, (result) => {
       res.status(500).send(result)

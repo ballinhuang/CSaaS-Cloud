@@ -148,7 +148,7 @@ export default {
         this.user = res.body;
         if (this.user.authority.type === "manager") {
           this.ismanager = true;
-          API.getschfile(
+          API.getfile(
             "Scheduler",
             res => {
               this.modes = res.body;

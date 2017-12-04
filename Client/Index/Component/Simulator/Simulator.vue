@@ -18,10 +18,10 @@
             bottom
           ></v-select>
         </v-flex>
-        <v-flex xs2>
+        <v-flex xs1>
           <v-subheader>Select Log</v-subheader>
         </v-flex>
-        <v-flex xs2>
+        <v-flex xs3>
           <v-select
             v-bind:items="log_items"
             v-model="log_model"
@@ -68,7 +68,7 @@
       <td class="text-xs-center">
           <p v-show="props.item.status === 'None'">{{ props.item.status }}</p>
           <v-progress-circular v-show="props.item.status === 'progress'" indeterminate class="primary--text"></v-progress-circular>
-          <result v-show="props.item.status === 'complete'"></result>
+          <result :data="props.item.data" v-show="props.item.status === 'complete'"></result>
       </td>
     </template>
   </v-data-table>
@@ -81,42 +81,40 @@ import Result from "./Result.vue";
 export default {
   data() {
     return {
-      cluster_items: [
-        {
-          value: "GPU",
-          text: "GPU"
-        },
-        {
-          value: "Lab",
-          text: "Lab"
-        }
-      ],
+      cluster_items: [],
       cluster_model: "",
       log_items: [],
       log_model: "",
       NPs: 0,
       headers: [
         { text: "Algorithm", value: "alogrithm", align: "center" },
-        { text: "Time1", value: "time1", align: "center" },
-        { text: "Time2", value: "time2", align: "center" },
+        { text: "Average waiting time", value: "time1", align: "center" },
+        { text: "Average turnaround time", value: "time2", align: "center" },
         { text: "Status", value: "status", align: "center", sortable: false }
       ],
       loader: null,
       loading: false,
-      results: [
-        { alogrithm: "FIFO", time1: 0, time2: 0, status: "None" },
-        { alogrithm: "SJF", time1: 0, time2: 0, status: "None" }
-      ]
+      results: []
     };
   },
   watch: {
     cluster_model: function() {
       this.log_items = [];
-      if (this.cluster_model === "GPU") {
-        this.log_items.push({ value: "Log GPU", text: "Log GPU" });
-      } else {
-        this.log_items.push({ value: "Log LAB", text: "Log LAB" });
-      }
+      API.getfile(
+        "L" + this.cluster_model,
+        res => {
+          this.log_items = [];
+          res.body.forEach(element => {
+            this.log_items.push({
+              value: element,
+              text: element
+            });
+          });
+        },
+        res => {
+          alert("ERROR");
+        }
+      );
     }
   },
   computed: {
@@ -131,15 +129,78 @@ export default {
   methods: {
     start: function() {
       this.loader = "loading";
-      this.results[0].time1 = 10;
-      this.results[0].time2 = 11;
-      this.results[0].status = "complete";
-      this.results[1].status = "progress";
-      const l = this.loader;
-      this[l] = !this[l];
-      setTimeout(() => (this[l] = false), 3000);
-      this.loader = null;
+      this.loading = true;
+
+      for (var i in this.results) {
+        this.results[i].status = "progress";
+        this.sim(i);
+      }
+    },
+    sim: function(index) {
+      API.sim(
+        {
+          clustername: this.cluster_model,
+          log: this.log_model,
+          mode: this.results[index].alogrithm,
+          np: this.NPs
+        },
+        res => {
+          this.results[index].status = "complete";
+          this.results[index].time1 = res.body[0];
+          this.results[index].time2 = res.body[1];
+          res.body.splice(0, 2);
+          this.results[index].data = res.body;
+
+          if (index == this.results.length - 1) {
+            this.loading = false;
+            this.loader = null;
+          }
+        },
+        res => {
+          if (index == this.results.length - 1) {
+            this.loading = false;
+            this.loader = null;
+          }
+          this.results[index].status = "complete";
+          alert(res.body);
+        }
+      );
     }
+  },
+  beforeCreate: function() {
+    API.getfile(
+      "Clusterslist",
+      res => {
+        this.cluster_items = [];
+        res.body.forEach(element => {
+          this.cluster_items.push({
+            value: element,
+            text: element
+          });
+        });
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
+    API.getfile(
+      "Sim",
+      res => {
+        this.results = [];
+        res.body.forEach(element => {
+          this.results.push({
+            alogrithm: element,
+            time1: 0,
+            time2: 0,
+            data: [],
+            status: "None"
+          });
+        });
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
   }
 };
 </script>

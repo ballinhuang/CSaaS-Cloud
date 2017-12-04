@@ -62,7 +62,7 @@ class WebAPI {
 		Vue.http.post('/api/opcluster', operateclustermsg).then(success, fail)
 	}
 
-	getschfile(dir, success, fail) {
+	getfile(dir, success, fail) {
 		Vue.http.get(`/api/getschfile/${dir}`).then(success, fail);
 	}
 
@@ -72,6 +72,13 @@ class WebAPI {
 			operate: operate
 		}
 		Vue.http.post('/api/opjob', operatejobmsg).then(success, fail)
+	}
+
+	sim(operate, success, fail) {
+		let simmsg = {
+			operate: operate
+		}
+		Vue.http.post('/api/sim', simmsg).then(success, fail)
 	}
 }
 
