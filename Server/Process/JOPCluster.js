@@ -38,6 +38,16 @@ module.exports = class JOPCluster extends Job {
             PortManager.removeport(target_cluster.port)
             PortManager.removeport(target_cluster.schedulerport)
             user.clusters.splice(i, 1)
+            for (var i in user.users) {
+                let clusteruser = UserManager.getUser(user.users[i])
+                for (var j in clusteruser.clusters) {
+                    if (clusteruser.clusters[j].name === target_cluster.name) {
+                        clusteruser.clusters.splice(j, 1)
+                        UserManager.updateDB(clusteruser)
+                        break
+                    }
+                }
+            }
         }
         else if (d.operate.op === "Recover" && target_cluster.status === 'Stop') {
             const schpid = Lunch.lunchscheduler(user.name, target_cluster.name, target_cluster.schedulerport, target_cluster.scheduler)
