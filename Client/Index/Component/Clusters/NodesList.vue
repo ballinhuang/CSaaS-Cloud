@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="800px">
-        <v-btn primary dark slot="activator">Node List</v-btn>
+        <v-btn class="primary" dark slot="activator">Node List</v-btn>
         <v-card>
             <v-card-title>
                 <span class="headline">Node List</span>
@@ -8,7 +8,7 @@
             <addnode v-show="ismanager" @closenodelist="dialog = false" :clustername="clustername" :user="user"></addnode>
             <v-card-text>
                 <v-data-table v-bind:headers="headers" :items="node" hide-actions class="elevation-1">
-                    <template slot="items" scope="props">
+                    <template slot="items" slot-scope="props">
                         <td>{{ props.item.nodename }}</td>
                         <td>{{ props.item.nodeip }}</td>
                         <td>{{ props.item.nodeport }}</td>
@@ -37,11 +37,11 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Node name", align: "left" },
-        { text: "IP", align: "left" },
-        { text: "Port", align: "left" },
-        { text: "CPU", align: "left" },
-        { text: "Operate", align: "left" }
+        { text: "Node name", align: "left", value: "name" },
+        { text: "IP", align: "left", value: "ip" },
+        { text: "Port", align: "left", value: "port" },
+        { text: "CPU", align: "left", value: "cpu" },
+        { text: "Operate", align: "left", value: "operate" }
       ],
       showaddnode: false,
       dialog: false

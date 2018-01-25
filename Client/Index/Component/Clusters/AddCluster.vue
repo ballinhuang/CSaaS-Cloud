@@ -15,7 +15,7 @@
                     </v-stepper-step>
                     <v-stepper-content step="1">
                         <v-text-field label="Cluster Name" required v-model="newcluster.name"></v-text-field>
-                        <v-btn primary @click.native="step = 2">Continue</v-btn>
+                        <v-btn class="primary" @click.native="step = 2">Continue</v-btn>
                         <v-btn flat @click.native="cleanitem">Cancel</v-btn>
                     </v-stepper-content>
                     <v-stepper-step step="2" v-bind:complete="step > 2">
@@ -25,7 +25,7 @@
                     <v-stepper-content step="2">
                         <v-text-field type="Number" label="Cluster Nodes Count" required v-model="newcluster.nodes" @change="nodecout"></v-text-field>
                         <v-data-table v-bind:headers="headers" :items="newcluster.nodeslist" hide-actions class="elevation-1">
-                            <template slot="items" scope="props">
+                            <template slot="items" slot-scope="props">
                                 <td>
                                     <v-text-field required v-model="props.item.nodename"></v-text-field>
                                 </td>
@@ -40,7 +40,7 @@
                                 </td>
                             </template>
                         </v-data-table>
-                        <v-btn primary @click.native="step = 3">Continue</v-btn>
+                        <v-btn class="primary" @click.native="step = 3">Continue</v-btn>
                         <v-btn flat @click.native="cleanitem">Cancel</v-btn>
                     </v-stepper-content>
                     <v-stepper-step step="3" v-bind:complete="step > 3">
@@ -49,7 +49,7 @@
                     </v-stepper-step>
                     <v-stepper-content step="3">
                         <v-select label="Schedule alogrithm select." :items="options" v-model="newcluster.scheduler"></v-select>
-                        <v-btn primary @click.native="additem">Continue</v-btn>
+                        <v-btn class="primary" @click.native="additem">Continue</v-btn>
                         <v-btn flat @click.native="cleanitem">Cancel</v-btn>
                     </v-stepper-content>
                 </v-stepper>

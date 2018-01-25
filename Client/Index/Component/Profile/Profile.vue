@@ -23,14 +23,14 @@
             </v-alert>
             <v-card>
                 <v-data-table v-bind:headers="headers" v-bind:items="user.users" v-bind:search="search">
-                    <template slot="items" scope="props">
+                    <template slot="items" slot-scope="props">
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.passwd }}</td>
                         <td>
                             <clusterset :alertmsg="alertmsg" :username="props.item.name" :user="user" :clusters="props.item.clusters"></clusterset>
                         </td>
                     </template>
-                    <template slot="pageText" scope="{ pageStart, pageStop }">
+                    <template slot="pageText" slot-scope="{ pageStart, pageStop }">
                         From {{ pageStart }} to {{ pageStop }}
                     </template>
                 </v-data-table>

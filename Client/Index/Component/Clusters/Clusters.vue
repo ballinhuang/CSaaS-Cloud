@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Cluster List</h3>
+        <div class="display-2">Cluster List</div>
         <v-spacer></v-spacer>
         <v-layout row wrap>
             <v-flex xs1 class="text-xs-right">
@@ -22,7 +22,7 @@
         </v-alert>
         <v-card>
             <v-data-table v-bind:headers="headers" v-bind:items="user.clusters" v-bind:search="search">
-                <template slot="items" scope="props">
+                <template slot="items" slot-scope="props">
                     <td>{{ props.item.name }}</td>
                     <td>{{ props.item.nodes }}</td>
                     <td>{{ props.item.port }}</td>
@@ -31,7 +31,7 @@
                     <td>
                       <v-layout row wrap>
                           <nodelist :clustername="props.item.name" :ismanager="ismanager" :node="props.item.nodeslist" :user="user"></nodelist>
-                          <jobstat :clustername="props.item.name"></jobstat>
+                          <jobstat :status="props.item.status" :clustername="props.item.name"></jobstat>
                       </v-layout>
                     </td>
                     <td>
@@ -53,7 +53,7 @@
                         </v-layout>
                     </td>
                 </template>
-                <template slot="pageText" scope="{ pageStart, pageStop }">
+                <template slot="pageText" slot-scope="{ pageStart, pageStop }">
                     From {{ pageStart }} to {{ pageStop }}
                 </template>
             </v-data-table>
@@ -83,8 +83,8 @@ export default {
         { text: "Port", value: "port", align: "left" },
         { text: "Scheduling mode", value: "scheduler", align: "left" },
         { text: "Status", value: "status", align: "left" },
-        { text: "Information", align: "left" },
-        { text: "Operate", align: "left" }
+        { text: "Information", value: "information", align: "left" },
+        { text: "Operate", value: "operate", align: "left" }
       ],
       user: {},
       alertmsg: { alert: false, type: "", msg: "" },

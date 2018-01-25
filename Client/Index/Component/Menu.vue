@@ -1,40 +1,38 @@
 <template>
-    <v-app standalone>
-        <v-navigation-drawer dark v-model="drawer" enable-resize-watcher persistent>
-            <v-toolbar flat class="transparent">
-                <v-list class="pa-0">
-                    <v-list-tile avatar tag="div">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Hello! {{user.name}}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-toolbar>
-            <v-divider></v-divider>
-            <v-list class="pt-0" dense>
-                <v-list-tile v-for="item in items" :key="item.title" :href="item.href" :to="item.to" :router="item.router">
-                    <v-list-tile-action>
-                        <v-icon dark>{{ item.icon }}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-        </v-navigation-drawer>
-        <v-toolbar class="blue darken-2" fixed dark>
-            <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
-            <v-toolbar-title>Dashboard</v-toolbar-title>
-        </v-toolbar>
-        <main>
-            <v-container>
-                <router-view></router-view>
-            </v-container>
-        </main>
-        <v-footer class="blue darken-2" fixed dark>
-            <span class="white--text">© 2017 NTCU</span>
-        </v-footer>
-    </v-app>
+<v-app id="inspire">
+  <v-navigation-drawer fixed clipped app v-model="drawer">
+    <v-list dense>
+      <template v-for="(item, i) in items">
+        <v-list-tile :key="i" :href="item.href" :to="item.to" :router="item.router">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              {{ item.text }}
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </template>
+    </v-list>
+  </v-navigation-drawer>
+  <v-toolbar color="blue darken-3" dark app clipped-left fixed>
+    <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <span class="hidden-xs-only">Crown</span>
+    </v-toolbar-title>
+  </v-toolbar>
+  <v-content>
+    <v-container>
+      <router-view>
+
+      </router-view>
+    </v-container>
+  </v-content>
+  <v-footer color="blue darken-3" app>
+    <span class="white--text">&copy; 2017 NTCU CS</span>
+  </v-footer>
+</v-app>
 </template>
 
 <script>
@@ -47,18 +45,18 @@ export default {
         {
           to: "/home",
           router: true,
-          title: "Home",
+          text: "Home",
           icon: "home"
         },
         {
           to: "/clusters",
           router: true,
-          title: "Clusters",
+          text: "Clusters",
           icon: "extension"
         },
         {
           href: "/logout",
-          title: "Logout",
+          text: "Logout",
           icon: "arrow_back"
         }
       ],
@@ -75,20 +73,26 @@ export default {
           this.items.splice(1, 0, {
             to: "/profile",
             router: true,
-            title: "Administrator",
+            text: "Administrator",
             icon: "fa-users"
           });
           this.items.splice(3, 0, {
             to: "/simulator",
             router: true,
-            title: "Simulation",
+            text: "Simulation",
+            icon: "fa-line-chart "
+          });
+          this.items.splice(3, 0, {
+            to: "/editor",
+            router: true,
+            text: "Editor",
             icon: "fa-line-chart "
           });
         } else {
           this.items.splice(1, 0, {
             to: "/profile",
             router: true,
-            title: "User",
+            text: "User",
             icon: "fa-user-circle"
           });
         }

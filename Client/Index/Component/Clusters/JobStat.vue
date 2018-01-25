@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-btn primary dark @click.native.stop="open">Job Status</v-btn>
+    <v-btn class="primary" dark @click.native.stop="open" :disabled="status==='Stop'">Job Status</v-btn>
     <v-dialog v-model="dialog" width="800px">
 
       <v-card>
@@ -30,7 +30,7 @@
           v-bind:items="items"
           v-bind:search="search"
           >
-              <template slot="items" scope="props">
+              <template slot="items" slot-scope="props">
                   <td>{{props.item.JOBID}}</td>
                   <td>{{props.item.JOBNAME}}</td>
                   <td>{{props.item.USER}}</td>
@@ -41,7 +41,7 @@
                   </td>
               </template>
 
-              <template slot="pageText" scope="{ pageStart, pageStop }">
+              <template slot="pageText" slot-scope="{ pageStart, pageStop }">
                   From {{ pageStart }} to {{ pageStop }}
               </template>
 
@@ -68,12 +68,12 @@ export default {
       pagination: {},
       search: "",
       headers: [
-        { text: "Job ID", align: "left" },
-        { text: "Job Name", align: "left" },
-        { text: "User", align: "left" },
-        { text: "Job Status", align: "left" },
-        { text: "Mother Node", align: "left" },
-        { text: "Operate", align: "left" }
+        { text: "Job ID", align: "left",value:"id" },
+        { text: "Job Name", align: "left" ,value:"jobname"},
+        { text: "User", align: "left" ,value:"user"},
+        { text: "Job Status", align: "left",value:"status" },
+        { text: "Mother Node", align: "left" ,value:"mothernode"},
+        { text: "Operate", align: "left",value:"operate" }
       ],
       items: []
     };
@@ -122,6 +122,6 @@ export default {
       );
     }
   },
-  props: ["clustername"]
+  props: ["clustername", "status"]
 };
 </script>

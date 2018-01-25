@@ -44,7 +44,7 @@
         </v-flex>
         <v-flex xs1>
           <v-btn
-            info
+            class="primary"
             :loading="loading"
             @click.native="start"
             :disabled="loading"
@@ -61,7 +61,7 @@
       :items="results"
       class="elevation-1"
     >
-    <template slot="items" scope="props">
+    <template slot="items" slot-scope="props">
       <td class="text-xs-center">{{ props.item.alogrithm }}</td>
       <td class="text-xs-center">{{ props.item.time1 }}</td>
       <td class="text-xs-center">{{ props.item.time2 }}</td>

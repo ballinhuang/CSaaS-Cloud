@@ -34,6 +34,10 @@ module.exports = {
         loader: ['style-loader', 'css-loader', 'stylus-loader']
       },
       {
+        test: /\.css$/,
+        loader: ['style-loader', 'css-loader']
+      },
+      {
         test: /\.(jpg|eot|png|woff|woff2|ttf|svg)$/,
         loader: "url-loader"
       }
@@ -60,7 +64,6 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: `${__dirname}/Client/Login/login.css` },
       {
         from: 'node_modules/monaco-editor/min/vs',
         to: 'vs',

@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="500px" persistent>
-        <v-btn primary dark slot="activator" v-on:click="init">Setting</v-btn>
+        <v-btn class="primary" dark slot="activator" v-on:click="init">Setting</v-btn>
         <v-card>
 
             <v-card-title>

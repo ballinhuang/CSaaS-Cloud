@@ -1,7 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog" width="800px" scrollable>
-      <v-btn primary dark slot="activator">Result</v-btn>
+      <v-btn class="primary" dark slot="activator">Result</v-btn>
       <v-card>
         <v-card-title>
           <span class="headline">Result</span>
@@ -17,8 +17,8 @@
               hide-actions
               class="elevation-1"
             >
-              <template slot="items" scope="props">
-                <td class="text-xs-center">{{ props.item.jobid }}</td>
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.jobid }}</td>
                 <td class="text-xs-center">{{ props.item.subt }}</td>
                 <td class="text-xs-center">{{ props.item.runt }}</td>
                 <td class="text-xs-center">{{ props.item.waitt }}</td>
@@ -43,7 +43,7 @@ export default {
       dialog: false,
       results: [],
       headers: [
-        { text: "Job ID", value: "jobid", align: "center" },
+        { text: "Job ID", value: "jobid" },
         { text: "Submit time", value: "subt", align: "center" },
         { text: "Run time", value: "runt", align: "center" },
         { text: "Wait time", value: "waitt", align: "center" },

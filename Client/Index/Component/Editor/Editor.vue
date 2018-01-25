@@ -26,12 +26,12 @@
         ></v-select>
       </v-flex>
       <v-flex xs1 text-xs-center>
-        <v-btn class="indigo white--text" dark>
+        <v-btn class="primary white--text" dark>
           <v-icon dark>fa-floppy-o</v-icon>
         </v-btn>
       </v-flex>
       <v-flex xs1 text-xs-center>
-        <v-btn v-on:click="cleaneditor" class="indigo white--text" dark>
+        <v-btn v-on:click="cleaneditor" class="primary white--text" dark>
           <v-icon dark>fa-trash</v-icon>
         </v-btn>
       </v-flex>

@@ -3,6 +3,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueHead from 'vue-head'
+
+// index.js or main.js
+require('../../node_modules/vuetify/dist/vuetify.min.css')
+// main.styl
+require('../../node_modules/vuetify/src/stylus/main.styl')
 import Vuetify from 'vuetify'
 
 import Menu from './Component/Menu.vue'

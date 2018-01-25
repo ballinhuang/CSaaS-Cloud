@@ -43,7 +43,7 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
-  PortManager.init()
+  //PortManager.init()
 });
 /*
     Express setting

@@ -13,9 +13,24 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.0/js/materialize.min.js"></script>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../build/login.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            background-color: #00bcd4;
+        }
+
+        #app {
+            flex: 1 0 auto;
+        }
+
+        #home {
+            flex: 1 0 auto;
+            padding-top: 3%;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,7 +38,6 @@
         <loginform></loginform>
     </div>
     <script src="../build/Login.js"></script>
-
 </body>
 
 <footer class="page-footer cyan">

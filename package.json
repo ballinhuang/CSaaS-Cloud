@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon Server/Entry.js --exec babel-node --presets es2015,stage-0",
+    "start": "nodemon Server/Entry.js  --ignore Client/ --exec babel-node --presets es2015,stage-0",
     "build": "babel Server -d dist --presets --presets es2015,stage-0",
     "serve": "forever start -c babel-node Server/Entry.js --presets es2015,stage-0",
     "startdb": "mongod --dbpath=Server/DB --port 6000",
@@ -45,7 +45,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.5.9",
-    "vue": "^2.4.2",
+    "vue": "^2.5.13",
     "vue-cli": "^2.8.2",
     "vue-head": "^2.0.11",
     "vue-hot-reload-api": "^2.1.0",
@@ -56,7 +56,7 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.4.2",
     "vue-template-loader": "^0.3.1",
-    "vuetify": "^0.15.0-beta.2",
+    "vuetify": "^0.17.6",
     "vuex": "^2.3.1",
     "webpack": "^3.3.0"
   }

@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" width="800px">
-        <v-btn primary dark slot="activator">Job Submission</v-btn>
+        <v-btn class="primary" dark slot="activator">Job Submission</v-btn>
         <v-card>
             <v-card-title>
                 <span class="headline">Job Submission</span>

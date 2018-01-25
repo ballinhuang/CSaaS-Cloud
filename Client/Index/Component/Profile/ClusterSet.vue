@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog">
-        <v-btn primary dark slot="activator" v-on:click="open">Cluster Setting</v-btn>
+        <v-btn class="primary" dark slot="activator" v-on:click="open">Cluster Setting</v-btn>
         <v-card>
             <v-card-title>
                 <span class="headline">User Profile</span>
