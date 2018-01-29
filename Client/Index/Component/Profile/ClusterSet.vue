@@ -24,41 +24,45 @@
 </template>
 
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 
 export default {
-    data () {
-        return {
-            dialog: false,
-            newclustersset: []
-        }
+  data() {
+    return {
+      dialog: false,
+      newclustersset: []
+    };
+  },
+  methods: {
+    open() {
+      this.newclustersset = [];
+      for (const usercluster in this.clusters) {
+        this.newclustersset.push(this.clusters[usercluster].name);
+      }
     },
-    methods: {
-        open () {
-            this.newclustersset = []
-            for (const usercluster in this.clusters) {
-                this.newclustersset.push(this.clusters[usercluster].name)
-            }
-        },
-        clean () {
-            this.dialog = false
-            this.newclustersset = []
-        },
-        save () {
-            const msg = {
-                username: this.username,
-                clusterlist: this.newclustersset
-            }
-            API.setcluster(msg, (result) => {
-                this.user.users = result.body.users
-            }, (result) => {
-                this.alertmsg.alert = true
-                this.alertmsg.type = "error"
-                this.alertmsg.msg = result.body
-            })
-            this.clean()
-        }
+    clean() {
+      this.dialog = false;
+      this.newclustersset = [];
     },
-    props: ['username', 'clusters', 'user', 'alertmsg']
-}
+    save() {
+      const msg = {
+        username: this.username,
+        clusterlist: this.newclustersset
+      };
+      API.setcluster(
+        msg,
+        result => {
+          this.user.users = result.body.users;
+        },
+        result => {
+          this.alertmsg.alert = true;
+          this.alertmsg.type = "error";
+          this.alertmsg.msg = result.body;
+        }
+      );
+      this.clean();
+    }
+  },
+  props: ["username", "clusters", "user", "alertmsg"]
+};
 </script>

@@ -37,46 +37,50 @@
 </template>
 
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 
 export default {
-    data () {
-        return {
-            dialog: false,
-            newusername: "",
-            newuserpasswd: "",
-            visible: false
-        }
+  data() {
+    return {
+      dialog: false,
+      newusername: "",
+      newuserpasswd: "",
+      visible: false
+    };
+  },
+  methods: {
+    clean() {
+      this.dialog = false;
+      this.init();
     },
-    methods: {
-        clean () {
-            this.dialog = false
-            this.init()
+    save() {
+      const msg = {
+        clustername: this.cluster.name,
+        newusername: this.newusername,
+        newuserpasswd: this.newuserpasswd
+      };
+      API.setclusteruser(
+        msg,
+        result => {
+          this.user.clusters = result.body.clusters;
         },
-        save () {
-            const msg = {
-                clustername: this.cluster.name,
-                newusername: this.newusername,
-                newuserpasswd: this.newuserpasswd
-            }
-            API.setclusteruser(msg, (result) => {
-                this.user.clusters = result.body.clusters
-            }, (result) => {
-                this.alertmsg.msg = result.body.msg
-                this.alertmsg.alert = true
-                this.alertmsg.type = "error"
-            })
-            this.clean()
-        },
-        init () {
-            this.visible = false
-            this.newusername = this.cluster.username
-            this.newuserpasswd = this.cluster.passwd
+        result => {
+          this.alertmsg.msg = result.body.msg;
+          this.alertmsg.alert = true;
+          this.alertmsg.type = "error";
         }
+      );
+      this.clean();
     },
-    created () {
-        this.clean()
-    },
-    props: ['user', 'cluster', 'alertmsg']
-}
+    init() {
+      this.visible = false;
+      this.newusername = this.cluster.username;
+      this.newuserpasswd = this.cluster.passwd;
+    }
+  },
+  created() {
+    this.clean();
+  },
+  props: ["user", "cluster", "alertmsg"]
+};
 </script>

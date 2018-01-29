@@ -41,37 +41,41 @@
 </template>
 
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 
 export default {
-    data () {
-        return {
-            dialog: false,
-            newusername: "",
-            newuserpasswd: ""
-        }
+  data() {
+    return {
+      dialog: false,
+      newusername: "",
+      newuserpasswd: ""
+    };
+  },
+  methods: {
+    clean() {
+      this.dialog = false;
+      this.newusername = "";
+      this.newuserpasswd = "";
     },
-    methods: {
-        clean () {
-            this.dialog = false
-            this.newusername = ""
-            this.newuserpasswd = ""
+    adduser() {
+      let msg = {
+        username: this.newusername,
+        passwd: this.newuserpasswd
+      };
+      API.adduser(
+        msg,
+        result => {
+          this.user.users = result.body.users;
         },
-        adduser () {
-            let msg = {
-                username: this.newusername,
-                passwd: this.newuserpasswd
-            }
-            API.adduser(msg, (result) => {
-                this.user.users = result.body.users
-            }, (result) => {
-                this.alertmsg.alert = true
-                this.alertmsg.type = "error"
-                this.alertmsg.msg = result.body
-            })
-            this.clean()
+        result => {
+          this.alertmsg.alert = true;
+          this.alertmsg.type = "error";
+          this.alertmsg.msg = result.body;
         }
-    },
-    props: ['user', 'alertmsg']
-}
+      );
+      this.clean();
+    }
+  },
+  props: ["user", "alertmsg"]
+};
 </script>

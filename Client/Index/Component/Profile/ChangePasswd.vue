@@ -12,39 +12,45 @@
     </v-layout>
 </template>
 <script>
-import API from '../../../WebAPI.js'
+import API from "../../../WebAPI.js";
 export default {
-    data () {
-        return {
-            e1: false,
-            valid: false,
-            newpassword: '',
-            newpasswordRules: [
-                (v) => !!v || 'Name is required',
-                (v) => /[A-Za-z0-9]/.test(v) || 'Password need to be numeric or alfanumeric.',
-                (v) => v.length >= 6 || 'Name must be more than 6 characters',
-            ],
-            check: '',
-            checkRules: [
-                (v) => v === this.newpassword || 'Error! Not the same password.'
-            ]
+  data() {
+    return {
+      e1: false,
+      valid: false,
+      newpassword: "",
+      newpasswordRules: [
+        v => !!v || "Name is required",
+        v =>
+          /[A-Za-z0-9]/.test(v) ||
+          "Password need to be numeric or alfanumeric.",
+        v => v.length >= 6 || "Name must be more than 6 characters"
+      ],
+      check: "",
+      checkRules: [
+        v => v === this.newpassword || "Error! Not the same password."
+      ]
+    };
+  },
+  methods: {
+    Save() {
+      if (!this.valid) {
+        return;
+      }
+      const msg = {
+        newpasswd: this.newpassword
+      };
+      API.changepasswd(
+        msg,
+        res => {
+          API.logout();
+        },
+        res => {
+          alert(res.body);
         }
-    },
-    methods: {
-        Save () {
-            if (!this.valid) {
-                return
-            }
-            const msg = {
-                newpasswd: this.newpassword
-            }
-            API.changepasswd(msg, (res) => {
-                API.logout()
-            }, (res) => {
-                alert(res.body)
-            })
-        }
-    },
-    props: ['user']
-}
+      );
+    }
+  },
+  props: ["user"]
+};
 </script>

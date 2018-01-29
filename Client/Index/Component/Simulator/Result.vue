@@ -9,27 +9,21 @@
           <v-btn class="blue--text darken-1" flat="flat" @click.native="dialog = false">Close</v-btn>
         </v-card-title>
         <v-divider></v-divider>
-          <v-card-text style="height: 800px;">
-            <v-data-table
-              v-if="dialog"
-              v-bind:headers="headers"
-              :items="results"
-              hide-actions
-              class="elevation-1"
-            >
-              <template slot="items" slot-scope="props">
-                <td>{{ props.item.jobid }}</td>
-                <td class="text-xs-center">{{ props.item.subt }}</td>
-                <td class="text-xs-center">{{ props.item.runt }}</td>
-                <td class="text-xs-center">{{ props.item.waitt }}</td>
-                <td class="text-xs-center">{{ props.item.np }}</td>
-                <td class="text-xs-center">{{ props.item.order }}</td>
-              </template>
-            </v-data-table>
-          </v-card-text>
+        <v-card-text style="height: 800px;">
+          <v-data-table v-if="dialog" v-bind:headers="headers" :items="results" hide-actions class="elevation-1">
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.jobid }}</td>
+              <td class="text-xs-center">{{ props.item.subt }}</td>
+              <td class="text-xs-center">{{ props.item.runt }}</td>
+              <td class="text-xs-center">{{ props.item.waitt }}</td>
+              <td class="text-xs-center">{{ props.item.np }}</td>
+              <td class="text-xs-center">{{ props.item.order }}</td>
+            </template>
+          </v-data-table>
+        </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          
+
         </v-card-actions>
       </v-card>
     </v-dialog>

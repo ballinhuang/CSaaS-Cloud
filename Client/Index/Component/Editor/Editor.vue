@@ -5,25 +5,13 @@
         <v-subheader>Language</v-subheader>
       </v-flex>
       <v-flex xs3>
-        <v-select
-          v-bind:items="languageitems"
-          v-model="language"
-          label="Select"
-          single-line
-          bottom
-        ></v-select>
+        <v-select v-bind:items="languageitems" v-model="language" label="Select" single-line bottom></v-select>
       </v-flex>
       <v-flex xs1>
         <v-subheader>Theme</v-subheader>
       </v-flex>
       <v-flex xs3>
-        <v-select
-          v-bind:items="themeitems"
-          v-model="theme"
-          label="Select"
-          single-line
-          bottom
-        ></v-select>
+        <v-select v-bind:items="themeitems" v-model="theme" label="Select" single-line bottom></v-select>
       </v-flex>
       <v-flex xs1 text-xs-center>
         <v-btn class="primary white--text" dark>
@@ -36,18 +24,7 @@
         </v-btn>
       </v-flex>
     </v-layout>
-    <Monaco
-        height="700"
-        :language="language"
-        srcPath="build"
-        :code="code"
-        :options="options"
-        :highlighted="highlightLines"
-        :changeThrottle="500"
-        :theme="theme"
-        @mounted="onMounted"
-        @codeChange="onCodeChange"
-        >
+    <Monaco height="700" :language="language" srcPath="build" :code="code" :options="options" :highlighted="highlightLines" :changeThrottle="500" :theme="theme" @mounted="onMounted" @codeChange="onCodeChange">
     </Monaco>
   </div>
 </template>

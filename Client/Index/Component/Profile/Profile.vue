@@ -44,47 +44,50 @@
 </template>
 
 <script>
-import API from '../../../WebAPI.js'
-import Adduser from './AddUser.vue'
-import ClusterSet from './ClusterSet.vue'
-import ChangePasswd from './ChangePasswd.vue'
+import API from "../../../WebAPI.js";
+import Adduser from "./AddUser.vue";
+import ClusterSet from "./ClusterSet.vue";
+import ChangePasswd from "./ChangePasswd.vue";
 
 export default {
-    data () {
-        return {
-            search: '',
-            headers: [
-                { text: 'User Name', value: 'username', align: 'left' },
-                { text: 'Passwd', value: 'passwd', align: 'left' },
-                { text: 'Operate', value: 'port', align: 'left' },
-            ],
-            user: {},
-            alertmsg: { alert: false, type: "", msg: "" },
-            pagination: {},
-            ismanager: false
-        }
-    },
-    methods: {
-        cleanalert () {
-            this.alertmsg.msg = ""
-            this.alertmsg.alert = false
-        }
-    },
-    components: {
-        adduser: Adduser,
-        clusterset: ClusterSet,
-        changepasswd: ChangePasswd
-    },
-    beforeCreate: function () {
-        API.getUser((res) => {
-            this.user = res.body;
-            if (this.user.authority.type === "manager") {
-                this.ismanager = true
-            }
-        }, (res) => {
-            alert("ERROR");
-        });
+  data() {
+    return {
+      search: "",
+      headers: [
+        { text: "User Name", value: "username", align: "left" },
+        { text: "Passwd", value: "passwd", align: "left" },
+        { text: "Operate", value: "port", align: "left" }
+      ],
+      user: {},
+      alertmsg: { alert: false, type: "", msg: "" },
+      pagination: {},
+      ismanager: false
+    };
+  },
+  methods: {
+    cleanalert() {
+      this.alertmsg.msg = "";
+      this.alertmsg.alert = false;
     }
-}
+  },
+  components: {
+    adduser: Adduser,
+    clusterset: ClusterSet,
+    changepasswd: ChangePasswd
+  },
+  beforeCreate: function() {
+    API.getUser(
+      res => {
+        this.user = res.body;
+        if (this.user.authority.type === "manager") {
+          this.ismanager = true;
+        }
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
+  }
+};
 </script>
 

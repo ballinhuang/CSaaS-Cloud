@@ -1,78 +1,51 @@
 <template>
-<div>
-  <h3>Simulation</h3>
-        <v-spacer></v-spacer>
-  <v-card>
-    <v-card-text>
-      <v-container fluid>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-subheader>Select Cluster</v-subheader>
-        </v-flex>
-        <v-flex xs2>
-          <v-select
-            v-bind:items="cluster_items"
-            v-model="cluster_model"
-            label="Select"
-            single-line
-            bottom
-          ></v-select>
-        </v-flex>
-        <v-flex xs1>
-          <v-subheader>Select Log</v-subheader>
-        </v-flex>
-        <v-flex xs3>
-          <v-select
-            v-bind:items="log_items"
-            v-model="log_model"
-            label="Select"
-            single-line
-            bottom
-            :disabled="selectcluster"
-          ></v-select>
-        </v-flex>
-        <v-flex xs1>
-          <v-subheader>NP</v-subheader>
-        </v-flex>
-        <v-flex xs1>
-          <v-text-field
-              label="NPs"
-              single-line
-              type="Number"
-              v-model="NPs"
-          ></v-text-field>
-        </v-flex>
-        <v-flex xs1>
-          <v-btn
-            class="primary"
-            :loading="loading"
-            @click.native="start"
-            :disabled="loading"
-          >
-            Start
-          </v-btn>
-        </v-flex>
-      </v-layout>
-      </v-container>
-    </v-card-text>
-  </v-card>
-  <v-data-table
-      v-bind:headers="headers"
-      :items="results"
-      class="elevation-1"
-    >
-    <template slot="items" slot-scope="props">
-      <td class="text-xs-center">{{ props.item.alogrithm }}</td>
-      <td class="text-xs-center">{{ props.item.time1 }}</td>
-      <td class="text-xs-center">{{ props.item.time2 }}</td>
-      <td class="text-xs-center">
+  <div>
+    <h3>Simulation</h3>
+    <v-spacer></v-spacer>
+    <v-card>
+      <v-card-text>
+        <v-container fluid>
+          <v-layout row wrap>
+            <v-flex xs2>
+              <v-subheader>Select Cluster</v-subheader>
+            </v-flex>
+            <v-flex xs2>
+              <v-select v-bind:items="cluster_items" v-model="cluster_model" label="Select" single-line bottom></v-select>
+            </v-flex>
+            <v-flex xs1>
+              <v-subheader>Select Log</v-subheader>
+            </v-flex>
+            <v-flex xs3>
+              <v-select v-bind:items="log_items" v-model="log_model" label="Select" single-line bottom :disabled="selectcluster"></v-select>
+            </v-flex>
+            <v-flex xs1>
+              <v-subheader>NP</v-subheader>
+            </v-flex>
+            <v-flex xs1>
+              <v-text-field label="NPs" single-line type="Number" v-model="NPs"></v-text-field>
+            </v-flex>
+            <v-flex xs1>
+              <v-btn class="primary" :loading="loading" @click.native="start" :disabled="loading">
+                Start
+              </v-btn>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+    </v-card>
+    <v-data-table v-bind:headers="headers" :items="results" class="elevation-1">
+      <template slot="items" slot-scope="props">
+        <td class="text-xs-center">{{ props.item.alogrithm }}</td>
+        <td class="text-xs-center">{{ props.item.time1 }}</td>
+        <td class="text-xs-center">{{ props.item.time2 }}</td>
+        <td class="text-xs-center">
           <p v-show="props.item.status === 'None'">{{ props.item.status }}</p>
           <v-progress-circular v-show="props.item.status === 'progress'" indeterminate class="primary--text"></v-progress-circular>
           <result :data="props.item.data" v-show="props.item.status === 'complete'"></result>
-      </td>
-    </template>
-  </v-data-table>
-</div>
+        </td>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>

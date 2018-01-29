@@ -13,37 +13,27 @@
             </v-btn>
           </v-flex>
           <v-flex xs5 class="pb-3" offset-xs6>
-            <v-text-field
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-            v-model="search"
-            >
+            <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search">
             </v-text-field>
           </v-flex>
         </v-layout>
-        
-        <v-card-text>
-          <v-data-table
-          v-bind:headers="headers"
-          v-bind:items="items"
-          v-bind:search="search"
-          >
-              <template slot="items" slot-scope="props">
-                  <td>{{props.item.JOBID}}</td>
-                  <td>{{props.item.JOBNAME}}</td>
-                  <td>{{props.item.USER}}</td>
-                  <td>{{props.item.JOBSTAT}}</td>
-                  <td>{{props.item.MOTHERNODE}}</td>
-                  <td>
-                    <v-btn v-if="props.item.JOBSTAT === 'RUNNING'" v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
-                  </td>
-              </template>
 
-              <template slot="pageText" slot-scope="{ pageStart, pageStop }">
-                  From {{ pageStart }} to {{ pageStop }}
-              </template>
+        <v-card-text>
+          <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
+            <template slot="items" slot-scope="props">
+              <td>{{props.item.JOBID}}</td>
+              <td>{{props.item.JOBNAME}}</td>
+              <td>{{props.item.USER}}</td>
+              <td>{{props.item.JOBSTAT}}</td>
+              <td>{{props.item.MOTHERNODE}}</td>
+              <td>
+                <v-btn v-if="props.item.JOBSTAT === 'RUNNING'" v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
+              </td>
+            </template>
+
+            <template slot="pageText" slot-scope="{ pageStart, pageStop }">
+              From {{ pageStart }} to {{ pageStop }}
+            </template>
 
           </v-data-table>
         </v-card-text>
@@ -68,12 +58,12 @@ export default {
       pagination: {},
       search: "",
       headers: [
-        { text: "Job ID", align: "left",value:"id" },
-        { text: "Job Name", align: "left" ,value:"jobname"},
-        { text: "User", align: "left" ,value:"user"},
-        { text: "Job Status", align: "left",value:"status" },
-        { text: "Mother Node", align: "left" ,value:"mothernode"},
-        { text: "Operate", align: "left",value:"operate" }
+        { text: "Job ID", align: "left", value: "id" },
+        { text: "Job Name", align: "left", value: "jobname" },
+        { text: "User", align: "left", value: "user" },
+        { text: "Job Status", align: "left", value: "status" },
+        { text: "Mother Node", align: "left", value: "mothernode" },
+        { text: "Operate", align: "left", value: "operate" }
       ],
       items: []
     };

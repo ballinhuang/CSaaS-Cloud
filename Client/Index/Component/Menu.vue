@@ -1,38 +1,38 @@
 <template>
-<v-app id="inspire">
-  <v-navigation-drawer fixed clipped app v-model="drawer">
-    <v-list dense>
-      <template v-for="(item, i) in items">
-        <v-list-tile :key="i" :href="item.href" :to="item.to" :router="item.router">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ item.text }}
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </template>
-    </v-list>
-  </v-navigation-drawer>
-  <v-toolbar color="blue darken-3" dark app clipped-left fixed>
-    <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <span class="hidden-xs-only">Crown</span>
-    </v-toolbar-title>
-  </v-toolbar>
-  <v-content>
-    <v-container>
-      <router-view>
+  <v-app id="inspire">
+    <v-navigation-drawer fixed clipped app v-model="drawer">
+      <v-list dense>
+        <template v-for="(item, i) in items">
+          <v-list-tile :key="i" :href="item.href" :to="item.to" :router="item.router">
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ item.text }}
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar color="blue darken-3" dark app clipped-left fixed>
+      <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <span class="hidden-xs-only">Crown</span>
+      </v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <v-container>
+        <router-view>
 
-      </router-view>
-    </v-container>
-  </v-content>
-  <v-footer color="blue darken-3" app>
-    <span class="white--text">&copy; 2017 NTCU CS</span>
-  </v-footer>
-</v-app>
+        </router-view>
+      </v-container>
+    </v-content>
+    <v-footer color="blue darken-3" app>
+      <span class="white--text">&copy; 2017 NTCU CS</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
