@@ -5,11 +5,11 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon Server/Entry.js  --ignore Client/ --exec babel-node --presets es2015,stage-0",
-    "build": "babel Server -d dist --presets --presets es2015,stage-0",
     "serve": "forever start -c babel-node Server/Entry.js --presets es2015,stage-0",
     "startdb": "mongod --dbpath=Server/DB --port 6000",
-    "dbtest": "forever -c \"node -r babel-register\" Server/User/CreatUser.js",
-    "wbuild": "webpack -d --progress --colors --watch"
+    "creatuser": "node -r babel-register Server/User/CreatUser.js",
+    "wbuild": "webpack -d --progress --colors --watch",
+    "init": "mkdir Server/Home;mkdir Server/DB"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",

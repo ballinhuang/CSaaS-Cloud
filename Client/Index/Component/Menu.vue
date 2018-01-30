@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer fixed clipped app v-model="drawer">
+    <v-navigation-drawer fixed clipped app v-model="drawer" dark>
       <v-list dense>
         <template v-for="(item, i) in items">
           <v-list-tile :key="i" :href="item.href" :to="item.to" :router="item.router">

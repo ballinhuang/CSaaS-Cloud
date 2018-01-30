@@ -61,8 +61,10 @@ module.exports = class JOPCluster extends Job {
                 nodename: d.operate.data.nodename,
                 nodeip: d.operate.data.nodeip,
                 nodeport: d.operate.data.nodeport,
-                nodenp: d.operate.data.nodenp
+                nodenp: d.operate.data.nodenp,
+                nodessh: d.operate.data.nodessh
             })
+
             execFile(__dirname + '/Command/addnode', [
                 '-i', '127.0.0.1',
                 '-p', target_cluster.port,
@@ -79,6 +81,7 @@ module.exports = class JOPCluster extends Job {
                     break;
                 }
             }
+
             execFile(__dirname + '/Command/removenode', [
                 '-i', '127.0.0.1',
                 '-p', target_cluster.port,

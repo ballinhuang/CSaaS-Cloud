@@ -1,39 +1,41 @@
 <template>
+  <div>
+    <v-btn class="primary" dark @click.native.stop="init">Setting</v-btn>
     <v-dialog v-model="dialog" width="500px" persistent>
-        <v-btn class="primary" dark slot="activator" v-on:click="init">Setting</v-btn>
-        <v-card>
+      <v-card>
 
-            <v-card-title>
-                <span class="headline">Cluster's User Setting</span>
-            </v-card-title>
+        <v-card-title>
+          <span class="headline">Cluster's User Setting</span>
+        </v-card-title>
 
-            <v-card-text>
-                <v-layout row>
-                    <v-flex xs4>
-                        <v-subheader>Username</v-subheader>
-                    </v-flex>
-                    <v-flex xs8>
-                        <v-text-field name="input-1" v-model="newusername"></v-text-field>
-                    </v-flex>
-                </v-layout>
-                <v-layout row>
-                    <v-flex xs4>
-                        <v-subheader>Password</v-subheader>
-                    </v-flex>
-                    <v-flex xs8>
-                        <v-text-field name="input-1" :type="visible ? 'text' : 'password'" :append-icon="visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" v-model="newuserpasswd"></v-text-field>
-                    </v-flex>
-                </v-layout>
+        <v-card-text>
+          <v-layout row>
+            <v-flex xs4>
+              <v-subheader>Username</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+              <v-text-field name="input-1" v-model="newusername"></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs4>
+              <v-subheader>Password</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+              <v-text-field name="input-1" :type="visible ? 'text' : 'password'" :append-icon="visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" v-model="newuserpasswd"></v-text-field>
+            </v-flex>
+          </v-layout>
 
-            </v-card-text>
+        </v-card-text>
 
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn class="blue--text darken-1" flat @click.native="clean">Close</v-btn>
-                <v-btn class="blue--text darken-1" flat @click.native="save">Save</v-btn>
-            </v-card-actions>
-        </v-card>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn class="blue--text darken-1" flat @click.native="clean">Close</v-btn>
+          <v-btn class="blue--text darken-1" flat @click.native="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
+  </div>
 </template>
 
 <script>

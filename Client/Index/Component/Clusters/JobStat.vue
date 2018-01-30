@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <div>
     <v-btn class="primary" dark @click.native.stop="open" :disabled="status==='Stop'">Job Status</v-btn>
     <v-dialog v-model="dialog" width="800px">
 
@@ -45,7 +45,7 @@
       </v-card>
 
     </v-dialog>
-  </v-layout>
+  </div>
 </template>
 
 <script>

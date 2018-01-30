@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="ismanager">
-            <h3>User List</h3>
+            <div class="display-2">User List</div>
             <v-spacer></v-spacer>
             <v-layout row wrap>
                 <v-flex xs1 class="text-xs-right">

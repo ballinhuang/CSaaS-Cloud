@@ -23,16 +23,17 @@ module.exports = class Lunch {
             nodecondata += node.nodeip + " " + node.nodeport + " " + node.nodename + " " + node.nodenp
         }
         fs.writeFileSync(nodecondir, nodecondata)
-
-        const serverexepath = path.join(process.cwd(), `./Server/Cluster/server`)
-        const argu = `-i 127.0.0.1 -p ${svr_port} -si 127.0.0.1 -sp ${sch_port}`
-        let stdout = ''
-        const proc = spawnSync(serverexepath, argu.split(' '), {
-            cwd: homedir,
-            timeout: 60
-        })
-        stdout = proc.stdout.toString()
-
+        /*
+                const serverexepath = path.join(process.cwd(), `./Server/Cluster/server`)
+                const argu = `-i 127.0.0.1 -p ${svr_port} -si 127.0.0.1 -sp ${sch_port}`
+                let stdout = ''
+                const proc = spawnSync(serverexepath, argu.split(' '), {
+                    cwd: homedir,
+                    timeout: 60
+                })
+                stdout = proc.stdout.toString()
+        */
+        var stdout = 1
         fs.unlink(nodecondir, (err) => {
             if (err) throw err;
         });
@@ -47,22 +48,24 @@ module.exports = class Lunch {
         if (!fs.existsSync(homedir, fs.constants.R_OK | fs.constants.W_OK)) {
             fs.mkdirSync(homedir);
         }
-
-        const schedulerexepath = path.join(process.cwd(), `./Server/Cluster/scheduler`)
-        let argu = ''
-        if (mode === "FIFO" || mode === "default")
-            argu = `-i 127.0.0.1 -p ${sch_port}`
-        else {
-            const filepath = path.join(process.cwd(), `./Server/Home/${username}/Scheduler/${mode}`)
-            argu = `-i 127.0.0.1 -p ${sch_port} -mode ${filepath}`
-        }
-
-        let stdout = ''
-        const proc = spawnSync(schedulerexepath, argu.split(' '), {
-            cwd: homedir,
-            timeout: 60
-        })
-        stdout = proc.stdout.toString()
+        /*
+                const schedulerexepath = path.join(process.cwd(), `./Server/Cluster/scheduler`)
+                let argu = ''
+                if (mode === "FIFO" || mode === "default")
+                    argu = `-i 127.0.0.1 -p ${sch_port}`
+                else {
+                    const filepath = path.join(process.cwd(), `./Server/Home/${username}/Scheduler/${mode}`)
+                    argu = `-i 127.0.0.1 -p ${sch_port} -mode ${filepath}`
+                }
+        
+                let stdout = ''
+                const proc = spawnSync(schedulerexepath, argu.split(' '), {
+                    cwd: homedir,
+                    timeout: 60
+                })
+                stdout = proc.stdout.toString()
+        */
+        var stdout = 2
         console.log(`Start scheduler process at port ${sch_port}. PID = ${stdout}`)
         return stdout
     }

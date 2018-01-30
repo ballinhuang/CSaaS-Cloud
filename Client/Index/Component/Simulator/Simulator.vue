@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Simulation</h3>
+    <div class="display-2">Simulation</div>
     <v-spacer></v-spacer>
     <v-card>
       <v-card-text>

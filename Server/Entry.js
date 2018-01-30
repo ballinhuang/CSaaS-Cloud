@@ -43,7 +43,7 @@ JobQueue.register(
 UserManager.init().then(async () => {
   const Users = UserManager.getUsers();
   LocalStrategy(Passport, Users);
-  //PortManager.init()
+  PortManager.init()
 });
 /*
     Express setting
@@ -51,10 +51,6 @@ UserManager.init().then(async () => {
 const APP = Express();
 const RTR = Express.Router()
 const PORT = 8082;
-const options = {
-  key: fs.readFileSync(`${__dirname}/Key/TLS/private.key`),
-  cert: fs.readFileSync(`${__dirname}/Key/TLS/certificate.crt`)
-};
 
 const Server = http.createServer(APP);
 

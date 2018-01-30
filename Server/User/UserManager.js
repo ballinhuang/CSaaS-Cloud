@@ -1,7 +1,8 @@
 import assert from 'assert';
 import MongoController from '../MongoController.js';
 import User from './User.js';
-
+import fs from 'fs'
+import path from 'path'
 
 import lodash from 'lodash'
 
@@ -97,6 +98,25 @@ class UserManager {
         if (await this.Users[Name] != null) {
             return false
         }
+        if (Type.type === "manager") {
+            const dirpath = path.join(process.cwd(), `./Server/Home/${Name}`)
+            if (!fs.existsSync(dirpath, fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath);
+            }
+            if (!fs.existsSync(dirpath + "/Clusters", fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath + "/Clusters");
+            }
+            if (!fs.existsSync(dirpath + "/Scheduler", fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath + "/Scheduler");
+            }
+            if (!fs.existsSync(dirpath + "/Sim", fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath + "/Sim");
+            }
+            if (!fs.existsSync(dirpath + "/Users", fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath + "/Users");
+            }
+        }
+
         await MongoController
             .insertDocument(this.CollectionName, newUser.getProperty())
         this.Users[Name] = newUser;

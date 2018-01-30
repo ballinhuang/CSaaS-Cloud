@@ -36,6 +36,9 @@
                   <v-text-field required v-model="props.item.nodeport"></v-text-field>
                 </td>
                 <td>
+                  <v-text-field required v-model="props.item.nodessh"></v-text-field>
+                </td>
+                <td>
                   <v-text-field type="number" required v-model="props.item.nodenp"></v-text-field>
                 </td>
               </template>
@@ -68,7 +71,8 @@ export default {
       headers: [
         { text: "Name", value: "name", align: "left" },
         { text: "IP", value: "nodes", align: "left" },
-        { text: "Port", value: "port", align: "left" },
+        { text: "Mom's Port", value: "port", align: "left" },
+        { text: "SSH Port", value: "ssh", align: "left" },
         { text: "CPU", value: "cpu", align: "left" }
       ],
       newcluster: {
@@ -80,7 +84,8 @@ export default {
             nodename: "",
             nodeip: "",
             nodeport: "",
-            nodenp: 0
+            nodenp: 0,
+            nodessh: ""
           }
         ],
         status: "",
@@ -132,7 +137,8 @@ export default {
           nodename: "",
           nodeip: "",
           nodeport: "",
-          nodenp: 0
+          nodenp: 0,
+          nodessh: ""
         }
       ];
       this.newcluster.status = "";
@@ -152,7 +158,8 @@ export default {
             nodename: "",
             nodeip: "",
             nodeport: "",
-            nodenp: 0
+            nodenp: 0,
+            nodessh: ""
           });
         }
       } else {

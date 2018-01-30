@@ -1,8 +1,8 @@
 <template>
-    <v-layout column justify-center align-center>
-      <div class="light-blue--text display-4">Hello {{user.name}} !</div>
-      <div class="light-blue--text display-3">Welcome to Crown</div>
-    </v-layout>
+  <v-layout class="mt-5" fill-height column justify-center align-center>
+    <div class="light-blue--text display-4">Hello {{user.name}} !</div>
+    <div class="light-blue--text display-3">Welcome to Crown</div>
+  </v-layout>
 </template>
 
 <script>

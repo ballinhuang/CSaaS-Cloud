@@ -3,26 +3,30 @@
     <v-btn fab dark class="indigo" @click.native.stop="open">
       <v-icon dark>add</v-icon>
     </v-btn>
-    <v-dialog v-model="addnodedialog" width="800px">
+    <v-dialog v-model="addnodedialog" width="300px">
       <v-card>
         <v-card-title>
           <span class="headline">Add Node</span>
         </v-card-title>
         <v-card-text>
-          <v-layout row wrap>
-            <v-flex xs3>
+          <v-layout column>
+            <v-flex xs12>
               <v-text-field label="Node name" v-model="nodename">
               </v-text-field>
             </v-flex>
-            <v-flex xs3>
+            <v-flex xs12>
               <v-text-field label="Node Ip" v-model="nodeip">
               </v-text-field>
             </v-flex>
-            <v-flex xs3>
+            <v-flex xs12>
               <v-text-field label="Node Port" v-model="nodeport">
               </v-text-field>
             </v-flex>
-            <v-flex xs3>
+            <v-flex xs12>
+              <v-text-field label="Node SSH" v-model="nodessh">
+              </v-text-field>
+            </v-flex>
+            <v-flex xs12>
               <v-text-field label="Node NP" v-model="nodenp">
               </v-text-field>
             </v-flex>
@@ -47,6 +51,7 @@ export default {
       nodeip: "",
       nodeport: "",
       nodenp: "",
+      nodessh: "",
       addnodedialog: false
     };
   },
@@ -56,6 +61,7 @@ export default {
       this.nodeip = "";
       this.nodeport = "";
       this.nodenp = "";
+      this.nodessh = "";
       this.addnodedialog = false;
     },
     submit() {
@@ -67,7 +73,8 @@ export default {
             nodename: this.nodename,
             nodeip: this.nodeip,
             nodeport: this.nodeport,
-            nodenp: this.nodenp
+            nodenp: this.nodenp,
+            nodessh: this.nodessh
           }
         },
         res => {

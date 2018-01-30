@@ -1,15 +1,15 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs6>
-            <h3>Change Password</h3>
-            <v-form v-model="valid">
-                <v-text-field label="New password" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'text' : 'password'" v-model="newpassword" :rules="newpasswordRules" required></v-text-field>
-                <v-text-field label="Enter again" v-model="check" :type="'password'" :rules="checkRules " required></v-text-field>
-                <v-btn @click="Save " :class="{ green: valid, red: !valid } ">Save</v-btn>
-            </v-form>
+  <v-layout row wrap>
+    <v-flex xs6>
+      <div class="display-2">Change Password</div>
+      <v-form v-model="valid">
+        <v-text-field label="New password" :append-icon="e1 ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (e1 = !e1)" :type="e1 ? 'text' : 'password'" v-model="newpassword" :rules="newpasswordRules" required></v-text-field>
+        <v-text-field label="Enter again" v-model="check" :type="'password'" :rules="checkRules " required></v-text-field>
+        <v-btn @click="Save " :class="{ green: valid, red: !valid } ">Save</v-btn>
+      </v-form>
 
-        </v-flex>
-    </v-layout>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
 import API from "../../../WebAPI.js";
