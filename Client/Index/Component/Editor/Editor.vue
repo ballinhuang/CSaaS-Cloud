@@ -23,18 +23,26 @@
           <v-icon dark>fa-trash</v-icon>
         </v-btn>
       </v-flex>
+      <v-flex xs1 text-xs-center>
+        <v-btn class="primary white--text" dark v-on:click="openFFshelf">OPEN</v-btn>
+      </v-flex>
     </v-layout>
-    <Monaco height="700" :language="language" srcPath="build" :code="code" :options="options" :highlighted="highlightLines" :changeThrottle="500" :theme="theme" @mounted="onMounted" @codeChange="onCodeChange">
-    </Monaco>
+    <v-layout>
+      <Monaco height="700" :language="language" srcPath="build" :code="code" :options="options" :highlighted="highlightLines" :changeThrottle="500" :theme="theme" @mounted="onMounted" @codeChange="onCodeChange">
+      </Monaco>
+    </v-layout>
+    <ffshelf category-url="../api/dirlist" v-on:confirm="onConfirm" ref="instance1"></ffshelf>
   </div>
 </template>
 
 <script>
 const Monaco = require("./Monaco.vue");
-
+import API from "../../../WebAPI.js";
+import FFShelf from "./ffshelf.min.js";
 module.exports = {
   components: {
-    Monaco
+    Monaco,
+    ffshelf: FFShelf
   },
   data() {
     return {
@@ -52,7 +60,7 @@ module.exports = {
           class: "secondary-highlighted-line"
         }
       ],
-      theme: "vs",
+      theme: "vs-dark",
       themeitems: [
         { text: "Visual Studio", value: "vs" },
         { text: "Visual Studio Dark", value: "vs-dark" },
@@ -81,11 +89,26 @@ module.exports = {
     },
     cleaneditor() {
       this.editor.setValue(this.code);
+    },
+    openFFshelf: function() {
+      this.$refs["instance1"].open();
+    },
+    onConfirm: function(files) {
+      // the "files" parameter is an array contains the file we selected.
+      API.getfile(
+        files[0].fileurl,
+        res => {
+          this.code = res.body;
+        },
+        res => {
+          alert(res.body);
+        }
+      );
     }
   },
-  created() {
+  beforeCreate() {
     this.options = {
-      selectOnLineNumbers: false
+      selectOnLineNumbers: true
     };
   }
 };

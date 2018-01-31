@@ -80,6 +80,9 @@ module.exports = {
     },
     theme: function() {
       window.monaco.editor.setTheme(this.theme);
+    },
+    code: function() {
+      this.editor.setValue(this.code);
     }
   },
   methods: {

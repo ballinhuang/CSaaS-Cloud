@@ -115,6 +115,9 @@ class UserManager {
             if (!fs.existsSync(dirpath + "/Users", fs.constants.R_OK | fs.constants.W_OK)) {
                 fs.mkdirSync(dirpath + "/Users");
             }
+            if (!fs.existsSync(dirpath + "/Work", fs.constants.R_OK | fs.constants.W_OK)) {
+                fs.mkdirSync(dirpath + "/Users");
+            }
         }
 
         await MongoController

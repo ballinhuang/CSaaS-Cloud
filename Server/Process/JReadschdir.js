@@ -29,6 +29,22 @@ module.exports = class JReadschdir extends Job {
             const files = fs.readdirSync(dirpath)
             done(null, files)
         }
+        else if (d.dir === 'dirlist') {
+            const dirpath = path.join(process.cwd(), `./Server/Home/${d.username}/Work`)
+            fs.readdir(dirpath, (err, files) => {
+                var dirlist = []
+                files.forEach(file => {
+                    dirlist.push({
+                        "id": file,
+                        "name": file,
+                        "icon": 'fa fa-list',
+                        "getUrl": `/api/filelist/${file}`,
+                        "postUrl": `/api/filelist/${file}`
+                    })
+                });
+                done(null, dirlist)
+            })
+        }
         else
             done(`Error`)
     }

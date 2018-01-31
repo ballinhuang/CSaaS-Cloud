@@ -214,4 +214,45 @@ RTR.route('/sim')
       res.status(500).send(result)
     })
   })
+
+RTR.route('/dirlist')
+  .get((req, res) => {
+    JobQueue.add(new JReadschdir(req.user.name, 'dirlist'), (result) => {
+      res.status(200).json(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
+
+RTR.route('/filelist/:dirname')
+  .get((req, res) => {
+    const dirpath = path.join(process.cwd(), `./Server/Home/${req.user.name}/Work/${req.params.dirname}`)
+    fs.readdir(dirpath, (err, files) => {
+      if (err) throw err;
+      var filelist = []
+      files.forEach(file => {
+        filelist.push({
+          "filename": file,
+          "filetype": 'file',
+          "fileurl": `/api/file/${req.params.dirname}/${file}`
+        })
+      });
+      res.status(200).json(filelist)
+    })
+  })
+
+RTR.route('/file/:dirname/:filename')
+  .get((req, res) => {
+    const filepath = path.join(process.cwd(), `./Server/Home/${req.user.name}/Work/${req.params.dirname}/${req.params.filename}`)
+    fs.readFile(filepath, 'utf8', function (err, contents) {
+      if (err) {
+        throw err;
+        res.status(500).send('ERROR')
+      }
+      else {
+        res.status(200).send(contents)
+      }
+    });
+  })
+
 APP.use('/api', RTR)
