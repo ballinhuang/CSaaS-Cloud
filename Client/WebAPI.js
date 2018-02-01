@@ -81,7 +81,7 @@ class WebAPI {
 		Vue.http.post('/api/sim', simmsg).then(success, fail)
 	}
 
-	getfile(url, success, fail) {
+	getworkfile(url, success, fail) {
 		Vue.http.get(url).then(success, fail);
 	}
 

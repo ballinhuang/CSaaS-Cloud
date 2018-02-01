@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <div class="display-2">Simulation</div>
     <v-spacer></v-spacer>
     <v-card>
@@ -45,7 +45,7 @@
         </td>
       </template>
     </v-data-table>
-  </div>
+  </v-container>
 </template>
 
 <script>

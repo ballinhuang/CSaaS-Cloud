@@ -17,7 +17,7 @@
               <td>{{ props.item.nodenp }}</td>
               <td v-show="ismanager">
                 <v-btn icon class="indigo--text" v-on:click="removenode(props.item.nodename)">
-                  <v-icon>fa-trash-o</v-icon>
+                  <v-icon>far fa-trash-alt</v-icon>
                 </v-btn>
               </td>
             </template>

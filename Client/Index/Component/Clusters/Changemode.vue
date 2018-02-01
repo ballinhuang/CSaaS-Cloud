@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn icon class="indigo--text" @click.native.stop="open">
-      <v-icon>fa-cog</v-icon>
+      <v-icon>fas fa-cog</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" width="800px">
       <v-card>

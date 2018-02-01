@@ -37,7 +37,7 @@ module.exports = class JReadschdir extends Job {
                     dirlist.push({
                         "id": file,
                         "name": file,
-                        "icon": 'fa fa-list',
+                        "icon": 'fas fa-folder-open',
                         "getUrl": `/api/filelist/${file}`,
                         "postUrl": `/api/filelist/${file}`
                     })

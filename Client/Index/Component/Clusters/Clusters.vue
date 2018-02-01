@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <div class="display-2">Cluster List</div>
     <v-spacer></v-spacer>
     <v-layout row wrap>
@@ -41,14 +41,14 @@
               <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
               </usersetting>
               <v-btn v-show="ismanager && props.item.status !== 'Work'" icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
-                <v-icon>fa-play</v-icon>
+                <v-icon>fas fa-play</v-icon>
               </v-btn>
               <v-btn v-show="ismanager && props.item.status !== 'Stop'" icon class="indigo--text" v-on:click="stopcluster(props.item.name)">
-                <v-icon>fa-stop</v-icon>
+                <v-icon>fas fa-stop</v-icon>
               </v-btn>
               <changemod v-if="ismanager" :user="user" :cluster="props.item" :modes="modes"></changemod>
               <v-btn v-show="ismanager" icon class="indigo--text" v-on:click="removecluster(props.item.name)">
-                <v-icon>fa-trash-o</v-icon>
+                <v-icon>far fa-trash-alt</v-icon>
               </v-btn>
             </v-layout>
           </td>
@@ -58,7 +58,7 @@
         </template>
       </v-data-table>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 

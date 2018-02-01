@@ -23,13 +23,11 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <v-container>
-        <router-view>
+      <router-view>
 
-        </router-view>
-      </v-container>
+      </router-view>
     </v-content>
-    <v-footer color="blue darken-3" app>
+    <v-footer color="blue darken-3" app fixed>
       <span class="white--text">&copy; 2017 NTCU CS</span>
     </v-footer>
   </v-app>
@@ -74,26 +72,26 @@ export default {
             to: "/profile",
             router: true,
             text: "Administrator",
-            icon: "fa-users"
+            icon: "fas fa-users"
           });
           this.items.splice(3, 0, {
             to: "/simulator",
             router: true,
             text: "Simulation",
-            icon: "fa-line-chart "
+            icon: "fas fa-chart-line"
           });
-          this.items.splice(3, 0, {
+          this.items.splice(4, 0, {
             to: "/editor",
             router: true,
             text: "Editor",
-            icon: "fa-line-chart "
+            icon: "fas fa-edit"
           });
         } else {
           this.items.splice(1, 0, {
             to: "/profile",
             router: true,
             text: "User",
-            icon: "fa-user-circle"
+            icon: "fas fa-user"
           });
         }
       },

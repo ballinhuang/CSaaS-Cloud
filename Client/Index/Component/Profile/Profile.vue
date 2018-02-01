@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-container>
         <div v-if="ismanager">
             <div class="display-2">User List</div>
             <v-spacer></v-spacer>
@@ -40,7 +40,7 @@
         <div v-if="!ismanager">
             <changepasswd :user="user"></changepasswd>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
