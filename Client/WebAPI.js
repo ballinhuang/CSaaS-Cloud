@@ -85,6 +85,13 @@ class WebAPI {
 		Vue.http.get(url).then(success, fail);
 	}
 
+	getdirlist(success, fail) {
+		Vue.http.get("/api/dirlist").then(success, fail);
+	}
+
+	operatefile(url, body, success, fail) {
+		Vue.http.post(url, body).then(success, fail);
+	}
 }
 
 export default new WebAPI();

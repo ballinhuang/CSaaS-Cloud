@@ -21,7 +21,8 @@ import {
   JOPCluster,
   JReadschdir,
   JOPJob,
-  JSim
+  JSim,
+  JOPFile
 } from './Process';
 
 require('./Utils.js')();
@@ -33,7 +34,8 @@ JobQueue.register(
   JOPCluster,
   JReadschdir,
   JOPJob,
-  JSim
+  JSim,
+  JOPFile
 )
 
 
@@ -254,5 +256,11 @@ RTR.route('/file/:dirname/:filename')
       }
     });
   })
-
+  .post((req, res) => {
+    JobQueue.add(new JOPFile(req.user.name, req.params.dirname, req.params.filename, req.body), (result) => {
+      res.status(200).send(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
+  })
 APP.use('/api', RTR)
