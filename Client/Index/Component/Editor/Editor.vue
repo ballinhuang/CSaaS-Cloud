@@ -78,10 +78,20 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-btn flat v-on:click="$refs['instance1'].open()">
-        Open File
-        <v-icon right dark>fas fa-cloud-download-alt</v-icon>
-      </v-btn>
+      <v-menu offset-y>
+        <v-btn flat slot="activator">
+          Cloud
+          <v-icon right dark>fas fa-cloud-download-alt</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile @click="$refs['instance1'].open()">
+            <v-list-tile-title>Open File</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile v-on:click="$refs['instance3'].open()">
+            <v-list-tile-title>Reomve File</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <!--<v-select v-bind:items="languageitems" v-model="language" label="Select" single-line bottom></v-select>-->
     </v-toolbar>
     <v-layout fill-height>
@@ -93,6 +103,9 @@
     </v-layout>
     <v-layout>
       <ffshelf category-url="../api/dirlist" v-on:confirm="savetooldfile" ref="instance2"></ffshelf>
+    </v-layout>
+    <v-layout>
+      <ffshelf category-url="../api/dirlist" v-on:confirm="removefile" ref="instance3"></ffshelf>
     </v-layout>
   </div>
 </template>
@@ -251,6 +264,18 @@ module.exports = {
       this.dirselect = "";
       this.inputdirname = "";
       this.inputfilename = "";
+    },
+    removefile: function(files) {
+      for (var i in files) {
+        API.operatefile(
+          files[i].fileurl,
+          {
+            operate: "delete"
+          },
+          res => {},
+          res => {}
+        );
+      }
     }
   },
   beforeCreate() {

@@ -24,7 +24,7 @@ module.exports = class Lunch {
         }
         fs.writeFileSync(nodecondir, nodecondata)
         /*
-                const serverexepath = path.join(process.cwd(), `./Server/Cluster/server`)
+                const serverexepath = path.join(process.cwd(), `./Server/Cluster/Daemons/server`)
                 const argu = `-i 127.0.0.1 -p ${svr_port} -si 127.0.0.1 -sp ${sch_port}`
                 let stdout = ''
                 const proc = spawnSync(serverexepath, argu.split(' '), {
@@ -49,7 +49,7 @@ module.exports = class Lunch {
             fs.mkdirSync(homedir);
         }
         /*
-                const schedulerexepath = path.join(process.cwd(), `./Server/Cluster/scheduler`)
+                const schedulerexepath = path.join(process.cwd(), `./Server/Cluster/Daemons/scheduler`)
                 let argu = ''
                 if (mode === "FIFO" || mode === "default")
                     argu = `-i 127.0.0.1 -p ${sch_port}`

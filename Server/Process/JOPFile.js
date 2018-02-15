@@ -26,13 +26,14 @@ module.exports = class JOPFile extends Job {
             done(null, 'Success')
         }
         else if (d.body.operate === 'delete') {
-            fs.unlink(nodecondir, (err) => {
-                if (err) {
-                    throw err;
-                    done('Error')
+            fs.unlinkSync(filepath)
+
+            if (fs.existsSync(dirpath, fs.constants.R_OK | fs.constants.W_OK)) {
+                if (fs.readdirSync(dirpath).length === 0) {
+                    fs.rmdirSync(dirpath);
                 }
-                done(null, 'Success')
-            });
+            }
+            done(null, 'Success')
         }
     }
 

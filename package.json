@@ -9,7 +9,7 @@
     "startdb": "mongod --dbpath=Server/DB --port 6000",
     "creatuser": "node -r babel-register Server/User/CreatUser.js",
     "wbuild": "webpack -d --progress --colors --watch",
-    "init": "mkdir Server/Home;mkdir Server/DB"
+    "initapp": "mkdir Server/Home;mkdir Server/DB"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -27,9 +27,7 @@
     "file-loader": "^0.11.2",
     "forever": "^0.15.3",
     "helmet": "^3.7.0",
-    "http-proxy": "^1.16.2",
     "imports-loader": "^0.7.1",
-    "jquery": "^3.2.1",
     "json-loader": "^0.5.4",
     "kue": "^0.11.6",
     "lodash": "^4.17.4",
@@ -41,6 +39,8 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "process": "^0.11.10",
+    "scp2": "^0.5.0",
+    "ssh2": "^0.5.5",
     "style-loader": "^0.18.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
