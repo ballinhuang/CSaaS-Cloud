@@ -8,6 +8,7 @@ import JReadschdir from './JReadschdir.js'
 import JOPJob from './JOPJob.js'
 import JSim from './JSim.js'
 import JOPFile from './JOPFile.js'
+import JCompile from './JCompile.js'
 
 module.exports = {
   JSubjob,
@@ -18,5 +19,6 @@ module.exports = {
   JOPJob,
   JSim,
   JOPFile,
+  JCompile,
   JobQueue: new JobQueue()
 }

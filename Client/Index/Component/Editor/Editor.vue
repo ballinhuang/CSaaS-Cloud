@@ -32,7 +32,7 @@
           <v-card-text>
             <v-layout row wrap>
               <v-flex xs4>
-                <v-subheader>Select Folder</v-subheader>
+                <v-subheader>Select Old Folder</v-subheader>
               </v-flex>
               <v-flex xs8>
                 <v-select :disabled="inputdirname!==''" v-bind:items="dirlist" v-model="dirselect" label="Select" single-line bottom></v-select>
@@ -90,6 +90,9 @@
           <v-list-tile v-on:click="$refs['instance3'].open()">
             <v-list-tile-title>Reomve File</v-list-tile-title>
           </v-list-tile>
+          <v-list-tile v-on:click="$refs['instance4'].open()">
+            <v-list-tile-title>Compile File</v-list-tile-title>
+          </v-list-tile>
         </v-list>
       </v-menu>
       <!--<v-select v-bind:items="languageitems" v-model="language" label="Select" single-line bottom></v-select>-->
@@ -106,6 +109,9 @@
     </v-layout>
     <v-layout>
       <ffshelf category-url="../api/dirlist" v-on:confirm="removefile" ref="instance3"></ffshelf>
+    </v-layout>
+    <v-layout>
+      <ffshelf category-url="../api/dirlist" v-on:confirm="compilefile" ref="instance4"></ffshelf>
     </v-layout>
   </div>
 </template>
@@ -276,6 +282,25 @@ module.exports = {
           res => {}
         );
       }
+    },
+    compilefile: function(files, modename) {
+      var filespath = [];
+      for (var i in files) {
+        filespath.push(files[i].fileurl);
+      }
+      var body = {
+        files: filespath,
+        modename: modename
+      };
+      API.operatefile(
+        body,
+        res => {
+          alert(res.body);
+        },
+        res => {
+          alert(res.body);
+        }
+      );
     }
   },
   beforeCreate() {
