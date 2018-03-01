@@ -92,6 +92,10 @@ class WebAPI {
 	operatefile(url, body, success, fail) {
 		Vue.http.post(url, body).then(success, fail);
 	}
+
+	compile(body, success, fail) {
+		Vue.http.post("/api/compile", body).then(success, fail)
+	}
 }
 
 export default new WebAPI();

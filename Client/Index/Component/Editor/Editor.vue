@@ -111,8 +111,30 @@
       <ffshelf category-url="../api/dirlist" v-on:confirm="removefile" ref="instance3"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/dirlist" v-on:confirm="compilefile" ref="instance4"></ffshelf>
+      <ffshelf category-url="../api/dirlist" v-on:confirm="inputmodename" ref="instance4"></ffshelf>
     </v-layout>
+    <!-- Save to new file dialog -->
+    <v-dialog v-model="inputmodenamedialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Compille</v-card-title>
+        <v-card-text>
+
+          <v-layout row wrap>
+            <v-flex xs4>
+              <v-subheader>Mode Name</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+              <v-text-field label="Mode Name" v-model="modename"></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat="flat" @click.native="closeinputmodenamedialog">Cancle</v-btn>
+          <v-btn flat="flat" @click.native="compilefile">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -155,10 +177,13 @@ module.exports = {
       ],
       deletedialog: false,
       savetonewfiledialog: false,
+      inputmodenamedialog: false,
       dirlist: [],
       dirselect: "",
       inputdirname: "",
-      inputfilename: ""
+      inputfilename: "",
+      modename: "",
+      filestemp: []
     };
   },
   methods: {
@@ -283,16 +308,24 @@ module.exports = {
         );
       }
     },
-    compilefile: function(files, modename) {
+    inputmodename: function(files) {
+      this.filestemp = files;
+      this.inputmodenamedialog = true;
+    },
+    closeinputmodenamedialog() {
+      this.inputmodenamedialog = false;
+      this.filestemp = [];
+    },
+    compilefile() {
       var filespath = [];
-      for (var i in files) {
-        filespath.push(files[i].fileurl);
+      for (var i in this.filestemp) {
+        filespath.push(this.filestemp[i].fileurl);
       }
       var body = {
         files: filespath,
-        modename: modename
+        modename: this.modename
       };
-      API.operatefile(
+      API.compile(
         body,
         res => {
           alert(res.body);
@@ -301,6 +334,7 @@ module.exports = {
           alert(res.body);
         }
       );
+      this.closeinputmodenamedialog();
     }
   },
   beforeCreate() {
