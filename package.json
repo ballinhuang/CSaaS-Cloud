@@ -8,7 +8,7 @@
     "serve": "forever start -c babel-node Server/Entry.js --presets es2015,stage-0",
     "startdb": "mongod --dbpath=Server/DB --port 6000",
     "creatuser": "node -r babel-register Server/User/CreatUser.js",
-    "wbuild": "webpack -d --progress --colors --watch",
+    "build": "webpack -d --progress --colors --watch",
     "initapp": "mkdir Server/Home;mkdir Server/DB"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
     "express-session": "^1.15.4",
-    "file-loader": "^0.11.2",
+    "file-loader": "^1.1.11",
     "forever": "^0.15.3",
     "helmet": "^3.7.0",
     "imports-loader": "^0.7.1",

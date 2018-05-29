@@ -38,8 +38,11 @@ module.exports = {
         loader: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(jpg|eot|png|woff|woff2|ttf|svg)$/,
-        loader: "url-loader"
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+            name: '[name].[ext]?[hash]'
+        }
       }
     ]
   },
@@ -67,6 +70,9 @@ module.exports = {
       {
         from: 'node_modules/monaco-editor/min/vs',
         to: 'vs',
+      }
+      ,{
+        from: 'Client/Login/CSAAS.png'
       }
     ])
   ]

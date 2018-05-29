@@ -82,7 +82,7 @@ APP.use(Passport.session());
 /**
  * Statcic binding
  */
-APP.use('/build', Express.static(`${BaseDir}/Client/build`))
+APP.use('/', Express.static(`${BaseDir}/Client/build`))
 /**
  * Authenticated
  */
