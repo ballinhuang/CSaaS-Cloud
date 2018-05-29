@@ -23,7 +23,9 @@ import {
   JOPJob,
   JSim,
   JOPFile,
-  JCompile
+  JCompile,
+  JSSH,
+  JSCP
 } from './Process';
 
 require('./Utils.js')();
@@ -37,7 +39,9 @@ JobQueue.register(
   JOPJob,
   JSim,
   JOPFile,
-  JCompile
+  JCompile,
+  JSSH,
+  JSCP
 )
 
 
@@ -274,4 +278,35 @@ RTR.route('/compile')
       res.status(500).send(result)
     })
   })
+
+
+
+//cluseter file operate
+RTR.route('/clusterscp/:file')
+// ls file
+  .get((req,res)=>{
+    if(req.params.file === undefined){
+      // do ssh ls to get file list
+    }
+    else{
+      // ssg cat the file
+    }
+  })
+// write a file to cluseter
+  .post((req,res)=>{
+
+  })
+// Delete a from to cluseter
+  .delete((req,res)=>{
+
+  })
+
+RTR.route('/clusterssh')
+  .post((req,res)=>{
+    // run command to compile the file
+  })
+
+
+
+
 APP.use('/api', RTR)

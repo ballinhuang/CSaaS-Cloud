@@ -9,6 +9,8 @@ import JOPJob from './JOPJob.js'
 import JSim from './JSim.js'
 import JOPFile from './JOPFile.js'
 import JCompile from './JCompile.js'
+import JSSH from './JSSH.js'
+import JSCP from './JSCP.js'
 
 module.exports = {
   JSubjob,
@@ -20,5 +22,7 @@ module.exports = {
   JSim,
   JOPFile,
   JCompile,
+  JSSH,
+  JSCP,
   JobQueue: new JobQueue()
 }
