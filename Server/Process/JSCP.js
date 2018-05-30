@@ -5,7 +5,7 @@ import fs from 'fs'
 import Job from './Job.js'
 import { UserManager } from '../User'
 
-module.exports = class JAddCluster extends Job {
+module.exports = class JSCP extends Job {
     constructor(operate, body) {
         super({})
         this.operate = operate
@@ -23,19 +23,38 @@ module.exports = class JAddCluster extends Job {
 
     static onProcess(job, done) {
         const d = job.data
-        if(d.operate === 'write'){
+
+        const user = UserManager.getProfile(d.body.username)
+        let cluster = user.clusters.filter(c => c.name === d.body.clustername);
+
+        console.log(cluster)
+
+        var client = new Client({
+            port: cluster.nodeslist[0].nodessh,
+            host: cluster.nodeslist[0].nodeip,
+            username: cluster.username,
+            password: cluster.passwd
+        });
+
+        if (d.operate === 'write') {
             /*
                 data = {
                     filename: "file.c",
                     content : "..."
                 }
             */
-            /*
-                client.write({
-                    destination: '/home/admin/data/file.c',
-                    content: 'hello world'
-                }, callback)
-            */
+            client.write({
+                destination: d.body.data.filename,
+                content: d.body.data.content
+            }, function (err) {
+                if (err) {
+                    console.log(err)
+                    done(err)
+                }
+                else {
+                    done(null)
+                }
+            })
         }
     }
 

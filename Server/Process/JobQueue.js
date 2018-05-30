@@ -4,7 +4,7 @@ module.exports = class JobQueue {
   constructor() {
     this.registered = []
     this.queue = kue.createQueue()
-    this.queue.setMaxListeners(30)
+    this.queue.setMaxListeners(121)
   }
 
   add(newjob, onComplete, onFailed) {
@@ -16,7 +16,7 @@ module.exports = class JobQueue {
   register() {
     for (const JobClass of arguments) {
       this.registered.push(JobClass.name)
-      this.queue.process(JobClass.name, 3, JobClass.onProcess)
+      this.queue.process(JobClass.name, 10, JobClass.onProcess)
     }
   }
 

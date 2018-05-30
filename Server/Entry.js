@@ -283,27 +283,51 @@ RTR.route('/compile')
 
 //cluseter file operate
 RTR.route('/clusterscp/:file')
-// ls file
-  .get((req,res)=>{
-    if(req.params.file === undefined){
+  // ls file
+  .get((req, res) => {
+    if (req.params.file === undefined) {
       // do ssh ls to get file list
+      JobQueue.add(new JSSH('ls', req.body), (result) => {
+        // ************need convert to json***************
+        res.status(200).send(result)
+      }, (result) => {
+        res.status(500).send(result)
+      })
     }
-    else{
+    else {
       // ssg cat the file
+      JobQueue.add(new JSSH('cat', req.body), (result) => {
+        res.status(200).send(result)
+      }, (result) => {
+        res.status(500).send(result)
+      })
     }
   })
-// write a file to cluseter
-  .post((req,res)=>{
-
+  // write a file to cluseter
+  .post((req, res) => {
+    JobQueue.add(new JSCP('write', req.body), (result) => {
+      res.status(200).send(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
   })
-// Delete a from to cluseter
-  .delete((req,res)=>{
-
+  // Delete a from to cluseter
+  .delete((req, res) => {
+    JobQueue.add(new JSSH('remove', req.body), (result) => {
+      res.status(200).send(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
   })
 
 RTR.route('/clusterssh')
-  .post((req,res)=>{
+  .post((req, res) => {
     // run command to compile the file
+    JobQueue.add(new JSSH('compile', req.body), (result) => {
+      res.status(200).send(result)
+    }, (result) => {
+      res.status(500).send(result)
+    })
   })
 
 
