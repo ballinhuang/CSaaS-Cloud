@@ -11,55 +11,6 @@
           <v-select v-bind:items="themeitems" v-model="theme" label="Select" single-line bottom></v-select>
         </v-flex>
       </v-layout>
-      <v-menu offset-y>
-        <v-btn flat slot="activator">
-          Save
-          <v-icon right dark>far fa-save</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile @click="savetonewfileopen">
-            <v-list-tile-title>To New File</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile v-on:click="$refs['instance2'].open()">
-            <v-list-tile-title>To Old File</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-      <!-- Save to new file dialog -->
-      <v-dialog v-model="savetonewfiledialog" max-width="500px">
-        <v-card>
-          <v-card-title class="headline">Save File</v-card-title>
-          <v-card-text>
-            <v-layout row wrap>
-              <v-flex xs4>
-                <v-subheader>Select Old Folder</v-subheader>
-              </v-flex>
-              <v-flex xs8>
-                <v-select :disabled="inputdirname!==''" v-bind:items="dirlist" v-model="dirselect" label="Select" single-line bottom></v-select>
-              </v-flex>
-            </v-layout>
-            <v-layout row wrap>
-              <v-flex xs4>
-                <v-subheader>New Folder Name</v-subheader>
-              </v-flex>
-              <v-flex xs8>
-                <v-text-field label="Folder name" v-model="inputdirname"></v-text-field>
-              </v-flex>
-              <v-flex xs4>
-                <v-subheader>New File Name</v-subheader>
-              </v-flex>
-              <v-flex xs8>
-                <v-text-field label="File name" v-model="inputfilename"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn flat="flat" @click.native="closesavetonewfiledialog">Cancle</v-btn>
-            <v-btn flat="flat" @click.native="savetonewfile">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
 
       <v-btn flat @click.native.stop="deletedialog = true">
         New File
@@ -78,23 +29,62 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
       <v-menu offset-y>
         <v-btn flat slot="activator">
-          Cloud
+          Save
+          <v-icon right dark>far fa-save</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile @click="savetonewfiledialog = true">
+            <v-list-tile-title>To New File</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile v-on:click="$refs['filesavelist'].open()">
+            <v-list-tile-title>To Old File</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+
+      <!-- Save to new file dialog -->
+      <v-dialog v-model="savetonewfiledialog" max-width="500px">
+        <v-card>
+          <v-card-title class="headline">Save File</v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs4>
+                <v-subheader>New File Name</v-subheader>
+              </v-flex>
+              <v-flex xs8>
+                <v-text-field label="File name" v-model="newfilename"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat="flat" @click.native="closesavetonewfiledialog">Cancle</v-btn>
+            <v-btn flat="flat" @click.native="savetonewfile">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-menu offset-y>
+        <v-btn flat slot="activator">
+          Operate
           <v-icon right dark>fas fa-cloud-download-alt</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile @click="$refs['instance1'].open()">
+          <v-list-tile @click="$refs['fileopenlist'].open()">
             <v-list-tile-title>Open File</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile v-on:click="$refs['instance3'].open()">
+          <v-list-tile v-on:click="$refs['fileremovelist'].open()">
             <v-list-tile-title>Reomve File</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile v-on:click="$refs['instance4'].open()">
+          <v-list-tile v-on:click="$refs['filecompilelist'].open()">
             <v-list-tile-title>Compile File</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
+
       <!--<v-select v-bind:items="languageitems" v-model="language" label="Select" single-line bottom></v-select>-->
     </v-toolbar>
     <v-layout fill-height>
@@ -102,36 +92,42 @@
       </Monaco>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/dirlist" v-on:confirm="onConfirm" ref="instance1"></ffshelf>
+      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onOpenfile" ref="fileopenlist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/dirlist" v-on:confirm="savetooldfile" ref="instance2"></ffshelf>
+      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onRemovefile" ref="fileremovelist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/dirlist" v-on:confirm="removefile" ref="instance3"></ffshelf>
+      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onCompilefile" ref="filecompilelist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/dirlist" v-on:confirm="inputmodename" ref="instance4"></ffshelf>
+      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onSavefile" ref="filesavelist"></ffshelf>
     </v-layout>
     <!-- Save to new file dialog -->
-    <v-dialog v-model="inputmodenamedialog" max-width="500px">
+    <v-dialog v-model="inputargdialog" max-width="500px">
       <v-card>
-        <v-card-title class="headline">Compille</v-card-title>
+        <v-card-title class="headline">Compile</v-card-title>
         <v-card-text>
 
           <v-layout row wrap>
             <v-flex xs4>
-              <v-subheader>Mode Name</v-subheader>
+              <v-subheader>Compiler</v-subheader>
             </v-flex>
             <v-flex xs8>
-              <v-text-field label="Mode Name" v-model="modename"></v-text-field>
+              <v-select v-bind:items="compilerslist" v-model="complier" label="Select" single-line bottom></v-select>
+            </v-flex>
+            <v-flex xs4>
+              <v-subheader>Options</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+              <v-text-field label="Options" v-model="options"></v-text-field>
             </v-flex>
           </v-layout>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat="flat" @click.native="closeinputmodenamedialog">Cancle</v-btn>
-          <v-btn flat="flat" @click.native="compilefile">Save</v-btn>
+          <v-btn flat="flat" @click.native="closeinputargdialog">Cancle</v-btn>
+          <v-btn flat="flat" @click.native="compilefile">Compile</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -142,6 +138,7 @@
 const Monaco = require("./Monaco.vue");
 import API from "../../../WebAPI.js";
 import FFShelf from "./ffshelf.min.js";
+
 module.exports = {
   components: {
     Monaco,
@@ -152,13 +149,7 @@ module.exports = {
       languageitems: [],
       languagesinfo: [],
       language: "cpp",
-      code:
-        '#include "IScheduler.hpp"\n\n' +
-        "class [Name] : public IScheduler {\n\n" +
-        "\tpublic:\n" +
-        "\t\t[Name]();\n" +
-        "\t\tdeque<Job> schedule(deque<Job>, deque<Job>, long, deque<Node>);\n\n" +
-        "};",
+      code: "// Inpute your codes.",
       highlightLines: [
         {
           number: 0,
@@ -176,19 +167,19 @@ module.exports = {
         { text: "High Contrast Dark", value: "hc-black" }
       ],
       deletedialog: false,
+      inputargdialog: false,
       savetonewfiledialog: false,
-      inputmodenamedialog: false,
-      dirlist: [],
-      dirselect: "",
-      inputdirname: "",
-      inputfilename: "",
-      modename: "",
+
+      compilerslist: [{ text: "gcc" }, { text: "g++" }, { text: "mpicc" }],
+
+      newfilename: "",
+      options: "",
+      complier: "",
       filestemp: []
     };
   },
   methods: {
     onMounted(editor, monaco) {
-      //console.log("after mount!", editor, editor.getValue(), editor.getModel());
       this.editor = editor;
       this.monaco = monaco;
       this.languagesinfo = this.monaco.languages.getLanguages();
@@ -210,13 +201,9 @@ module.exports = {
       this.deletedialog = false;
       this.code = "";
     },
-    openFFshelf: function() {
-      this.$refs["instance1"].open();
-    },
-    onConfirm: function(files) {
-      // the "files" parameter is an array contains the file we selected.
-      API.getworkfile(
-        files[0].fileurl,
+    onOpenfile: function(files) {
+      API.clustergetfile(
+        `/cluster/scp/${files[0].filename}`,
         res => {
           this.code = res.body;
         },
@@ -225,43 +212,16 @@ module.exports = {
         }
       );
     },
-    savetonewfileopen() {
-      API.getdirlist(
-        res => {
-          this.dirlist = [];
-          for (var i in res.body) {
-            this.dirlist.push({
-              text: res.body[i].name,
-              value: res.body[i].name
-            });
-          }
-          this.savetonewfiledialog = true;
-        },
-        res => {
-          alert(result.body);
-        }
-      );
-    },
     savetonewfile() {
       if (this.inputfilename === "") {
         alert("No input the file's name");
         this.closesavetonewfiledialog();
       }
-      if (this.dirselect === "" && this.inputdirname === "") {
-        alert("No input the Floder name");
-        this.closesavetonewfiledialog();
-      }
-      var finaldirname = "";
-      if (this.inputdirname !== "") {
-        finaldirname = this.inputdirname;
-      } else {
-        finaldirname = this.dirselect;
-      }
-      API.operatefile(
-        `/api/file/${finaldirname}/${this.inputfilename}`,
+
+      API.clusteroperatefile(
+        `/cluster/scp/`,
         {
-          operate: "save",
-          data: this.editor.getValue()
+          c
         },
         res => {
           alert(res.body);
@@ -273,12 +233,15 @@ module.exports = {
         }
       );
     },
-    savetooldfile: function(files) {
-      API.operatefile(
-        files[0].fileurl,
+    onSavefile: function(files) {
+      API.clusteroperatefile(
+        `/cluster/scp/`,
         {
-          operate: "save",
-          data: this.editor.getValue()
+          operate: "write",
+          data: {
+            filename: files[0].filename,
+            content: this.code
+          }
         },
         res => {
           alert(res.body);
@@ -292,49 +255,64 @@ module.exports = {
     },
     closesavetonewfiledialog() {
       this.savetonewfiledialog = false;
-      this.dirselect = "";
-      this.inputdirname = "";
-      this.inputfilename = "";
+      this.newfilename = "";
     },
-    removefile: function(files) {
+    onRemovefile: function(files) {
       for (var i in files) {
-        API.operatefile(
-          files[i].fileurl,
+        API.clusteroperatefile(
+          `/cluster/scp/`,
           {
-            operate: "delete"
+            operate: "remove",
+            data: {
+              filename: files[i].filename
+            }
           },
-          res => {},
-          res => {}
+          res => {
+            alert(res.body);
+          },
+          res => {
+            alert(res.body);
+          }
         );
       }
     },
-    inputmodename: function(files) {
+    onCompilefile: function(files) {
       this.filestemp = files;
-      this.inputmodenamedialog = true;
+      this.inputargdialog = true;
     },
-    closeinputmodenamedialog() {
-      this.inputmodenamedialog = false;
+    closeinputargdialog() {
+      this.inputargdialog = false;
       this.filestemp = [];
+      this.complier = "";
+      this.options = "";
     },
     compilefile() {
-      var filespath = [];
-      for (var i in this.filestemp) {
-        filespath.push(this.filestemp[i].fileurl);
+      if (this.complier === "") {
+        this.closeinputargdialog();
       }
-      var body = {
-        files: filespath,
-        modename: this.modename
-      };
-      API.compile(
-        body,
+      var files = "";
+      for (var i in this.filestemp) {
+        files += this.filestemp[i].filename + " ";
+      }
+      API.clusteroperatefile(
+        `/cluster/scp/`,
+        {
+          operate: "compile",
+          data: {
+            compiler: this.complier,
+            argc: this.options,
+            files: ""
+          }
+        },
         res => {
+          this.closeinputargdialog();
           alert(res.body);
         },
         res => {
+          this.closeinputargdialog();
           alert(res.body);
         }
       );
-      this.closeinputmodenamedialog();
     }
   },
   beforeCreate() {

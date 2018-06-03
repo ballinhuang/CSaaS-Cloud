@@ -280,9 +280,14 @@ RTR.route('/compile')
   })
 
 
+RTR.route('/cluster/dirlist')
+  .get((req, res) => {
+
+  })
+
 
 //cluseter file operate
-RTR.route('/clusterscp/:file')
+RTR.route('/cluster/scp/:file')
   // ls file
   .get((req, res) => {
     if (req.params.file === undefined) {
@@ -320,7 +325,7 @@ RTR.route('/clusterscp/:file')
     })
   })
 
-RTR.route('/clusterssh')
+RTR.route('/cluster/ssh')
   .post((req, res) => {
     // run command to compile the file
     JobQueue.add(new JSSH('compile', req.body), (result) => {

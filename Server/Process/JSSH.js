@@ -60,10 +60,11 @@ module.exports = class JSSH extends Job {
                 /*
                     data = {
                         compiler: "gcc",
-                        argc:""
+                        argc:"",
+                        files:""
                     }
                 */
-                conn.exec(d.body.data.compiler + ' ' + body.data.argc, function (err, stream) {
+                conn.exec(d.body.data.compiler + ' ' + body.data.argc + ' ' + body.data.files, function (err, stream) {
                     var stdout = ''
                     if (err) {
                         //throw err;
