@@ -99,6 +99,20 @@ const isLogin = (req, res, next) => {
   }
 };
 
+const isOwner = (username, clustername) => {
+  let user = UserManager.getProfile(username)
+  var isowner = false
+  let target_cluster = null
+  for (var cluster in user.clusters) {
+    if (user.clusters[cluster].name === clustername) {
+      isowner = true
+      target_cluster = user.clusters[cluster]
+      break
+    }
+  }
+  return target_cluster
+}
+
 
 /**
  *  Routing set
@@ -155,7 +169,7 @@ RTR.route('/uses/user')
 
 RTR.route('/subjob')
   .post((req, res) => {
-    let user = UserManager.getProfile(req.user.name)
+    /*let user = UserManager.getProfile(req.user.name)
     var isowner = false
     let target_cluster = null
     for (var cluster in user.clusters) {
@@ -164,8 +178,9 @@ RTR.route('/subjob')
         target_cluster = user.clusters[cluster]
         break
       }
-    }
-    if (isowner) {
+    }*/
+    var target_cluster = isOwner(req.user.name, req.body.name)
+    if (target_cluster !== null) {
       JobQueue.add(new JSubjob(user, target_cluster, req.body), (result) => {
         res.status(200).json(result)
       }, (result) => {
@@ -280,9 +295,27 @@ RTR.route('/compile')
   })
 
 
-RTR.route('/cluster/dirlist')
+RTR.route('/cluster/dirlist/:clustername')
   .get((req, res) => {
+    var target_cluster = isOwner(req.user.name, req.params.clustername)
+    if (target_cluster !== null) {
+      if (target_cluster.username !== "" && target_cluster.password !== "") {
+        res.status(200).send([{
+          "id": `/home/${target_cluster.username}`,
+          "name": `/home/${target_cluster.username}`,
+          "icon": 'fas fa-folder-open',
+          "getUrl": `/api/cluster/scp/`,
+          "postUrl": `/api/cluster/scp/`
+        }])
+      }
+      else {
+        res.status(500).send("Please set your cluster's user first!")
+      }
 
+    }
+    else {
+      res.status(500).send("Your are not the cluster's user!")
+    }
   })
 
 
@@ -293,7 +326,6 @@ RTR.route('/cluster/scp/:file')
     if (req.params.file === undefined) {
       // do ssh ls to get file list
       JobQueue.add(new JSSH('ls', req.body), (result) => {
-        // ************need convert to json***************
         res.status(200).send(result)
       }, (result) => {
         res.status(500).send(result)
@@ -308,34 +340,33 @@ RTR.route('/cluster/scp/:file')
       })
     }
   })
-  // write a file to cluseter
+
   .post((req, res) => {
-    JobQueue.add(new JSCP('write', req.body), (result) => {
-      res.status(200).send(result)
-    }, (result) => {
-      res.status(500).send(result)
-    })
+    if (req.body.operate === "write") {
+      // write a file to cluseter
+      JobQueue.add(new JSCP('write', req.body), (result) => {
+        res.status(200).send(result)
+      }, (result) => {
+        res.status(500).send(result)
+      })
+    }
+    else if (req.body.operate === "remove") {
+      // Delete a from to cluseter
+      JobQueue.add(new JSSH('remove', req.body), (result) => {
+        res.status(200).send(result)
+      }, (result) => {
+        res.status(500).send(result)
+      })
+    }
+    else if (req.body.operate === "compile") {
+      // run command to compile the file
+      JobQueue.add(new JSSH('compile', req.body), (result) => {
+        res.status(200).send(result)
+      }, (result) => {
+        res.status(500).send(result)
+      })
+    }
+
   })
-  // Delete a from to cluseter
-  .delete((req, res) => {
-    JobQueue.add(new JSSH('remove', req.body), (result) => {
-      res.status(200).send(result)
-    }, (result) => {
-      res.status(500).send(result)
-    })
-  })
-
-RTR.route('/cluster/ssh')
-  .post((req, res) => {
-    // run command to compile the file
-    JobQueue.add(new JSSH('compile', req.body), (result) => {
-      res.status(200).send(result)
-    }, (result) => {
-      res.status(500).send(result)
-    })
-  })
-
-
-
 
 APP.use('/api', RTR)

@@ -45,7 +45,17 @@ module.exports = class JSSH extends Job {
                     stream.on('close', function (code, signal) {
                         console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
                         conn.end();
-                        done(null, stdout)
+                        var fileslist = stdout.split("\n");
+                        var fileslistjson = []
+                        for (var i in fileslist) {
+                            var filename = fileslist[i].substring(fileslist[i].lastIndexOf("/") + 1)
+                            fileslistjson.push({
+                                "filename": filename,
+                                "filetype": 'file',
+                                "fileurl": `/api/cluster/scp/${filename}`
+                            })
+                        }
+                        done(null, fileslistjson)
                     }).on('data', function (data) {
                         console.log('STDOUT: ' + data);
                         stdout += data

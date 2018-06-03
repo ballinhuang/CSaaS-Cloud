@@ -148,7 +148,7 @@ module.exports = {
     return {
       languageitems: [],
       languagesinfo: [],
-      language: "cpp",
+      language: "c",
       code: "// Inpute your codes.",
       highlightLines: [
         {
@@ -203,7 +203,7 @@ module.exports = {
     },
     onOpenfile: function(files) {
       API.clustergetfile(
-        `/cluster/scp/${files[0].filename}`,
+        `/api/cluster/scp/${files[0].filename}`,
         res => {
           this.code = res.body;
         },
@@ -219,9 +219,13 @@ module.exports = {
       }
 
       API.clusteroperatefile(
-        `/cluster/scp/`,
+        `/api/cluster/scp/`,
         {
-          c
+          operate: "write",
+          data: {
+            filename: this.newfilename,
+            content: this.code
+          }
         },
         res => {
           alert(res.body);
@@ -235,7 +239,7 @@ module.exports = {
     },
     onSavefile: function(files) {
       API.clusteroperatefile(
-        `/cluster/scp/`,
+        `/api/cluster/scp/`,
         {
           operate: "write",
           data: {
@@ -260,7 +264,7 @@ module.exports = {
     onRemovefile: function(files) {
       for (var i in files) {
         API.clusteroperatefile(
-          `/cluster/scp/`,
+          `/api/cluster/scp/`,
           {
             operate: "remove",
             data: {
@@ -295,13 +299,13 @@ module.exports = {
         files += this.filestemp[i].filename + " ";
       }
       API.clusteroperatefile(
-        `/cluster/scp/`,
+        `/api/cluster/scp/`,
         {
           operate: "compile",
           data: {
             compiler: this.complier,
             argc: this.options,
-            files: ""
+            files: files
           }
         },
         res => {
