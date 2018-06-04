@@ -53,7 +53,6 @@ export default {
   methods: {
     clean() {
       this.dialog = false;
-      this.init();
     },
     save() {
       const msg = {
@@ -75,9 +74,10 @@ export default {
       this.clean();
     },
     init() {
-      this.visible = false;
       this.newusername = this.cluster.username;
       this.newuserpasswd = this.cluster.passwd;
+      this.visible = false;
+      this.dialog = true;
     }
   },
   created() {

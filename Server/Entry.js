@@ -304,8 +304,8 @@ RTR.route('/cluster/dirlist/:clustername')
           "id": `/home/${target_cluster.username}`,
           "name": `/home/${target_cluster.username}`,
           "icon": 'fas fa-folder-open',
-          "getUrl": `/api/cluster/scp/`,
-          "postUrl": `/api/cluster/scp/`
+          "getUrl": `/api/cluster/scp/${req.params.clustername}`,
+          "postUrl": `/api/cluster/scp/${req.params.clustername}`
         }])
       }
       else {
@@ -320,51 +320,86 @@ RTR.route('/cluster/dirlist/:clustername')
 
 
 //cluseter file operate
-RTR.route('/cluster/scp/:file')
+RTR.route('/cluster/scp/:clustername/:file?')
   // ls file
   .get((req, res) => {
+
     if (req.params.file === undefined) {
+      console.log('ls')
       // do ssh ls to get file list
-      JobQueue.add(new JSSH('ls', req.body), (result) => {
-        res.status(200).send(result)
-      }, (result) => {
-        res.status(500).send(result)
-      })
+      var target_cluster = isOwner(req.user.name, req.params.clustername)
+      if (target_cluster !== null) {
+        JobQueue.add(new JSSH(req.user.name, 'ls', req.body, target_cluster), (result) => {
+          res.status(200).send(result)
+        }, (result) => {
+          res.status(500).send(result)
+        })
+      }
+      else {
+        res.status(500).send("Your are not the cluster's user!")
+      }
+
     }
     else {
       // ssg cat the file
-      JobQueue.add(new JSSH('cat', req.body), (result) => {
-        res.status(200).send(result)
-      }, (result) => {
-        res.status(500).send(result)
-      })
+      var target_cluster = isOwner(req.user.name, req.params.clustername)
+      if (target_cluster !== null) {
+        JobQueue.add(new JSSH(req.user.name, 'cat', { data: { filename: req.params.file } }, target_cluster), (result) => {
+          res.status(200).send(result)
+        }, (result) => {
+          res.status(500).send(result)
+        })
+      }
+      else {
+        res.status(500).send("Your are not the cluster's user!")
+      }
     }
   })
 
   .post((req, res) => {
     if (req.body.operate === "write") {
       // write a file to cluseter
-      JobQueue.add(new JSCP('write', req.body), (result) => {
-        res.status(200).send(result)
-      }, (result) => {
-        res.status(500).send(result)
-      })
+      var target_cluster = isOwner(req.user.name, req.params.clustername)
+      if (target_cluster !== null) {
+        JobQueue.add(new JSCP(req.user.name, 'write', req.body, target_cluster), (result) => {
+          res.status(200).send(result)
+        }, (result) => {
+          res.status(500).send(result)
+        })
+      }
+      else {
+        res.status(500).send("Your are not the cluster's user!")
+      }
+
     }
     else if (req.body.operate === "remove") {
       // Delete a from to cluseter
-      JobQueue.add(new JSSH('remove', req.body), (result) => {
-        res.status(200).send(result)
-      }, (result) => {
-        res.status(500).send(result)
-      })
+      var target_cluster = isOwner(req.user.name, req.params.clustername)
+      if (target_cluster !== null) {
+        JobQueue.add(new JSSH(req.user.name, 'remove', req.body, target_cluster), (result) => {
+          res.status(200).send(result)
+        }, (result) => {
+          res.status(500).send(result)
+        })
+      }
+      else {
+        res.status(500).send("Your are not the cluster's user!")
+      }
+
     }
     else if (req.body.operate === "compile") {
       // run command to compile the file
-      JobQueue.add(new JSSH('compile', req.body), (result) => {
-        res.status(200).send(result)
-      }, (result) => {
-        res.status(500).send(result)
-      })
+      var target_cluster = isOwner(req.user.name, req.params.clustername)
+      if (target_cluster !== null) {
+        JobQueue.add(new JSSH(req.user.name, 'compile', req.body, target_cluster), (result) => {
+          res.status(200).send(result)
+        }, (result) => {
+          res.status(500).send(result)
+        })
+      }
+      else {
+        res.status(500).send("Your are not the cluster's user!")
+      }
     }
 
   })

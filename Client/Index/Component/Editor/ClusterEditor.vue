@@ -92,16 +92,16 @@
       </Monaco>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onOpenfile" ref="fileopenlist"></ffshelf>
+      <ffshelf :category-url="'../api/cluster/dirlist/'+clustername" v-on:confirm="onOpenfile" ref="fileopenlist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onRemovefile" ref="fileremovelist"></ffshelf>
+      <ffshelf :category-url="'../api/cluster/dirlist/'+clustername" v-on:confirm="onRemovefile" ref="fileremovelist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onCompilefile" ref="filecompilelist"></ffshelf>
+      <ffshelf :category-url="'../api/cluster/dirlist/'+clustername" v-on:confirm="onCompilefile" ref="filecompilelist"></ffshelf>
     </v-layout>
     <v-layout>
-      <ffshelf category-url="../api/cluster/dirlist" v-on:confirm="onSavefile" ref="filesavelist"></ffshelf>
+      <ffshelf :category-url="'../api/cluster/dirlist/'+clustername" v-on:confirm="onSavefile" ref="filesavelist"></ffshelf>
     </v-layout>
     <!-- Save to new file dialog -->
     <v-dialog v-model="inputargdialog" max-width="500px">
@@ -117,10 +117,10 @@
               <v-select v-bind:items="compilerslist" v-model="complier" label="Select" single-line bottom></v-select>
             </v-flex>
             <v-flex xs4>
-              <v-subheader>Options</v-subheader>
+              <v-subheader>Argument</v-subheader>
             </v-flex>
             <v-flex xs8>
-              <v-text-field label="Options" v-model="options"></v-text-field>
+              <v-text-field label="Argument" v-model="argument"></v-text-field>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -173,9 +173,13 @@ module.exports = {
       compilerslist: [{ text: "gcc" }, { text: "g++" }, { text: "mpicc" }],
 
       newfilename: "",
-      options: "",
+      argument: "",
       complier: "",
-      filestemp: []
+      filestemp: [],
+
+      user: {},
+      clustername: "",
+      cluster: {}
     };
   },
   methods: {
@@ -203,7 +207,8 @@ module.exports = {
     },
     onOpenfile: function(files) {
       API.clustergetfile(
-        `/api/cluster/scp/${files[0].filename}`,
+        this.clustername,
+        files[0].filename,
         res => {
           this.code = res.body;
         },
@@ -219,12 +224,12 @@ module.exports = {
       }
 
       API.clusteroperatefile(
-        `/api/cluster/scp/`,
+        this.clustername,
         {
           operate: "write",
           data: {
             filename: this.newfilename,
-            content: this.code
+            content: this.editor.getValue()
           }
         },
         res => {
@@ -239,12 +244,12 @@ module.exports = {
     },
     onSavefile: function(files) {
       API.clusteroperatefile(
-        `/api/cluster/scp/`,
+        this.clustername,
         {
           operate: "write",
           data: {
             filename: files[0].filename,
-            content: this.code
+            content: this.editor.getValue()
           }
         },
         res => {
@@ -264,7 +269,7 @@ module.exports = {
     onRemovefile: function(files) {
       for (var i in files) {
         API.clusteroperatefile(
-          `/api/cluster/scp/`,
+          this.clustername,
           {
             operate: "remove",
             data: {
@@ -288,7 +293,7 @@ module.exports = {
       this.inputargdialog = false;
       this.filestemp = [];
       this.complier = "";
-      this.options = "";
+      this.argument = "";
     },
     compilefile() {
       if (this.complier === "") {
@@ -299,12 +304,12 @@ module.exports = {
         files += this.filestemp[i].filename + " ";
       }
       API.clusteroperatefile(
-        `/api/cluster/scp/`,
+        this.clustername,
         {
           operate: "compile",
           data: {
             compiler: this.complier,
-            argc: this.options,
+            argc: this.argument,
             files: files
           }
         },
@@ -323,6 +328,21 @@ module.exports = {
     this.options = {
       selectOnLineNumbers: true
     };
+    API.getUser(
+      res => {
+        this.user = res.body;
+        if (this.$route.params.clustername !== undefined)
+          this.clustername = this.$route.params.clustername;
+        for (var i in this.user.clusters) {
+          if (this.user.clusters[i].name === this.clustername) {
+            this.cluster = this.user.clusters[i];
+          }
+        }
+      },
+      res => {
+        alert("ERROR");
+      }
+    );
   }
 };
 </script>

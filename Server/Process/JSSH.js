@@ -1,4 +1,4 @@
-import SSH from 'ssh2'
+import { Client } from 'ssh2'
 import path from 'path'
 import fs from 'fs'
 
@@ -6,13 +6,14 @@ import Job from './Job.js'
 import { UserManager } from '../User'
 
 module.exports = class JSSH extends Job {
-    constructor(operate, body) {
+    constructor(username, operate, body, target_cluster) {
         super({})
         this.operate = operate
         this.body = body
+        this.username = username
+        this.target_cluster = target_cluster
         /*
             body = {
-                usernane:"user",
                 clustername : "LAB01",
                 data:{
 
@@ -24,10 +25,10 @@ module.exports = class JSSH extends Job {
     static onProcess(job, done) {
         const d = job.data
 
-        const user = UserManager.getProfile(d.body.username)
-        let cluster = user.clusters.filter(c => c.name === d.body.clustername);
+        //const user = UserManager.getProfile(d.username)
+        let cluster = d.target_cluster
 
-        console.log(cluster)
+        //console.log(cluster)
 
 
         var conn = new Client();
@@ -35,7 +36,7 @@ module.exports = class JSSH extends Job {
             console.log('Client :: ready');
             if (d.operate === 'ls') {
                 //find ~ -maxdepth 1 -type f -not -name '.*'
-                conn.exec("find ~ -maxdepth 1 -type f -not -name '.*''", function (err, stream) {
+                conn.exec("find ~ -maxdepth 1 -type f -not -name '.*'", function (err, stream) {
                     var stdout = ''
                     if (err) {
                         //throw err;
@@ -48,6 +49,9 @@ module.exports = class JSSH extends Job {
                         var fileslist = stdout.split("\n");
                         var fileslistjson = []
                         for (var i in fileslist) {
+                            if (fileslist[i].trim() === '') {
+                                continue;
+                            }
                             var filename = fileslist[i].substring(fileslist[i].lastIndexOf("/") + 1)
                             fileslistjson.push({
                                 "filename": filename,
@@ -164,7 +168,9 @@ module.exports = class JSSH extends Job {
     getData() {
         return {
             operate: this.operate,
-            body: this.body
+            body: this.body,
+            username: this.username,
+            target_cluster: this.target_cluster
         }
     }
 }

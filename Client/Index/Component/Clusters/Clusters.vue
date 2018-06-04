@@ -40,6 +40,7 @@
               </subjob>
               <usersetting v-show="!ismanager" :user="user" :cluster="props.item" :alertmsg="alertmsg">
               </usersetting>
+              <v-btn class="primary" dark v-show="!ismanager" :to="'/clustereditor/' + props.item.name">Editor</v-btn>
               <v-btn v-show="ismanager && props.item.status !== 'Work'" icon class="indigo--text" v-on:click="recovercluster(props.item.name)">
                 <v-icon>fas fa-play</v-icon>
               </v-btn>

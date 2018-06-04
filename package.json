@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon Server/Entry.js  --ignore Client/ --exec babel-node --presets es2015,stage-0",
     "serve": "forever start -c babel-node Server/Entry.js --presets es2015,stage-0",
-    "startdb": "mongod --dbpath=Server/DB --port 6000",
+    "startdb": "mongod --fork --dbpath=Server/DB --port 6000 --syslog",
     "creatuser": "node -r babel-register Server/User/CreatUser.js",
     "build": "webpack -d --progress --colors --watch",
     "initapp": "mkdir Server/Home;mkdir Server/DB"

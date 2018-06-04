@@ -96,6 +96,14 @@ class WebAPI {
 	compile(body, success, fail) {
 		Vue.http.post("/api/compile", body).then(success, fail)
 	}
+
+	clustergetfile(clustername, filename, success, fail) {
+		Vue.http.get(`/api/cluster/scp/${clustername}/${filename}`).then(success, fail);
+	}
+
+	clusteroperatefile(clustername, body, success, fail) {
+		Vue.http.post(`/api/cluster/scp/${clustername}`, body).then(success, fail)
+	}
 }
 
 export default new WebAPI();

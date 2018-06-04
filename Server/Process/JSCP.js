@@ -1,4 +1,4 @@
-import SCP from 'scp2'
+import { Client } from 'scp2'
 import path from 'path'
 import fs from 'fs'
 
@@ -6,13 +6,14 @@ import Job from './Job.js'
 import { UserManager } from '../User'
 
 module.exports = class JSCP extends Job {
-    constructor(operate, body) {
+    constructor(username, operate, body, target_cluster) {
         super({})
         this.operate = operate
         this.body = body
+        this.username = username
+        this.target_cluster = target_cluster
         /*
             body = {
-                usernane:"user",
                 clustername : "LAB01",
                 data:{
 
@@ -24,16 +25,11 @@ module.exports = class JSCP extends Job {
     static onProcess(job, done) {
         const d = job.data
 
-        const user = UserManager.getProfile(d.body.username)
-        let cluster = user.clusters.filter(c => c.name === d.body.clustername);
-
-        console.log(cluster)
-
         var client = new Client({
-            port: cluster.nodeslist[0].nodessh,
-            host: cluster.nodeslist[0].nodeip,
-            username: cluster.username,
-            password: cluster.passwd
+            port: d.target_cluster.nodeslist[0].nodessh,
+            host: d.target_cluster.nodeslist[0].nodeip,
+            username: d.target_cluster.username,
+            password: d.target_cluster.passwd
         });
 
         if (d.operate === 'write') {
@@ -43,9 +39,10 @@ module.exports = class JSCP extends Job {
                     content : "..."
                 }
             */
+            const buf = Buffer.from(d.body.data.content, 'utf8');
             client.write({
                 destination: d.body.data.filename,
-                content: d.body.data.content
+                content: buf
             }, function (err) {
                 if (err) {
                     console.log(err)
@@ -61,7 +58,9 @@ module.exports = class JSCP extends Job {
     getData() {
         return {
             operate: this.operate,
-            body: this.body
+            body: this.body,
+            username: this.username,
+            target_cluster: this.target_cluster
         }
     }
 }

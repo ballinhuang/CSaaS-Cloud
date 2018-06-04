@@ -17,6 +17,7 @@ import ProfileView from './Component/Profile/Profile.vue'
 import Clusters from './Component/Clusters/Clusters.vue'
 import Editor from './Component/Editor/Editor.vue'
 import Simulator from './Component/Simulator/Simulator.vue'
+import ClusterEditor from './Component/Editor/ClusterEditor.vue'
 
 Vue.use(VueHead)
 Vue.use(VueRouter)
@@ -29,7 +30,8 @@ const routes = [
     { path: '/profile', component: ProfileView },
     { path: '/clusters', component: Clusters },
     { path: '/editor', component: Editor },
-    { path: '/simulator', component: Simulator }
+    { path: '/simulator', component: Simulator },
+    { path: '/clustereditor/:clustername', component: ClusterEditor, props: { default: true } }
 ]
 
 const router = new VueRouter({
