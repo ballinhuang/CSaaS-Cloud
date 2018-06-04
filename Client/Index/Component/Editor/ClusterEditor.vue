@@ -308,7 +308,7 @@ module.exports = {
         {
           operate: "compile",
           data: {
-            compiler: this.complier,
+            compiler: this.complier.text,
             argc: this.argument,
             files: files
           }

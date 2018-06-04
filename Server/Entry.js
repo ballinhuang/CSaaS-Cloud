@@ -180,8 +180,9 @@ RTR.route('/subjob')
       }
     }*/
     var target_cluster = isOwner(req.user.name, req.body.name)
+
     if (target_cluster !== null) {
-      JobQueue.add(new JSubjob(user, target_cluster, req.body), (result) => {
+      JobQueue.add(new JSubjob(req.user, target_cluster, req.body), (result) => {
         res.status(200).json(result)
       }, (result) => {
         res.status(500).json({ type: 'error', msg: result })

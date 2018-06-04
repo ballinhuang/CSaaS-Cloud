@@ -78,7 +78,9 @@ module.exports = class JSSH extends Job {
                         files:""
                     }
                 */
-                conn.exec(d.body.data.compiler + ' ' + body.data.argc + ' ' + body.data.files, function (err, stream) {
+                console.log(d.body.data)
+                console.log(d.body.data.compiler + ' ' + d.body.data.argc + ' ' + d.body.data.files)
+                conn.exec(d.body.data.compiler + ' ' + d.body.data.argc + ' ' + d.body.data.files, function (err, stream) {
                     var stdout = ''
                     if (err) {
                         //throw err;

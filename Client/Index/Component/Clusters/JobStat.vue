@@ -26,8 +26,28 @@
               <td>{{props.item.USER}}</td>
               <td>{{props.item.JOBSTAT}}</td>
               <td>{{props.item.MOTHERNODE}}</td>
-              <td>
-                <v-btn v-if="props.item.JOBSTAT === 'RUNNING'" v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
+              <td v-if="props.item.JOBSTAT === 'RUNNING'">
+                <v-btn v-on:click="killjob(props.item.JOBID)" error dark>Kill</v-btn>
+              </td>
+              <td v-if="props.item.JOBSTAT === 'COMPLETE'">
+                <v-btn @click.native.stop="seeresult(props.item.JOBID)" color="teal" dark>Result</v-btn>
+                <v-dialog v-model="resultdialog" scrollable max-width="900px">
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">JOB{{props.item.JOBID}}</span>
+                    </v-card-title>
+                    <v-divider></v-divider>
+
+                    <v-card-text style="height: 600px;">
+                      <pre>{{result}}</pre>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="green darken-1" flat="flat" @click="resultdialog = false">Close</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </td>
             </template>
 
@@ -65,7 +85,10 @@ export default {
         { text: "Mother Node", align: "left", value: "mothernode" },
         { text: "Operate", align: "left", value: "operate" }
       ],
-      items: []
+      items: [],
+
+      result: "",
+      resultdialog: false
     };
   },
   methods: {
@@ -108,6 +131,19 @@ export default {
         },
         res => {
           alert("Error");
+        }
+      );
+    },
+    seeresult(jobid) {
+      API.clustergetfile(
+        this.clustername,
+        "JOB" + jobid + ".OUT",
+        res => {
+          this.result = res.body;
+          this.resultdialog = true;
+        },
+        res => {
+          alert(res.body);
         }
       );
     }
