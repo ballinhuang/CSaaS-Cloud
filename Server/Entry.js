@@ -363,7 +363,7 @@ RTR.route('/cluster/scp/:clustername/:file?')
       var target_cluster = isOwner(req.user.name, req.params.clustername)
       if (target_cluster !== null) {
         JobQueue.add(new JSCP(req.user.name, 'write', req.body, target_cluster), (result) => {
-          res.status(200).send(result)
+          res.status(200).send("Success")
         }, (result) => {
           res.status(500).send(result)
         })
@@ -378,7 +378,7 @@ RTR.route('/cluster/scp/:clustername/:file?')
       var target_cluster = isOwner(req.user.name, req.params.clustername)
       if (target_cluster !== null) {
         JobQueue.add(new JSSH(req.user.name, 'remove', req.body, target_cluster), (result) => {
-          res.status(200).send(result)
+          res.status(200).send("Success")
         }, (result) => {
           res.status(500).send(result)
         })
@@ -393,7 +393,7 @@ RTR.route('/cluster/scp/:clustername/:file?')
       var target_cluster = isOwner(req.user.name, req.params.clustername)
       if (target_cluster !== null) {
         JobQueue.add(new JSSH(req.user.name, 'compile', req.body, target_cluster), (result) => {
-          res.status(200).send(result)
+          res.status(200).send("Success")
         }, (result) => {
           res.status(500).send(result)
         })
