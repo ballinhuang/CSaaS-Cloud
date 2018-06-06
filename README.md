@@ -16,10 +16,21 @@
 
 
 3. 使用方式
+- 初始化
 ```
 yarn install
 yarn initapp
+```
+
+- 建立使用者 (可到`/Server/User/CreatUser.js` 更換想要的管理者ID和PASSWORD)
+```
 yarn startdb
+yarn creatuser
+```
+
+- 開始
+```
 yarn build
-yarn start
+yarn startdb
+yarn start (背景執行模式用 yarn serve)
 ```
