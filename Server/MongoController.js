@@ -1,9 +1,11 @@
 import { MongoClient } from 'mongodb';
 import assert from 'assert';
 
+require('./Utils.js')();
+
 class MongoController {
     constructor() {
-        this.url = 'mongodb://localhost:6000/CSAAS';
+        this.url = `mongodb://localhost:${DBPort}/CSAAS`;
         this.db = null;
     }
 

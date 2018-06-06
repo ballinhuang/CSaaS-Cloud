@@ -2,9 +2,12 @@ import fs from 'fs'
 import { spawnSync } from 'child_process'
 import path from 'path'
 
+require('../Utils.js')();
+
 module.exports = class Lunch {
 
     static lunchserver(username, clustername, svr_port, sch_port, nodeslist) {
+
         const homedir = path.join(process.cwd(), `./Server/Home/${username}/Clusters/${clustername}`)
         if (!fs.existsSync(homedir, fs.constants.R_OK | fs.constants.W_OK)) {
             fs.mkdirSync(homedir);
@@ -25,7 +28,7 @@ module.exports = class Lunch {
         fs.writeFileSync(nodecondir, nodecondata)
 
         const serverexepath = path.join(process.cwd(), `./Server/Cluster/Daemons/server`)
-        const argu = `-i 127.0.0.1 -p ${svr_port} -si 127.0.0.1 -sp ${sch_port}`
+        const argu = `-i ${HostIP} -p ${svr_port} -si 127.0.0.1 -sp ${sch_port}`
         let stdout = ''
         const proc = spawnSync(serverexepath, argu.split(' '), {
             cwd: homedir,
