@@ -8,7 +8,7 @@
     "serve": "forever start -c babel-node Server/Entry.js --presets es2015,stage-0",
     "startdb": "mongod --fork --dbpath=Server/DB --port 6000 --syslog",
     "creatuser": "node -r babel-register Server/User/CreatUser.js",
-    "build": "webpack -d --progress --colors --watch",
+    "build": "webpack -d --progress --colors",
     "initapp": "mkdir Server/Home;mkdir Server/DB"
   },
   "dependencies": {
