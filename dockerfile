@@ -1,15 +1,10 @@
 # This dockerfile uses the ubuntu image
-FROM ubuntu
+FROM node:8
 
 MAINTAINER ballingunag
 
 RUN apt-get update
-RUN apt-get install -y apt-utils
-RUN apt-get install -y git curl gnupg redis-server mongodb 
-# RUN redis-server --daemonize yes
-
-# RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y git redis-server mongodb 
 
 WORKDIR ~
 RUN git clone https://github.com/ballinhuang/CSaaS-Cloud.git
