@@ -10,4 +10,4 @@ services:
     network_mode: "bridge"
     stdin_open: true
     tty: true
-    
+    command: sh startup.sh

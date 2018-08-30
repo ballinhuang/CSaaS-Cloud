@@ -16,5 +16,3 @@ RUN npm install
 RUN sh setup.sh 127.0.0.1 
 RUN npm run initapp
 RUN npm run build
-
-CMD sh startup.sh
