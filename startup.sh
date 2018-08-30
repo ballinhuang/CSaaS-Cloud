@@ -3,4 +3,4 @@
 redis-server --daemonize yes
 npm run startdb
 npm run creatuser
-npm run start
+npm run serve
